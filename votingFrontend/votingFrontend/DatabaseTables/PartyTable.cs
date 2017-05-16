@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace votingFrontend.DatabaseTables
 {
-    class PartyTable
+    public class PartyTable
     {
     }
 }
