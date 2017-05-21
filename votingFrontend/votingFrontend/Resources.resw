@@ -135,4 +135,7 @@
   <data name="LoginTitle" xml:space="preserve">
     <value>Vote 2017</value>
   </data>
+  <data name="TimeTillOpen" xml:space="preserve">
+    <value>Voting Opens in:</value>
+  </data>
 </root>

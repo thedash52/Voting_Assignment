@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
+using Windows.UI.Xaml;
 
 namespace votingFrontend.ViewModels
 {
@@ -21,8 +18,15 @@ namespace votingFrontend.ViewModels
         private string electoralIdText;
         private string electoralId;
         private string loginText;
+        private Visibility votingClosed;
+
+        private string timeTillOpenText;
+        private double timeTillOpen;
 
         private ResourceLoader resource;
+
+        private DateTime openDateTime = DateTime.Parse("25 May 2017 11:30AM");
+        private DispatcherTimer countdown;
 
         public LoginViewModel()
         {
@@ -33,6 +37,38 @@ namespace votingFrontend.ViewModels
             DoBText = resource.GetString("DateOfBirth");
             ElectoralIdText = resource.GetString("ElectoralID");
             LoginText = resource.GetString("LoginButton");
+
+            DoB = DateTime.Now;
+
+            if (DateTime.Now >= openDateTime)
+            {
+                VotingClosed = Visibility.Collapsed;
+            }
+            else
+            {
+                VotingClosed = Visibility.Visible;
+
+                countdown = new DispatcherTimer();
+                countdown.Interval = new TimeSpan(0, 0, 1);
+                countdown.Tick += Countdown_Tick;
+
+                TimeTillOpenText = resource.GetString("TimeTillOpen");
+                TimeTillOpen = (openDateTime - DateTime.Now).TotalSeconds;
+
+                countdown.Start();
+            }
+        }
+
+        private void Countdown_Tick(object sender, object e)
+        {
+            TimeTillOpen--;
+
+            if (TimeTillOpen < 0)
+            {
+                votingClosed = Visibility.Collapsed;
+                TimeTillOpen = 0;
+                countdown.Stop();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
@@ -172,6 +208,48 @@ namespace votingFrontend.ViewModels
             set
             {
                 this.loginText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Visibility VotingClosed
+        {
+            get
+            {
+                return this.votingClosed;
+            }
+
+            set
+            {
+                this.votingClosed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string TimeTillOpenText
+        {
+            get
+            {
+                return this.timeTillOpenText;
+            }
+
+            set
+            {
+                this.timeTillOpenText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double TimeTillOpen
+        {
+            get
+            {
+                return this.timeTillOpen;
+            }
+
+            set
+            {
+                this.timeTillOpen = value;
                 OnPropertyChanged();
             }
         }

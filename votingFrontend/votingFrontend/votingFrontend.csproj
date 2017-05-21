@@ -96,6 +96,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\CountdownConverter.cs" />
     <Compile Include="DatabaseTables\CandidateTable.cs" />
     <Compile Include="DatabaseTables\ElectorateTable.cs" />
     <Compile Include="DatabaseTables\PartyTable.cs" />

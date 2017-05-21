@@ -23,9 +23,11 @@ namespace votingFrontend.Views
     /// </summary>
     public sealed partial class LoginView : Page
     {
-        private LoginViewModel loginVM = new LoginViewModel();
+        private LoginViewModel loginVM;
         public LoginView()
         {
+            loginVM = new LoginViewModel();
+
             this.InitializeComponent();
             this.DataContext = loginVM;
         }
