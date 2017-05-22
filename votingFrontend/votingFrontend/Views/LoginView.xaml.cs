@@ -30,6 +30,8 @@ namespace votingFrontend.Views
 
             this.InitializeComponent();
             this.DataContext = loginVM;
+
+            
         }
     }
 }

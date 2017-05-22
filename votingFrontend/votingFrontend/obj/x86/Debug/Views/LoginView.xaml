@@ -5,7 +5,12 @@
     xmlns:local="using:votingFrontend.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:votingFrontend.Converters"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:CountdownConverter x:Key="CountdownConverter"/>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
@@ -27,21 +32,26 @@
             <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="65" FontWeight="Bold" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0"/>
-        
-        <TextBlock Text="{Binding FirstNameLabel}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
-        <TextBox Text="{Binding FirstName}" Grid.Column="3" Grid.Row="1"/>
+        <TextBlock Text="{Binding TitleText}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="65" FontWeight="Bold" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0"/>
 
-        <TextBlock Text="{Binding LastNameLabel}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"/>
-        <TextBox Text="{Binding LastName}" Grid.Column="3" Grid.Row="2"/>
+        <TextBlock Text="{Binding FirstNameText}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
+        <TextBox Text="{Binding FirstName}" Grid.Column="3" Grid.Row="1" VerticalAlignment="Center"/>
 
-        <TextBlock Text="{Binding DoBLabel}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3"/>
-        <TextBox Text="{Binding DoB}" Grid.Column="3" Grid.Row="3"/>
+        <TextBlock Text="{Binding LastNameText}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"/>
+        <TextBox Text="{Binding LastName}" Grid.Column="3" Grid.Row="2" VerticalAlignment="Center"/>
 
-        <TextBlock Text="{Binding ElectoralIdLabel}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="4"/>
-        <TextBox Text="{Binding ElectoralId}" Grid.Column="3" Grid.Row="4"/>
+        <TextBlock Text="{Binding DoBText}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3"/>
+        <CalendarDatePicker Date="{Binding DoB}" HorizontalAlignment="Stretch" Grid.Column="3" Grid.Row="3"/>
 
-        <Button Content="{Binding LoginText}" FontSize="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="6" />
+        <TextBlock Text="{Binding ElectoralIdText}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="4"/>
+        <TextBox Text="{Binding ElectoralId}" Grid.Column="3" Grid.Row="4" VerticalAlignment="Center"/>
+
+        <Button x:ConnectionId='1' x:Name="btnLogin" Content="{Binding LoginText}" Command="{Binding LoginCommand}" FontSize="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="6" />
+
+        <StackPanel Background="Black" Opacity="0.6" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="8" Visibility="{Binding VotingClosed}"/>
+        <TextBlock Text="{Binding TimeTillOpenText}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="50" TextAlignment="Center" Foreground="White" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="4" Visibility="{Binding VotingClosed}"/>
+        <TextBlock Text="{Binding TimeTillOpen, Converter={StaticResource CountdownConverter}}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="50" TextAlignment="Center" Foreground="White" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="4" Grid.RowSpan="4" Visibility="{Binding VotingClosed}"/>
+
     </Grid>
 </Page>
 

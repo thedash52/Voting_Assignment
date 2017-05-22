@@ -1,9 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
+using votingFrontend.Services;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace votingFrontend.ViewModels
 {
@@ -39,7 +42,7 @@ namespace votingFrontend.ViewModels
             DoBText = resource.GetString("DateOfBirth");
             ElectoralIdText = resource.GetString("ElectoralID");
             LoginText = resource.GetString("LoginButton");
-            
+            LoginCommand = new CommandService(Login);
 
             DoB = DateTime.Now;
 
@@ -70,12 +73,12 @@ namespace votingFrontend.ViewModels
         {
             get
             {
-                return this.Login;
+                return this.loginCommand;
             }
 
             set
             {
-                this.Login = value;
+                this.loginCommand = value;
                 OnPropertyChanged();
             }
         }
@@ -258,6 +261,39 @@ namespace votingFrontend.ViewModels
             {
                 this.timeTillOpen = value;
                 OnPropertyChanged();
+            }
+        }
+
+        internal async void Login(object sender)
+        {
+            if (FirstName == null || LastName == null || ElectoralId == null)
+            {
+                ContentDialog emptyEntry = new ContentDialog()
+                {
+                    Title = "No Login Information",
+                    Content = "No information has been entered. Please enter your firstname, last name, date of birth and electoral ID.",
+                    PrimaryButtonText = "OK"
+                };
+
+                await emptyEntry.ShowAsync();
+                return;
+            }
+
+            MatchCollection firstNameResult = Regex.Matches(FirstName, @"^[a-zA-Z]+$");
+            MatchCollection lastNameResult = Regex.Matches(LastName, @"^[a-zA-Z]+$");
+            MatchCollection electoralIdResult = Regex.Matches(ElectoralId, @"^[A-Z]{3}[0-9]+$");
+
+            if (electoralIdResult.Count == 0)
+            {
+                ContentDialog invalidEntry = new ContentDialog()
+                {
+                    Title = "Invalid Entry",
+                    Content = "Please enter a valid Electoral ID",
+                    PrimaryButtonText = "OK"
+                };
+
+                await invalidEntry.ShowAsync();
+                return;
             }
         }
 

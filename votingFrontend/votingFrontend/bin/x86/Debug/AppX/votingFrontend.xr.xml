@@ -1,16 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Roots >
+  <Roots.Interfaces>
+    <RootInterface FullName="Windows.UI.Xaml.Data.IValueConverter" />
+  </Roots.Interfaces>
   <Roots.PropertyPathNames>
+    <RootPropertyPathName Name="TimeTillOpen" />
+    <RootPropertyPathName Name="VotingClosed" />
+    <RootPropertyPathName Name="TimeTillOpenText" />
     <RootPropertyPathName Name="LoginText" />
+    <RootPropertyPathName Name="LoginCommand" />
     <RootPropertyPathName Name="ElectoralId" />
-    <RootPropertyPathName Name="ElectoralIdLabel" />
+    <RootPropertyPathName Name="ElectoralIdText" />
     <RootPropertyPathName Name="DoB" />
-    <RootPropertyPathName Name="DoBLabel" />
+    <RootPropertyPathName Name="DoBText" />
     <RootPropertyPathName Name="LastName" />
-    <RootPropertyPathName Name="LastNameLabel" />
+    <RootPropertyPathName Name="LastNameText" />
     <RootPropertyPathName Name="FirstName" />
-    <RootPropertyPathName Name="FirstNameLabel" />
-    <RootPropertyPathName Name="Title" />
+    <RootPropertyPathName Name="FirstNameText" />
+    <RootPropertyPathName Name="TitleText" />
   </Roots.PropertyPathNames>
   <Roots.RootTypes>
     <RootType FullName="Windows.UI.Xaml.Application">
@@ -18,6 +25,7 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Page">
       <RootProperty Name="Content" />
+      <RootProperty Name="Resources" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Grid">
       <RootProperty Name="Background" />
@@ -30,10 +38,13 @@
       <RootMethod Name="SetColumnSpan" />
       <RootMethod Name="GetRow" />
       <RootMethod Name="SetRow" />
+      <RootMethod Name="GetRowSpan" />
+      <RootMethod Name="SetRowSpan" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.ThemeResourceExtension" />
     <RootType FullName="votingFrontend.Views.CandidateView" />
     <RootType FullName="votingFrontend.Views.ElectorateView" />
+    <RootType FullName="votingFrontend.Converters.CountdownConverter" />
     <RootType FullName="Windows.UI.Xaml.Controls.ColumnDefinition">
       <RootProperty Name="Width" />
     </RootType>
@@ -46,17 +57,34 @@
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="FontSize" />
       <RootProperty Name="FontWeight" />
+      <RootProperty Name="TextAlignment" />
+      <RootProperty Name="Foreground" />
+      <RootProperty Name="Visibility" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
       <RootProperty Name="Text" />
+      <RootProperty Name="VerticalAlignment" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.CalendarDatePicker">
+      <RootProperty Name="Date" />
+      <RootProperty Name="HorizontalAlignment" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Button">
       <RootProperty Name="Content" />
+      <RootProperty Name="Command" />
       <RootProperty Name="FontSize" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Data.Binding" />
+    <RootType FullName="Windows.UI.Xaml.Controls.StackPanel">
+      <RootProperty Name="Background" />
+      <RootProperty Name="Opacity" />
+      <RootProperty Name="Visibility" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Data.Binding">
+      <RootProperty Name="Converter" />
+    </RootType>
+    <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.StaticResourceExtension" />
     <RootType FullName="votingFrontend.Views.LoginView" />
     <RootType FullName="votingFrontend.Views.PartyView" />
     <RootType FullName="votingFrontend.Views.ReferendumView" />
