@@ -25,7 +25,7 @@ namespace votingFrontend.Converters
 
             if (timespan.TotalSeconds < 1.0)
             {
-                return "-- : --";
+                return "00 : 00";
             }
             else if (timespan.TotalSeconds < 3600)
             {

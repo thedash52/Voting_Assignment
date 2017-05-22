@@ -46,7 +46,7 @@
         <TextBlock Text="{Binding ElectoralIdText}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="4"/>
         <TextBox Text="{Binding ElectoralId}" Grid.Column="3" Grid.Row="4" VerticalAlignment="Center"/>
 
-        <Button Content="{Binding LoginText}" FontSize="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="6" />
+        <Button Content="{Binding LoginText}" Command="{Binding Login}" FontSize="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="6" />
 
         <StackPanel Background="Black" Opacity="0.6" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="8" Visibility="{Binding VotingClosed}"/>
         <TextBlock Text="{Binding TimeTillOpenText}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="50" TextAlignment="Center" Foreground="White" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="4" Visibility="{Binding VotingClosed}"/>
