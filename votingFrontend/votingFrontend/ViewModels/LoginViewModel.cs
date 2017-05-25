@@ -64,6 +64,7 @@ namespace votingFrontend.ViewModels
             LoggingIn = false;
 
             DoB = DateTime.Now;
+            DoB = DoB.AddYears(-18);
 
             if (DateTime.Now >= openDateTime)
             {
@@ -390,9 +391,9 @@ namespace votingFrontend.ViewModels
             }
 
             DateTime validationDate = DateTime.Now;
-            validationDate.AddYears(-18);
+            validationDate = validationDate.AddYears(-18);
 
-            if (DoB.Date < validationDate)
+            if (DoB.Date > validationDate.Date)
             {
                 ContentDialog invalidEntry = new ContentDialog()
                 {
