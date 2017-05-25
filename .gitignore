@@ -1,0 +1,5 @@
+.vs/
+obj/
+bin/
+aspnet-core/src/votingBackend.Web.Host/App_Data/Logs/
+aspnet-core/src/votingBackend.Web.Mvc/App_Data/Logs/
