@@ -7,7 +7,28 @@ using System.Net.Http;
 
 namespace votingFrontend.Services
 {
-    public class RestService
+    internal class RestService
     {
+        public RestService()
+        {
+
+        }
+
+        internal async Task<bool> Login(string firstName, string lastName, DateTime dob, string electoralId)
+        {
+            string first = "Bob";
+            string last = "Smith";
+            DateTime birth = DateTime.Parse("10/08/1993");
+            string id = "ABC123456";
+
+            if (first != firstName || last != lastName || birth.Date != dob.Date || id != electoralId)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }

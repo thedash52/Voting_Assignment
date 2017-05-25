@@ -132,29 +132,31 @@ namespace votingFrontend.votingFrontend_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[10];
+            _typeNameTable = new string[11];
             _typeNameTable[0] = "votingFrontend.Views.CandidateView";
             _typeNameTable[1] = "Windows.UI.Xaml.Controls.Page";
             _typeNameTable[2] = "Windows.UI.Xaml.Controls.UserControl";
             _typeNameTable[3] = "votingFrontend.Views.ElectorateView";
             _typeNameTable[4] = "votingFrontend.Converters.CountdownConverter";
             _typeNameTable[5] = "Object";
-            _typeNameTable[6] = "votingFrontend.Views.LoginView";
-            _typeNameTable[7] = "votingFrontend.Views.PartyView";
-            _typeNameTable[8] = "votingFrontend.Views.ReferendumView";
-            _typeNameTable[9] = "votingFrontend.Views.VoteSubmittedView";
+            _typeNameTable[6] = "votingFrontend.Converters.DateTimeConverter";
+            _typeNameTable[7] = "votingFrontend.Views.LoginView";
+            _typeNameTable[8] = "votingFrontend.Views.PartyView";
+            _typeNameTable[9] = "votingFrontend.Views.ReferendumView";
+            _typeNameTable[10] = "votingFrontend.Views.VoteSubmittedView";
 
-            _typeTable = new global::System.Type[10];
+            _typeTable = new global::System.Type[11];
             _typeTable[0] = typeof(global::votingFrontend.Views.CandidateView);
             _typeTable[1] = typeof(global::Windows.UI.Xaml.Controls.Page);
             _typeTable[2] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
             _typeTable[3] = typeof(global::votingFrontend.Views.ElectorateView);
             _typeTable[4] = typeof(global::votingFrontend.Converters.CountdownConverter);
             _typeTable[5] = typeof(global::System.Object);
-            _typeTable[6] = typeof(global::votingFrontend.Views.LoginView);
-            _typeTable[7] = typeof(global::votingFrontend.Views.PartyView);
-            _typeTable[8] = typeof(global::votingFrontend.Views.ReferendumView);
-            _typeTable[9] = typeof(global::votingFrontend.Views.VoteSubmittedView);
+            _typeTable[6] = typeof(global::votingFrontend.Converters.DateTimeConverter);
+            _typeTable[7] = typeof(global::votingFrontend.Views.LoginView);
+            _typeTable[8] = typeof(global::votingFrontend.Views.PartyView);
+            _typeTable[9] = typeof(global::votingFrontend.Views.ReferendumView);
+            _typeTable[10] = typeof(global::votingFrontend.Views.VoteSubmittedView);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -192,10 +194,11 @@ namespace votingFrontend.votingFrontend_XamlTypeInfo
         private object Activate_0_CandidateView() { return new global::votingFrontend.Views.CandidateView(); }
         private object Activate_3_ElectorateView() { return new global::votingFrontend.Views.ElectorateView(); }
         private object Activate_4_CountdownConverter() { return new global::votingFrontend.Converters.CountdownConverter(); }
-        private object Activate_6_LoginView() { return new global::votingFrontend.Views.LoginView(); }
-        private object Activate_7_PartyView() { return new global::votingFrontend.Views.PartyView(); }
-        private object Activate_8_ReferendumView() { return new global::votingFrontend.Views.ReferendumView(); }
-        private object Activate_9_VoteSubmittedView() { return new global::votingFrontend.Views.VoteSubmittedView(); }
+        private object Activate_6_DateTimeConverter() { return new global::votingFrontend.Converters.DateTimeConverter(); }
+        private object Activate_7_LoginView() { return new global::votingFrontend.Views.LoginView(); }
+        private object Activate_8_PartyView() { return new global::votingFrontend.Views.PartyView(); }
+        private object Activate_9_ReferendumView() { return new global::votingFrontend.Views.ReferendumView(); }
+        private object Activate_10_VoteSubmittedView() { return new global::votingFrontend.Views.VoteSubmittedView(); }
 
         private global::Windows.UI.Xaml.Markup.IXamlType CreateXamlType(int typeIndex)
         {
@@ -240,30 +243,37 @@ namespace votingFrontend.votingFrontend_XamlTypeInfo
                 xamlType = new global::votingFrontend.votingFrontend_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 6:   //  votingFrontend.Views.LoginView
-                userType = new global::votingFrontend.votingFrontend_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_6_LoginView;
+            case 6:   //  votingFrontend.Converters.DateTimeConverter
+                userType = new global::votingFrontend.votingFrontend_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                userType.Activator = Activate_6_DateTimeConverter;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 7:   //  votingFrontend.Views.PartyView
+            case 7:   //  votingFrontend.Views.LoginView
                 userType = new global::votingFrontend.votingFrontend_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_7_PartyView;
+                userType.Activator = Activate_7_LoginView;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 8:   //  votingFrontend.Views.ReferendumView
+            case 8:   //  votingFrontend.Views.PartyView
                 userType = new global::votingFrontend.votingFrontend_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_8_ReferendumView;
+                userType.Activator = Activate_8_PartyView;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 9:   //  votingFrontend.Views.VoteSubmittedView
+            case 9:   //  votingFrontend.Views.ReferendumView
                 userType = new global::votingFrontend.votingFrontend_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_9_VoteSubmittedView;
+                userType.Activator = Activate_9_ReferendumView;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 10:   //  votingFrontend.Views.VoteSubmittedView
+                userType = new global::votingFrontend.votingFrontend_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_10_VoteSubmittedView;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;

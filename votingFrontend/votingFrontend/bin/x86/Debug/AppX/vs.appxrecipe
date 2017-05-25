@@ -31,13 +31,13 @@
     <AppXManifest Include="C:\Dev\votingassignment\votingFrontend\votingFrontend\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-05-22T09:51:15.360</Modified>
+      <Modified>2017-05-25T09:06:38.505</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Dev\votingassignment\votingFrontend\votingFrontend\bin\x86\Debug\votingFrontend.exe">
       <PackagePath>entrypoint\votingFrontend.exe</PackagePath>
-      <Modified>2017-05-22T09:51:14.213</Modified>
+      <Modified>2017-05-25T09:06:38.076</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\theda\.nuget\packages\Microsoft.CSharp\4.0.1\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -543,7 +543,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\votingassignment\votingFrontend\votingFrontend\bin\x86\Debug\votingFrontend.xr.xml">
       <PackagePath>votingFrontend.xr.xml</PackagePath>
-      <Modified>2017-05-22T09:15:20.142</Modified>
+      <Modified>2017-05-25T08:22:53.873</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -552,11 +552,11 @@
     <AppxPackagedFile Include="C:\Dev\votingassignment\votingFrontend\votingFrontend\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-05-22T09:51:15.021</Modified>
+      <Modified>2017-05-25T08:57:41.798</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\votingassignment\votingFrontend\votingFrontend\bin\x86\Debug\Core\votingFrontend.exe">
       <PackagePath>votingFrontend.exe</PackagePath>
-      <Modified>2017-05-22T09:51:15.349</Modified>
+      <Modified>2017-05-25T09:06:38.495</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

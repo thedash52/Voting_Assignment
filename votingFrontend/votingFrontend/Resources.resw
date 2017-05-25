@@ -123,11 +123,20 @@
   <data name="ElectoralID" xml:space="preserve">
     <value>Electoral ID#:</value>
   </data>
+  <data name="ElectoralIdPlaceHolder" xml:space="preserve">
+    <value>ABC123456</value>
+  </data>
   <data name="FirstName" xml:space="preserve">
     <value>First Name:</value>
   </data>
+  <data name="FirstNamePlaceHolder" xml:space="preserve">
+    <value>John</value>
+  </data>
   <data name="LastName" xml:space="preserve">
     <value>Last Name:</value>
+  </data>
+  <data name="LastNamePlaceHolder" xml:space="preserve">
+    <value>Doe</value>
   </data>
   <data name="LoginButton" xml:space="preserve">
     <value>Log In</value>

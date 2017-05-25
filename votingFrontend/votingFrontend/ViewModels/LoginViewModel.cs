@@ -3,7 +3,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
+using votingFrontend.Interfaces;
 using votingFrontend.Services;
+using votingFrontend.Views;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -28,13 +30,24 @@ namespace votingFrontend.ViewModels
         private string timeTillOpenText;
         private double timeTillOpen;
 
+        private string firstNamePlaceholder;
+        private string lastNamePlaceholder;
+        private string electoralIdPlaceholder;
+
+        private bool loggingIn;
+
         private ResourceLoader resource;
 
         private DateTime openDateTime = DateTime.Parse("22 May 2017 3:49PM");
         private DispatcherTimer countdown;
 
-        public LoginViewModel()
+        private RestService restAPI = new RestService();
+        private INavigationService navigation;
+
+        public LoginViewModel(INavigationService navigationService)
         {
+            this.navigation = navigationService;
+
             resource = new ResourceLoader();
             TitleText = resource.GetString("LoginTitle");
             FirstNameText = resource.GetString("FirstName");
@@ -43,6 +56,12 @@ namespace votingFrontend.ViewModels
             ElectoralIdText = resource.GetString("ElectoralID");
             LoginText = resource.GetString("LoginButton");
             LoginCommand = new CommandService(Login);
+
+            FirstNamePlaceHolder = resource.GetString("FirstNamePlaceHolder");
+            LastNamePlaceHolder = resource.GetString("LastNamePlaceHolder");
+            ElectoralIdPlaceHolder = resource.GetString("ElectoralIdPlaceHolder");
+
+            LoggingIn = false;
 
             DoB = DateTime.Now;
 
@@ -264,8 +283,66 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        public string FirstNamePlaceHolder
+        {
+            get
+            {
+                return this.firstNamePlaceholder;
+            }
+
+            set
+            {
+                this.firstNamePlaceholder = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string LastNamePlaceHolder
+        {
+            get
+            {
+                return this.lastNamePlaceholder;
+            }
+
+            set
+            {
+                this.lastNamePlaceholder = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ElectoralIdPlaceHolder
+        {
+            get
+            {
+                return this.electoralIdPlaceholder;
+            }
+
+            set
+            {
+                this.electoralIdPlaceholder = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool LoggingIn
+        {
+            get
+            {
+                return this.loggingIn;
+            }
+
+            set
+            {
+                this.loggingIn = value;
+                OnPropertyChanged();
+            }
+        }
+
         internal async void Login(object sender)
         {
+            LoggingIn = true;
+
             if (FirstName == null || LastName == null || ElectoralId == null)
             {
                 ContentDialog emptyEntry = new ContentDialog()
@@ -276,12 +353,58 @@ namespace votingFrontend.ViewModels
                 };
 
                 await emptyEntry.ShowAsync();
+                LoggingIn = false;
                 return;
             }
 
             MatchCollection firstNameResult = Regex.Matches(FirstName, @"^[a-zA-Z]+$");
             MatchCollection lastNameResult = Regex.Matches(LastName, @"^[a-zA-Z]+$");
-            MatchCollection electoralIdResult = Regex.Matches(ElectoralId, @"^[A-Z]{3}[0-9]+$");
+            MatchCollection electoralIdResult = Regex.Matches(ElectoralId, @"^[A-Z]{3}[0-9]{6}$");
+
+            if (firstNameResult.Count == 0)
+            {
+                ContentDialog invalidEntry = new ContentDialog()
+                {
+                    Title = "Invalid Entry",
+                    Content = FirstName + " is not a valid name, Please enter your correct first name",
+                    PrimaryButtonText = "OK"
+                };
+
+                await invalidEntry.ShowAsync();
+                LoggingIn = false;
+                return;
+            }
+
+            if (lastNameResult.Count == 0)
+            {
+                ContentDialog invalidEntry = new ContentDialog()
+                {
+                    Title = "Invalid Entry",
+                    Content = LastName + " is not a valid name, Please enter your correct last name",
+                    PrimaryButtonText = "OK"
+                };
+
+                await invalidEntry.ShowAsync();
+                LoggingIn = false;
+                return;
+            }
+
+            DateTime validationDate = DateTime.Now;
+            validationDate.AddYears(-18);
+
+            if (DoB.Date < validationDate)
+            {
+                ContentDialog invalidEntry = new ContentDialog()
+                {
+                    Title = "Invalid Entry",
+                    Content = "Only 18 years and older are allowed to vote",
+                    PrimaryButtonText = "OK"
+                };
+
+                await invalidEntry.ShowAsync();
+                LoggingIn = false;
+                return;
+            }
 
             if (electoralIdResult.Count == 0)
             {
@@ -293,7 +416,29 @@ namespace votingFrontend.ViewModels
                 };
 
                 await invalidEntry.ShowAsync();
+                LoggingIn = false;
                 return;
+            }
+
+            bool loggedIn = await restAPI.Login(FirstName, LastName, DoB, ElectoralId);
+
+            if (loggedIn)
+            {
+                LoggingIn = false;
+
+                this.navigation.Navigate(typeof(ElectorateView));
+            }
+            else
+            {
+                ContentDialog invalidLogin = new ContentDialog()
+                {
+                    Title = "Incorrect Login",
+                    Content = "Incorrect Login Details",
+                    PrimaryButtonText = "OK"
+                };
+
+                await invalidLogin.ShowAsync();
+                LoggingIn = false;
             }
         }
 

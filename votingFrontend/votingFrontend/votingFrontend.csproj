@@ -97,14 +97,17 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\CountdownConverter.cs" />
+    <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="DatabaseTables\CandidateTable.cs" />
     <Compile Include="DatabaseTables\ElectorateTable.cs" />
     <Compile Include="DatabaseTables\PartyTable.cs" />
     <Compile Include="DatabaseTables\ReferendumTable.cs" />
     <Compile Include="DatabaseTables\UserVoteTable.cs" />
+    <Compile Include="Interfaces\INavigationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CommandService.cs" />
     <Compile Include="Services\DatabaseService.cs" />
+    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\RestService.cs" />
     <Compile Include="ViewModels\CandidateViewModel.cs" />
     <Compile Include="ViewModels\ElectorateViewModel.cs" />
