@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using votingFrontend.Services;
 using votingFrontend.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -23,9 +24,12 @@ namespace votingFrontend.Views
     /// </summary>
     public sealed partial class LoginView : Page
     {
-        private LoginViewModel loginVM = new LoginViewModel();
+        private LoginViewModel loginVM;
+
         public LoginView()
         {
+            loginVM = new LoginViewModel(new NavigationService());
+
             this.InitializeComponent();
             this.DataContext = loginVM;
         }
