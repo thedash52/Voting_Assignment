@@ -126,6 +126,12 @@
   <data name="ElectoralIdPlaceHolder" xml:space="preserve">
     <value>ABC123456</value>
   </data>
+  <data name="ElectorateSelect" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="ElectorateTitle" xml:space="preserve">
+    <value>Choose Your Electorate</value>
+  </data>
   <data name="FirstName" xml:space="preserve">
     <value>First Name:</value>
   </data>

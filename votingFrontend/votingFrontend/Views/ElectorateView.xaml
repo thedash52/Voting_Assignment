@@ -5,9 +5,53 @@
     xmlns:local="using:votingFrontend.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:votingFrontend.Converters"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <converters:CountdownConverter x:Key="CountdownConverter"/>
+        <converters:DateTimeConverter x:Key="DateTimeConverter"/>
 
+        <DataTemplate x:Name="Normal" x:Key="Normal">
+            <TextBlock Text="{Binding Name}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Name="Detailed" x:Key="Detailed">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="{Binding Name}" Grid.Column="0" Grid.Row="0" />
+                <Rectangle HorizontalAlignment="Stretch" Fill="Gray" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"/>
+
+                <TextBlock Text="{Binding Detail}" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"/>
+
+                <Button Content="{Binding SelectButton}" Command="{Binding SelectCommand}" Grid.Column="1" Grid.Row="3"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{Binding Title}" FontSize="65" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+
+        <ListView ItemTemplate="{StaticResource Normal}" ItemsSource="{Binding Electorates}" SelectedItem="{Binding SelectedElectorate}" SelectionChanged="ListView_SelectionChanged" Grid.Column="0" Grid.Row="1"/>
     </Grid>
 </Page>

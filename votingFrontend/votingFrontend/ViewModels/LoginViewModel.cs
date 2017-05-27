@@ -462,6 +462,5 @@ namespace votingFrontend.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
     }
 }
