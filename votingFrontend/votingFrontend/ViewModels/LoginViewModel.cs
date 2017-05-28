@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
+using votingFrontend.DatabaseTables;
 using votingFrontend.Interfaces;
 using votingFrontend.Services;
 using votingFrontend.Views;
@@ -42,6 +43,7 @@ namespace votingFrontend.ViewModels
         private DispatcherTimer countdown;
 
         private RestService restAPI = new RestService();
+        private DatabaseService db = new DatabaseService();
         private INavigationService navigation;
 
         public LoginViewModel(INavigationService navigationService)
@@ -66,11 +68,7 @@ namespace votingFrontend.ViewModels
             DoB = DateTime.Now;
             DoB = DoB.AddYears(-18);
 
-            if (DateTime.Now >= openDateTime)
-            {
-                VotingClosed = Visibility.Collapsed;
-            }
-            else
+            if (DateTime.Now <= openDateTime)
             {
                 VotingClosed = Visibility.Visible;
 
@@ -84,6 +82,16 @@ namespace votingFrontend.ViewModels
                 TimeTillOpen = (openDateTime - DateTime.Now).TotalSeconds;
 
                 countdown.Start();
+            }
+            else if (DateTime.Now >= (openDateTime.AddHours(9).AddMinutes(50)))
+            {
+                VotingClosed = Visibility.Visible;
+
+                TimeTillOpenText = resource.GetString("VotingFinished");
+            }
+            else
+            {
+                VotingClosed = Visibility.Collapsed;
             }
         }
 
@@ -127,6 +135,7 @@ namespace votingFrontend.ViewModels
             set
             {
                 this.firstNameText = value;
+                OnPropertyChanged();
             }
         }
 
@@ -421,10 +430,31 @@ namespace votingFrontend.ViewModels
                 return;
             }
 
+            UserVoteTable user = db.CheckVoter(FirstName, LastName, DoB, ElectoralId);
+
+            if (user != null)
+            {
+                if (user.VoteSaved)
+                {
+                    this.navigation.Navigate(typeof(VoteSubmittedView));
+                }
+            }
+
             bool loggedIn = await restAPI.Login(FirstName, LastName, DoB, ElectoralId);
 
             if (loggedIn)
             {
+                UserVoteTable newUser = new UserVoteTable()
+                {
+                    FirstName = FirstName,
+                    LastName = LastName,
+                    DoB = DoB,
+                    ElectoralId = ElectoralId,
+
+                };
+
+                db.VoterLoggedIn(newUser);
+
                 LoggingIn = false;
 
                 this.navigation.Navigate(typeof(ElectorateView));

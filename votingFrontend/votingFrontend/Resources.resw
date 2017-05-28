@@ -153,4 +153,7 @@
   <data name="TimeTillOpen" xml:space="preserve">
     <value>Voting Opens in:</value>
   </data>
+  <data name="VotingFinished" xml:space="preserve">
+    <value>Voting has Finished for 2017!</value>
+  </data>
 </root>

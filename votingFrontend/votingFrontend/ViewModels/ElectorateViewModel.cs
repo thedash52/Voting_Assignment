@@ -17,7 +17,7 @@ namespace votingFrontend.ViewModels
     public class ElectorateViewModel : INotifyPropertyChanged
     {
         private string title;
-        private ObservableCollection<ElectorateTable> electorates;
+        private List<ElectorateTable> electorates;
         private string selectButton;
 
         private ICommand selectCommand;
@@ -33,6 +33,13 @@ namespace votingFrontend.ViewModels
             this.resource = new ResourceLoader();
             Title = resource.GetString("ElectorateTitle");
             SelectButton = resource.GetString("ElectorateSelect");
+
+            Electorates = new List<ElectorateTable>()
+            {
+                new ElectorateTable() { Name = "Palmerston North", Detail = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a sollicitudin urna. Sed sollicitudin suscipit est, eget euismod tellus lobortis id. Sed maximus cursus pellentesque. Morbi quis dolor pretium, sodales orci quis, dignissim neque. Proin ante tellus, lobortis non dui auctor, tincidunt mollis enim. Donec eget congue nisi, a tincidunt felis. Mauris feugiat, orci in lacinia consequat, lorem dui cursus odio, iaculis rutrum velit nisl in nisl. Fusce aliquet lacus vitae turpis scelerisque, a fermentum ex luctus. Etiam eleifend dolor vel ex sodales imperdiet. Praesent non nunc in orci sollicitudin imperdiet.", Image = "/Assets/placeholder120x120.png" },
+                new ElectorateTable() { Name = "Rangitikei", Detail = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a sollicitudin urna. Sed sollicitudin suscipit est, eget euismod tellus lobortis id. Sed maximus cursus pellentesque. Morbi quis dolor pretium, sodales orci quis, dignissim neque. Proin ante tellus, lobortis non dui auctor, tincidunt mollis enim. Donec eget congue nisi, a tincidunt felis. Mauris feugiat, orci in lacinia consequat, lorem dui cursus odio, iaculis rutrum velit nisl in nisl. Fusce aliquet lacus vitae turpis scelerisque, a fermentum ex luctus. Etiam eleifend dolor vel ex sodales imperdiet. Praesent non nunc in orci sollicitudin imperdiet.", Image = "/Assets/placeholder120x120.png" },
+                new ElectorateTable() { Name = "Te Tai Hauauru", Detail = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a sollicitudin urna. Sed sollicitudin suscipit est, eget euismod tellus lobortis id. Sed maximus cursus pellentesque. Morbi quis dolor pretium, sodales orci quis, dignissim neque. Proin ante tellus, lobortis non dui auctor, tincidunt mollis enim. Donec eget congue nisi, a tincidunt felis. Mauris feugiat, orci in lacinia consequat, lorem dui cursus odio, iaculis rutrum velit nisl in nisl. Fusce aliquet lacus vitae turpis scelerisque, a fermentum ex luctus. Etiam eleifend dolor vel ex sodales imperdiet. Praesent non nunc in orci sollicitudin imperdiet.", Image = "/Assets/placeholder120x120.png" }
+            };
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -51,7 +58,7 @@ namespace votingFrontend.ViewModels
             }
         }
 
-        public ObservableCollection<ElectorateTable> Electorates
+        public List<ElectorateTable> Electorates
         {
             get
             {

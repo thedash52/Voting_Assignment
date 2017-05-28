@@ -18,7 +18,7 @@ namespace votingFrontend.Services
         {
             string first = "Bob";
             string last = "Smith";
-            DateTime birth = DateTime.Parse("10/08/1993");
+            DateTime birth = DateTime.Parse("1993-08-10");
             string id = "ABC123456";
 
             if (first != firstName || last != lastName || birth.Date != dob.Date || id != electoralId)

@@ -24,5 +24,15 @@ namespace votingFrontend.Services
             db.CreateTable<PartyTable>();
             db.CreateTable<ReferendumTable>();
         }
+
+        internal void VoterLoggedIn(UserVoteTable user)
+        {
+            
+        }
+
+        internal UserVoteTable CheckVoter(string firstName, string lastName, DateTime doB, string electoralId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
