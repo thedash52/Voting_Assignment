@@ -108,6 +108,7 @@
     <Compile Include="Services\CommandService.cs" />
     <Compile Include="Services\DatabaseService.cs" />
     <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Services\NetworkConnection.cs" />
     <Compile Include="Services\RestService.cs" />
     <Compile Include="ViewModels\CandidateViewModel.cs" />
     <Compile Include="ViewModels\ElectorateViewModel.cs" />
@@ -186,6 +187,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.19.2">
+      <Name>SQLite for Universal Windows Platform</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

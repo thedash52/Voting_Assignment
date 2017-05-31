@@ -1,5 +1,5 @@
 .vs/
-votingFrontend/votingFrontend/obj/*
-votingFrontend/votingFrontend/bin/*
+votingFrontend/votingFrontend/bin
+votingFrontend/votingFrontend/obj
 aspnet-core/src/votingBackend.Web.Host/App_Data/Logs/
 aspnet-core/src/votingBackend.Web.Mvc/App_Data/Logs/

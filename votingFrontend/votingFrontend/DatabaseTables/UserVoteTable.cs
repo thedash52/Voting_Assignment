@@ -23,8 +23,6 @@ namespace votingFrontend.DatabaseTables
 
         public string ElectoralId { get; set; }
 
-        public bool VoteSaved { get; set; }
-
         public int ElectorateId { get; set; }
 
         public int CandidateId { get; set; }
@@ -32,5 +30,9 @@ namespace votingFrontend.DatabaseTables
         public int PartyId { get; set; }
 
         public bool Referendum { get; set; }
+
+        public bool Active { get; set; }
+
+        public bool VoteSaved { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using votingFrontend.DatabaseTables;
 using votingFrontend.Interfaces;
@@ -34,6 +36,7 @@ namespace votingFrontend.ViewModels
         private string firstNamePlaceholder;
         private string lastNamePlaceholder;
         private string electoralIdPlaceholder;
+        private string connectionText;
 
         private bool loggingIn;
 
@@ -62,6 +65,7 @@ namespace votingFrontend.ViewModels
             FirstNamePlaceHolder = resource.GetString("FirstNamePlaceHolder");
             LastNamePlaceHolder = resource.GetString("LastNamePlaceHolder");
             ElectoralIdPlaceHolder = resource.GetString("ElectoralIdPlaceHolder");
+            ConnectionText = resource.GetString("ConnectionText");
 
             LoggingIn = false;
 
@@ -349,6 +353,20 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        public string ConnectionText
+        {
+            get
+            {
+                return this.connectionText;
+            }
+
+            set
+            {
+                this.connectionText = value;
+                OnPropertyChanged();
+            }
+        }
+
         internal async void Login(object sender)
         {
             LoggingIn = true;
@@ -430,6 +448,8 @@ namespace votingFrontend.ViewModels
                 return;
             }
 
+            await UpdateVoteData();
+
             UserVoteTable user = db.CheckVoter(FirstName, LastName, DoB, ElectoralId);
 
             if (user != null)
@@ -437,6 +457,25 @@ namespace votingFrontend.ViewModels
                 if (user.VoteSaved)
                 {
                     this.navigation.Navigate(typeof(VoteSubmittedView));
+                }
+
+                user = db.SwitchActive(user);
+
+                if (user.ElectorateId == default(int))
+                {
+                    this.navigation.Navigate(typeof(ElectorateView));
+                }
+                else if (user.CandidateId == default(int))
+                {
+                    this.navigation.Navigate(typeof(CandidateView));
+                }
+                else if (user.PartyId == default(int))
+                {
+                    this.navigation.Navigate(typeof(PartyView));
+                }
+                else
+                {
+                    this.navigation.Navigate(typeof(ReferendumView));
                 }
             }
 
@@ -450,7 +489,7 @@ namespace votingFrontend.ViewModels
                     LastName = LastName,
                     DoB = DoB,
                     ElectoralId = ElectoralId,
-
+                    Active = true
                 };
 
                 db.VoterLoggedIn(newUser);
@@ -471,6 +510,24 @@ namespace votingFrontend.ViewModels
                 await invalidLogin.ShowAsync();
                 LoggingIn = false;
             }
+        }
+
+        private async Task UpdateVoteData()
+        {
+            List<ElectorateTable> electorates = new List<ElectorateTable>();
+            List<CandidateTable> candidates = new List<CandidateTable>();
+            List<PartyTable> parties = new List<PartyTable>();
+            List<ReferendumTable> referendum = new List<ReferendumTable>();
+
+            electorates = await restAPI.GetElectorates();
+            candidates = await restAPI.GetCandidates();
+            parties = await restAPI.GetParties();
+            referendum = await restAPI.GetReferendum();
+
+            await db.UpdateElectorates(electorates);
+            await db.UpdateCandidates(candidates);
+            await db.UpdateParties(parties);
+            await db.UpdateReferendum(referendum);
         }
 
         private void Countdown_Tick(object sender, object e)

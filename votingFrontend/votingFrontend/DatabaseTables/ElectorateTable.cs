@@ -13,6 +13,8 @@ namespace votingFrontend.DatabaseTables
         [PrimaryKey]
         public int Id { get; set; }
 
+        public int ServerId { get; set; }
+
         public string Name { get; set; }
 
         public string Detail { get; set; }
