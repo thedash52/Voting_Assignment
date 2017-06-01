@@ -42,7 +42,7 @@ namespace votingFrontend.ViewModels
 
         private ResourceLoader resource;
 
-        private DateTime openDateTime = DateTime.Parse("22 May 2017 3:49PM");
+        private DateTime openDateTime = DateTime.Parse("1 June 2017 3:49PM");
         private DispatcherTimer countdown;
 
         private RestService restAPI = new RestService();
@@ -457,9 +457,13 @@ namespace votingFrontend.ViewModels
                 if (user.VoteSaved)
                 {
                     this.navigation.Navigate(typeof(VoteSubmittedView));
+                    return;
                 }
 
-                user = db.SwitchActive(user);
+                if (!user.Active)
+                {
+                    user = db.SwitchActive(user);
+                }
 
                 if (user.ElectorateId == default(int))
                 {
@@ -477,6 +481,8 @@ namespace votingFrontend.ViewModels
                 {
                     this.navigation.Navigate(typeof(ReferendumView));
                 }
+
+                return;
             }
 
             bool loggedIn = await restAPI.Login(FirstName, LastName, DoB, ElectoralId);
@@ -487,7 +493,7 @@ namespace votingFrontend.ViewModels
                 {
                     FirstName = FirstName,
                     LastName = LastName,
-                    DoB = DoB,
+                    DoB = DoB.Date.ToString(),
                     ElectoralId = ElectoralId,
                     Active = true
                 };

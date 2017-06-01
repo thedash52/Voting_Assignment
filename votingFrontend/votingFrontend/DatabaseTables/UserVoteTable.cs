@@ -19,7 +19,7 @@ namespace votingFrontend.DatabaseTables
 
         public string LastName { get; set; }
 
-        public DateTime DoB { get; set; }
+        public string DoB { get; set; }
 
         public string ElectoralId { get; set; }
 

@@ -27,15 +27,16 @@ namespace votingFrontend.Services
 
             set
             {
+                this.requiresInternet = value;
                 var profile = NetworkInformation.GetInternetConnectionProfile();
 
                 if (profile != null && profile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
                 {
-                    SetActive(true);
+                    SetActive(value);
                 }
                 else
                 {
-                    SetActive(false);
+                    SetActive(!value);
                 }
             }
         }

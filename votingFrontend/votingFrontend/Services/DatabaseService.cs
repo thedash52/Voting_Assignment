@@ -27,13 +27,15 @@ namespace votingFrontend.Services
 
         internal void VoterLoggedIn(UserVoteTable user)
         {
+            db.Query<UserVoteTable>("UPDATE UserVoteTable SET Active = 0");
+
             db.Insert(user);
         }
 
         internal UserVoteTable CheckVoter(string firstName, string lastName, DateTime doB, string electoralId)
         {
             List<UserVoteTable> userDB = new List<UserVoteTable>();
-            userDB = db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE FirstName = " + firstName + " AND LastName = " + lastName + " AND DoB = " + doB.Date + " AND ElectoralId = " + electoralId);
+            userDB = db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE FirstName = '" + firstName + "' AND LastName = '" + lastName + "' AND DoB LIKE '" + doB.Date.ToString("d") + "%' AND ElectoralId = '" + electoralId + "'");
 
             if (userDB.Count != 1)
             {
@@ -43,9 +45,17 @@ namespace votingFrontend.Services
             return userDB[0];
         }
 
+        internal List<ElectorateTable> GetElectorates()
+        {
+            List<ElectorateTable> electorates = new List<ElectorateTable>();
+            electorates = db.Query<ElectorateTable>("SELECT * FROM ElectorateTable");
+
+            return electorates;
+        }
+
         internal UserVoteTable SwitchActive(UserVoteTable user)
         {
-            db.Query<UserVoteTable>("UPDATE VoteUserTable SET Active = " + !user.Active + " WHERE Id = " + user.Id);
+            db.Query<UserVoteTable>("UPDATE UserVoteTable SET Active = '" + !user.Active + "' WHERE Id = '" + user.Id + "'");
 
             return user;
         }
@@ -93,13 +103,33 @@ namespace votingFrontend.Services
                         db.Update(single);
                     }
                 }
-                else if (dbreferendum.Count == -1)
+                else if (dbreferendum.Count == 0)
                 {
                     db.Insert(item);
                 }
             }
 
             return Task.FromResult(-1);
+        }
+
+        internal int AddElectorateVote(ElectorateTable sender)
+        {
+            List<UserVoteTable> users = new List<UserVoteTable>();
+            users = db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
+
+            if (users.Count != 1)
+            {
+                return -1;
+            }
+
+            UserVoteTable user = new UserVoteTable();
+            user = users[0];
+            user.ElectorateId = sender.Id;
+
+
+            db.Update(user);
+
+            return 1;
         }
 
         internal Task UpdateParties(List<PartyTable> parties)
@@ -145,7 +175,7 @@ namespace votingFrontend.Services
                         db.Update(single);
                     }
                 }
-                else if (dbParties.Count == -1)
+                else if (dbParties.Count == 0)
                 {
                     db.Insert(item);
                 }
@@ -197,7 +227,7 @@ namespace votingFrontend.Services
                         db.Insert(single);
                     }
                 }
-                else if (dbCandidates.Count == -1)
+                else if (dbCandidates.Count == 0)
                 {
                     db.Insert(item);
                 }
@@ -249,7 +279,7 @@ namespace votingFrontend.Services
                         db.Update(single);
                     }
                 }
-                else if (dbelectorates.Count == -1)
+                else if (dbelectorates.Count == 0)
                 {
                     db.Insert(item);
                 }

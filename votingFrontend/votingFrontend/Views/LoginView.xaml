@@ -9,38 +9,38 @@
     xmlns:converters="using:votingFrontend.Converters"
     mc:Ignorable="d">
 
-    <VisualStateManager.VisualStateGroups>
-        <VisualStateGroup>
-            <VisualState x:Name="OfflineState">
-                <VisualState.StateTriggers>
-                    <service:NetworkConnection RequiresInternet="False"/>
-                </VisualState.StateTriggers>
-
-                <VisualState.Setters>
-                    <Setter Target="connectionPanel.Visibility" Value="true"/>
-                    <Setter Target="connectionText.Visibility" Value="true"/>
-                </VisualState.Setters>
-            </VisualState>
-
-            <VisualState x:Name="ConnectedState">
-                <VisualState.StateTriggers>
-                    <service:NetworkConnection RequiresInternet="True"/>
-                </VisualState.StateTriggers>
-
-                <VisualState.Setters>
-                    <Setter Target="connectionPanel.Visibility" Value="false"/>
-                    <Setter Target="connectionText.Visibility" Value="false"/>
-                </VisualState.Setters>
-            </VisualState>
-        </VisualStateGroup>
-    </VisualStateManager.VisualStateGroups>
-
     <Page.Resources>
         <converters:CountdownConverter x:Key="CountdownConverter"/>
         <converters:DateTimeConverter x:Key="DateTimeConverter"/>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="OfflineState">
+                    <VisualState.StateTriggers>
+                        <service:NetworkConnection RequiresInternet="False"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="connectionPanel.Visibility" Value="Visible"/>
+                        <Setter Target="connectionText.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="ConnectedState">
+                    <VisualState.StateTriggers>
+                        <service:NetworkConnection RequiresInternet="True"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="connectionPanel.Visibility" Value="Collapsed"/>
+                        <Setter Target="connectionText.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.2*"/>
             <ColumnDefinition Width="*"/>

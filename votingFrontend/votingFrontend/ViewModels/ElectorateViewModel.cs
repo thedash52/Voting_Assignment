@@ -10,7 +10,9 @@ using System.Windows.Input;
 using votingFrontend.DatabaseTables;
 using votingFrontend.Interfaces;
 using votingFrontend.Services;
+using votingFrontend.Views;
 using Windows.ApplicationModel.Resources;
+using Windows.UI.Xaml.Controls;
 
 namespace votingFrontend.ViewModels
 {
@@ -20,11 +22,14 @@ namespace votingFrontend.ViewModels
         private List<ElectorateTable> electorates;
         private string selectButton;
 
+        private string connectionText;
+
         private ICommand selectCommand;
         private INavigationService navigation;
 
         private ResourceLoader resource;
         private RestService restAPI = new RestService();
+        private DatabaseService db = new DatabaseService();
 
         public ElectorateViewModel(INavigationService navigationService)
         {
@@ -33,13 +38,11 @@ namespace votingFrontend.ViewModels
             this.resource = new ResourceLoader();
             Title = resource.GetString("ElectorateTitle");
             SelectButton = resource.GetString("ElectorateSelect");
+            SelectCommand = new CommandService(Next);
 
-            Electorates = new List<ElectorateTable>()
-            {
-                new ElectorateTable() { Name = "Palmerston North", Detail = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a sollicitudin urna. Sed sollicitudin suscipit est, eget euismod tellus lobortis id. Sed maximus cursus pellentesque. Morbi quis dolor pretium, sodales orci quis, dignissim neque. Proin ante tellus, lobortis non dui auctor, tincidunt mollis enim. Donec eget congue nisi, a tincidunt felis. Mauris feugiat, orci in lacinia consequat, lorem dui cursus odio, iaculis rutrum velit nisl in nisl. Fusce aliquet lacus vitae turpis scelerisque, a fermentum ex luctus. Etiam eleifend dolor vel ex sodales imperdiet. Praesent non nunc in orci sollicitudin imperdiet.", Image = "/Assets/placeholder120x120.png" },
-                new ElectorateTable() { Name = "Rangitikei", Detail = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a sollicitudin urna. Sed sollicitudin suscipit est, eget euismod tellus lobortis id. Sed maximus cursus pellentesque. Morbi quis dolor pretium, sodales orci quis, dignissim neque. Proin ante tellus, lobortis non dui auctor, tincidunt mollis enim. Donec eget congue nisi, a tincidunt felis. Mauris feugiat, orci in lacinia consequat, lorem dui cursus odio, iaculis rutrum velit nisl in nisl. Fusce aliquet lacus vitae turpis scelerisque, a fermentum ex luctus. Etiam eleifend dolor vel ex sodales imperdiet. Praesent non nunc in orci sollicitudin imperdiet.", Image = "/Assets/placeholder120x120.png" },
-                new ElectorateTable() { Name = "Te Tai Hauauru", Detail = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a sollicitudin urna. Sed sollicitudin suscipit est, eget euismod tellus lobortis id. Sed maximus cursus pellentesque. Morbi quis dolor pretium, sodales orci quis, dignissim neque. Proin ante tellus, lobortis non dui auctor, tincidunt mollis enim. Donec eget congue nisi, a tincidunt felis. Mauris feugiat, orci in lacinia consequat, lorem dui cursus odio, iaculis rutrum velit nisl in nisl. Fusce aliquet lacus vitae turpis scelerisque, a fermentum ex luctus. Etiam eleifend dolor vel ex sodales imperdiet. Praesent non nunc in orci sollicitudin imperdiet.", Image = "/Assets/placeholder120x120.png" }
-            };
+            ConnectionText = resource.GetString("ConnectionText");
+
+            Electorates = db.GetElectorates();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -97,6 +100,42 @@ namespace votingFrontend.ViewModels
             {
                 this.selectCommand = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public string ConnectionText
+        {
+            get
+            {
+                return this.connectionText;
+            }
+
+            set
+            {
+                this.connectionText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        internal async void Next(object sender)
+        {
+            int result = db.AddElectorateVote((ElectorateTable)sender);
+
+            if (result == -1)
+            {
+                ContentDialog error = new ContentDialog()
+                {
+                    Title = "Error Getting User",
+                    Content = "Unable to get current user, returning to login",
+                    PrimaryButtonText = "OK"
+                };
+
+                await error.ShowAsync();
+                this.navigation.Navigate(typeof(LoginView));
+            }
+            else
+            {
+                this.navigation.Navigate(typeof(CandidateView));
             }
         }
 

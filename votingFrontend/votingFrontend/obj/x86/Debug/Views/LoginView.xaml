@@ -5,6 +5,7 @@
     xmlns:local="using:votingFrontend.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:service="using:votingFrontend.Services"
     xmlns:converters="using:votingFrontend.Converters"
     mc:Ignorable="d">
 
@@ -14,6 +15,32 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:ConnectionId='1' x:Name="OfflineState">
+                    <VisualState.StateTriggers>
+                        <service:NetworkConnection RequiresInternet="False"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="connectionPanel.Visibility" Value="Visible"/>
+                        <Setter Target="connectionText.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:ConnectionId='2' x:Name="ConnectedState">
+                    <VisualState.StateTriggers>
+                        <service:NetworkConnection RequiresInternet="True"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="connectionPanel.Visibility" Value="Collapsed"/>
+                        <Setter Target="connectionText.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.2*"/>
             <ColumnDefinition Width="*"/>
@@ -47,7 +74,7 @@
         <TextBlock Text="{Binding ElectoralIdText}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="4"/>
         <TextBox Text="{Binding ElectoralId, Mode=TwoWay}" Grid.Column="3" Grid.Row="4" VerticalAlignment="Center" PlaceholderText="{Binding ElectoralIdPlaceHolder}"/>
 
-        <Button x:ConnectionId='1' x:Name="btnLogin" Content="{Binding LoginText}" Command="{Binding LoginCommand}" FontSize="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="6" />
+        <Button x:ConnectionId='3' x:Name="btnLogin" Content="{Binding LoginText}" Command="{Binding LoginCommand}" FontSize="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="6" />
 
         <StackPanel Background="Black" Opacity="0.6" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="8" Visibility="{Binding VotingClosed}"/>
         <TextBlock Text="{Binding TimeTillOpenText}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="50" TextAlignment="Center" Foreground="White" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="4" Visibility="{Binding VotingClosed}"/>
@@ -55,6 +82,9 @@
 
         <StackPanel Background="Black" Opacity="0.6" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="8" Visibility="{Binding LoggingIn}"/>
         <ProgressRing IsActive="{Binding LoggingIn}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Grid.RowSpan="4"/>
+
+        <StackPanel x:ConnectionId='4' x:Name="connectionPanel" Background="Black" Opacity="0.6" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="8"/>
+        <TextBlock x:ConnectionId='5' x:Name="connectionText" Text="{Binding ConnectionText}" FontSize="50" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Foreground="White" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="8"/>
     </Grid>
 </Page>
 
