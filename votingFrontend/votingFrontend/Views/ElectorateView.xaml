@@ -81,9 +81,9 @@
 
         <TextBlock Text="{Binding Title}" FontSize="65" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
 
-        <ListView x:Name="listView" ItemTemplate="{StaticResource Normal}" ItemsSource="{Binding Electorates}" SelectedItem="{Binding SelectedElectorate}" SelectionChanged="ListView_SelectionChanged" Grid.Column="0" Grid.Row="1"/>
+        <ListView x:Name="listView" ItemTemplate="{StaticResource Normal}" ItemsSource="{Binding Electorates}" SelectionChanged="ListView_SelectionChanged" Grid.Column="0" Grid.Row="1"/>
 
-        <StackPanel x:Name="connectionPanel" Background="Black" Opacity="0.6" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="8"/>
-        <TextBlock x:Name="connectionText" Text="{Binding ConnectionText}" FontSize="50" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Foreground="White" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="8"/>
+        <StackPanel x:Name="connectionPanel" Background="Black" Opacity="0.6" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
+        <TextBlock x:Name="connectionText" Text="{Binding ConnectionText}" FontSize="50" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Foreground="White" Grid.Column="0"  Grid.Row="0" Grid.RowSpan="2"/>
     </Grid>
 </Page>

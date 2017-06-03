@@ -1,4 +1,5 @@
-﻿using SQLite.Net;
+﻿using Newtonsoft.Json;
+using SQLite.Net;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,6 +44,14 @@ namespace votingFrontend.Services
             }
 
             return userDB[0];
+        }
+
+        internal List<CandidateTable> GetCandidates()
+        {
+            List<CandidateTable> candidates = new List<CandidateTable>();
+            candidates = db.Query<CandidateTable>("SELECT * FROM CandidateTable");
+
+            return candidates;
         }
 
         internal List<ElectorateTable> GetElectorates()
@@ -112,6 +121,34 @@ namespace votingFrontend.Services
             return Task.FromResult(-1);
         }
 
+        internal int AddCandidateVote(List<CandidateTable> sender)
+        {
+            List<UserVoteTable> users = new List<UserVoteTable>();
+            users = db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
+
+            if (users.Count != 1)
+            {
+                return -1;
+            }
+
+            List<int> choosenCandidates = new List<int>();
+
+            foreach (CandidateTable item in sender)
+            {
+                choosenCandidates.Add(item.Id);
+            }
+
+            string json = JsonConvert.SerializeObject(choosenCandidates);
+
+            UserVoteTable user = new UserVoteTable();
+            user = users[0];
+            user.CandidateIds = json;
+
+            db.Update(user);
+
+            return 1;
+        }
+
         internal int AddElectorateVote(ElectorateTable sender)
         {
             List<UserVoteTable> users = new List<UserVoteTable>();
@@ -125,7 +162,6 @@ namespace votingFrontend.Services
             UserVoteTable user = new UserVoteTable();
             user = users[0];
             user.ElectorateId = sender.Id;
-
 
             db.Update(user);
 

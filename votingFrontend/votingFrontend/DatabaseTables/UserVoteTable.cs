@@ -25,7 +25,7 @@ namespace votingFrontend.DatabaseTables
 
         public int ElectorateId { get; set; }
 
-        public int CandidateId { get; set; }
+        public string CandidateIds { get; set; }
 
         public int PartyId { get; set; }
 

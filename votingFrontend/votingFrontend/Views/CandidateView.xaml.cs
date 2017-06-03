@@ -29,5 +29,20 @@ namespace votingFrontend.Views
             this.InitializeComponent();
             this.DataContext = candidateVM;
         }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (var item in e.AddedItems)
+            {
+                ListViewItem lvi = (sender as ListView).ContainerFromItem(item) as ListViewItem;
+                lvi.ContentTemplate = (DataTemplate)this.Resources["Detailed"];
+            }
+
+            foreach (var item in e.RemovedItems)
+            {
+                ListViewItem lvi = (sender as ListView).ContainerFromItem(item) as ListViewItem;
+                lvi.ContentTemplate = (DataTemplate)this.Resources["Normal"];
+            }
+        }
     }
 }
