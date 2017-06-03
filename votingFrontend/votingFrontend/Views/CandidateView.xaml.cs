@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using votingFrontend.Services;
 using votingFrontend.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -23,11 +24,15 @@ namespace votingFrontend.Views
     /// </summary>
     public sealed partial class CandidateView : Page
     {
-        private CandidateViewModel candidateVM = new CandidateViewModel();
+        private CandidateViewModel candidateVM;
         public CandidateView()
         {
+            candidateVM = new CandidateViewModel(new NavigationService());
+
             this.InitializeComponent();
             this.DataContext = candidateVM;
+
+            
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -43,6 +48,16 @@ namespace votingFrontend.Views
                 ListViewItem lvi = (sender as ListView).ContainerFromItem(item) as ListViewItem;
                 lvi.ContentTemplate = (DataTemplate)this.Resources["Normal"];
             }
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            candidateVM.SelectedCandidateChecked(sender);
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            candidateVM.SelectedCandidateUnChecked(sender);
         }
     }
 }

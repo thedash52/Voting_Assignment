@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using votingFrontend.DatabaseTables;
 using votingFrontend.Interfaces;
+using votingFrontend.Models;
 using votingFrontend.Services;
 using votingFrontend.Views;
 using Windows.ApplicationModel.Resources;
@@ -18,16 +20,16 @@ namespace votingFrontend.ViewModels
     public class CandidateViewModel : INotifyPropertyChanged
     {
         private string title;
-        private List<CandidateTable> candidates;
+        private ObservableCollection<CandidateSelection> candidates;
         private List<CandidateTable> selectedCandidates;
-        private CandidateTable selectedCandidate;
+        private CandidateSelection selectedCandidate;
         private string selectButton;
 
         private string connectionText;
 
+        private bool canExecute;
+
         private ICommand selectCommand;
-        private ICommand checkedCommand;
-        private ICommand unCheckedCommand;
         private INavigationService navigation;
 
         private ResourceLoader resource;
@@ -43,11 +45,14 @@ namespace votingFrontend.ViewModels
             SelectButton = resource.GetString("CandidateSelect");
 
             SelectCommand = new CommandService(Next);
-            CheckedCommand = new CommandService(SelectedCandidateChecked);
-            UnCheckedCommand = new CommandService(SelectedCandidateUnChecked);
 
             ConnectionText = resource.GetString("ConnectionText");
 
+            CanExecute = false;
+
+            SelectedCandidates = new List<CandidateTable>();
+
+            Candidates = new ObservableCollection<CandidateSelection>();
             Candidates = db.GetCandidates();
         }
 
@@ -67,7 +72,7 @@ namespace votingFrontend.ViewModels
             }
         }
 
-        public List<CandidateTable> Candidates
+        public ObservableCollection<CandidateSelection> Candidates
         {
             get
             {
@@ -133,39 +138,12 @@ namespace votingFrontend.ViewModels
             set
             {
                 this.selectedCandidates = value;
+
                 OnPropertyChanged();
             }
         }
 
-        public ICommand CheckedCommand
-        {
-            get
-            {
-                return this.checkedCommand;
-            }
-
-            set
-            {
-                this.checkedCommand = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ICommand UnCheckedCommand
-        {
-            get
-            {
-                return this.unCheckedCommand;
-            }
-
-            set
-            {
-                this.unCheckedCommand = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public CandidateTable SelectedCandidate
+        public CandidateSelection SelectedCandidate
         {
             get
             {
@@ -179,14 +157,94 @@ namespace votingFrontend.ViewModels
             }
         }
 
-        internal void SelectedCandidateChecked(object sender)
+        public bool CanExecute
         {
+            get
+            {
+                return this.canExecute;
+            }
 
+            set
+            {
+                this.canExecute = value;
+                OnPropertyChanged();
+            }
+        }
+
+        internal async void SelectedCandidateChecked(object sender)
+        {
+            if (SelectedCandidates.Count > 3)
+            {
+                ContentDialog error = new ContentDialog()
+                {
+                    Title = "To Many Selected",
+                    Content = "You have choosen to many Candidates, Maximum allowed is 3",
+                    PrimaryButtonText = "OK"
+                };
+
+                CheckBox chkbox = (CheckBox)sender;
+                chkbox.IsChecked = false;
+
+                await error.ShowAsync();
+            }
+            else
+            {
+                int idx = Candidates.IndexOf(SelectedCandidate);
+
+                Candidates[idx].Selected = true;
+
+                CandidateTable candidate = new CandidateTable()
+                {
+                    Id = SelectedCandidate.Id,
+                    ServerId = SelectedCandidate.ServerId,
+                    Name = SelectedCandidate.Name,
+                    Detail = SelectedCandidate.Detail,
+                    Image = SelectedCandidate.Image
+                };
+
+                if (!SelectedCandidates.Any(i => i.Id == candidate.Id && i.ServerId == candidate.ServerId))
+                {
+                    SelectedCandidates.Add(candidate);
+                }
+
+                CanExecute = true;
+            }
         }
 
         internal void SelectedCandidateUnChecked(object sender)
         {
+            CandidateTable candidate = new CandidateTable()
+            {
+                Id = SelectedCandidate.Id,
+                ServerId = SelectedCandidate.ServerId,
+                Name = SelectedCandidate.Name,
+                Detail = SelectedCandidate.Detail,
+                Image = SelectedCandidate.Image
+            };
 
+            if (SelectedCandidates.Any(i => i.Id == candidate.Id && i.ServerId == candidate.ServerId))
+            {
+                int idx = Candidates.IndexOf(SelectedCandidate);
+
+                Candidates[idx].Selected = false;
+
+                int rmIdx = 0;
+
+                for (int i = 0; i < SelectedCandidates.Count; i++)
+                {
+                    if (SelectedCandidates[i].Id == candidate.Id && SelectedCandidates[i].ServerId == candidate.ServerId)
+                    {
+                        rmIdx = i;
+                    }
+                }
+
+                SelectedCandidates.RemoveAt(rmIdx);
+
+                if (SelectedCandidates.Count == 0)
+                {
+                    CanExecute = false;
+                }
+            }
         }
 
         internal async void Next(object sender)

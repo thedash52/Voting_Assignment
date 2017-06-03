@@ -12,9 +12,25 @@
     <Page.Resources>
         <converters:CountdownConverter x:Key="CountdownConverter"/>
         <converters:DateTimeConverter x:Key="DateTimeConverter"/>
+        <converters:VisibilityConverter x:Key="VisibilityConverter"/>
 
         <DataTemplate x:Name="Normal" x:Key="Normal">
-            <TextBlock Text="{Binding Name}"/>
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="{Binding Name}" Grid.Column="0" Grid.Row="0"/>
+
+                <Border Background="Black" Grid.Column="1" Grid.Row="0">
+                    <TextBlock Text="Selected" Foreground="White" Visibility="{Binding Selected, Converter={StaticResource VisibilityConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Name="Detailed" x:Key="Detailed">
@@ -37,7 +53,7 @@
                 <TextBlock Text="{Binding Detail}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="10" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"/>
                 <Image Source="{Binding Image}" VerticalAlignment="Center" HorizontalAlignment="Center" MaxHeight="120" MaxWidth="120" Margin="10" Grid.Column="1" Grid.Row="2"/>
 
-                <CheckBox IsThreeState="False" Checked="{Binding CheckedCommand}" Unchecked="{Binding UnCheckedCommand}" Grid.Column="1" Grid.Row="3"/>
+                <CheckBox IsThreeState="False" IsChecked="{Binding Selected}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Grid.Column="1" Grid.Row="3"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -76,14 +92,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="3*"/>
-            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.75*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding Title}" FontSize="65" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+        <TextBlock Text="{Binding Title}" FontSize="50" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Grid.Column="0" Grid.Row="0"/>
 
-        <ListView x:Name="listView" ItemTemplate="{StaticResource Normal}" ItemsSource="{Binding Candidates}" SelectedItem="{Binding SelectedCandidate}" SelectionChanged="ListView_SelectionChanged" Grid.Column="0" Grid.Row="1"/>
+        <ListView x:Name="listView" ItemTemplate="{StaticResource Normal}" ItemsSource="{Binding Candidates}" SelectedItem="{Binding SelectedCandidate, Mode=TwoWay}" SelectionChanged="ListView_SelectionChanged" SelectionMode="Single" Grid.Column="0" Grid.Row="1"/>
 
-        <Button Content="{Binding SelectButton}" Command="{Binding SelectCommand}" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="2"/>
+        <Button Content="{Binding SelectButton}" Command="{Binding SelectCommand}" IsEnabled="{Binding CanExecute}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="2"/>
 
         <StackPanel x:Name="connectionPanel" Background="Black" Opacity="0.6" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
         <TextBlock x:Name="connectionText" Text="{Binding ConnectionText}" FontSize="50" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Foreground="White" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>

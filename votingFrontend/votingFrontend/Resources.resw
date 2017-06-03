@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CandidateSelect" xml:space="preserve">
+    <value>Next</value>
+  </data>
   <data name="CandidateTitle" xml:space="preserve">
-    <value>Choose Up to </value>
+    <value>Choose Up to 3 Candidates</value>
   </data>
   <data name="ConnectionText" xml:space="preserve">
     <value>Device is Currently Offline, Please Connect to the Internet</value>

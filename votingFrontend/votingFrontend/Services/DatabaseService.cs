@@ -2,11 +2,13 @@
 using SQLite.Net;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using votingFrontend.DatabaseTables;
+using votingFrontend.Models;
 
 namespace votingFrontend.Services
 {
@@ -46,10 +48,27 @@ namespace votingFrontend.Services
             return userDB[0];
         }
 
-        internal List<CandidateTable> GetCandidates()
+        internal ObservableCollection<CandidateSelection> GetCandidates()
         {
-            List<CandidateTable> candidates = new List<CandidateTable>();
-            candidates = db.Query<CandidateTable>("SELECT * FROM CandidateTable");
+            List<CandidateTable> dbcandidates = new List<CandidateTable>();
+            dbcandidates = db.Query<CandidateTable>("SELECT * FROM CandidateTable");
+
+            ObservableCollection<CandidateSelection> candidates = new ObservableCollection<CandidateSelection>();
+
+            foreach (CandidateTable item in dbcandidates)
+            {
+                CandidateSelection candidate = new CandidateSelection()
+                {
+                    Id = item.Id,
+                    ServerId = item.ServerId,
+                    Name = item.Name,
+                    Detail = item.Detail,
+                    Image = item.Image,
+                    Selected = false
+                };
+
+                candidates.Add(candidate);
+            }
 
             return candidates;
         }
@@ -69,54 +88,12 @@ namespace votingFrontend.Services
             return user;
         }
 
-        internal Task UpdateReferendum(List<ReferendumTable> referendum)
+        internal Task UpdateReferendum(ReferendumTable referendum)
         {
-            foreach (ReferendumTable item in referendum)
-            {
-                List<ReferendumTable> dbreferendum = new List<ReferendumTable>();
-                dbreferendum = db.Query<ReferendumTable>("SELECT * FROM ReferendumTable WHERE ServerId = " + item.ServerId);
+            db.DropTable<ReferendumTable>();
+            db.CreateTable<ReferendumTable>();
 
-                if (dbreferendum.Count == 1)
-                {
-                    ReferendumTable single = new ReferendumTable();
-                    single = dbreferendum[0];
-
-                    bool updateRecord = false;
-
-                    if (item.Name != single.Name)
-                    {
-                        updateRecord = true;
-                    }
-
-                    if (item.Detail != single.Detail)
-                    {
-                        updateRecord = true;
-                    }
-
-                    if (item.Images != single.Images)
-                    {
-                        updateRecord = true;
-                    }
-
-                    if (updateRecord)
-                    {
-                        single = new ReferendumTable()
-                        {
-                            Id = dbreferendum[0].Id,
-                            ServerId = item.ServerId,
-                            Name = item.Name,
-                            Detail = item.Detail,
-                            Images = item.Images
-                        };
-
-                        db.Update(single);
-                    }
-                }
-                else if (dbreferendum.Count == 0)
-                {
-                    db.Insert(item);
-                }
-            }
+            db.Insert(referendum);
 
             return Task.FromResult(-1);
         }
@@ -170,156 +147,30 @@ namespace votingFrontend.Services
 
         internal Task UpdateParties(List<PartyTable> parties)
         {
-            foreach (PartyTable item in parties)
-            {
-                List<PartyTable> dbParties = new List<PartyTable>();
-                dbParties = db.Query<PartyTable>("SELECT * FROM PartyTable WHERE ServerId = " + item.ServerId);
+            db.DropTable<PartyTable>();
+            db.CreateTable<PartyTable>();
 
-                if (dbParties.Count == 1)
-                {
-                    PartyTable single = new PartyTable();
-                    single = dbParties[0];
-
-                    bool updateRecord = false;
-
-                    if (item.Name != single.Name)
-                    {
-                        updateRecord = true;
-                    }
-
-                    if (item.Detail != single.Detail)
-                    {
-                        updateRecord = true;
-                    }
-
-                    if (item.Image != single.Image)
-                    {
-                        updateRecord = true;
-                    }
-
-                    if (updateRecord)
-                    {
-                        single = new PartyTable()
-                        {
-                            Id = dbParties[0].Id,
-                            ServerId = item.ServerId,
-                            Name = item.Name,
-                            Detail = item.Detail,
-                            Image = item.Image
-                        };
-
-                        db.Update(single);
-                    }
-                }
-                else if (dbParties.Count == 0)
-                {
-                    db.Insert(item);
-                }
-            }
+            db.InsertAll(parties);
 
             return Task.FromResult(-1);
         }
 
         internal Task UpdateCandidates(List<CandidateTable> candidates)
         {
-            foreach (CandidateTable item in candidates)
-            {
-                List<CandidateTable> dbCandidates = new List<CandidateTable>();
-                dbCandidates = db.Query<CandidateTable>("SELECT * FROM CandidateTable WHERE ServerId = " + item.ServerId);
+            db.DropTable<CandidateTable>();
+            db.CreateTable<CandidateTable>();
 
-                if (dbCandidates.Count == 1)
-                {
-                    CandidateTable single = new CandidateTable();
-                    single = dbCandidates[0];
-
-                    bool updateRecord = false;
-
-                    if (item.Name != single.Name)
-                    {
-                        updateRecord = true;
-                    }
-
-                    if (item.Detail != single.Detail)
-                    {
-                        updateRecord = true;
-                    }
-
-                    if (item.Image != single.Image)
-                    {
-                        updateRecord = true;
-                    }
-
-                    if (updateRecord)
-                    {
-                        single = new CandidateTable()
-                        {
-                            Id = dbCandidates[0].Id,
-                            ServerId = item.ServerId,
-                            Name = item.Name,
-                            Detail = item.Detail,
-                            Image = item.Image
-                        };
-
-                        db.Insert(single);
-                    }
-                }
-                else if (dbCandidates.Count == 0)
-                {
-                    db.Insert(item);
-                }
-            }
+            db.InsertAll(candidates);
 
             return Task.FromResult(-1);
         }
 
         internal Task UpdateElectorates(List<ElectorateTable> electorates)
         {
-            foreach (ElectorateTable item in electorates)
-            {
-                List<ElectorateTable> dbelectorates = new List<ElectorateTable>();
-                dbelectorates = db.Query<ElectorateTable>("SELECT * FROM ElectorateTable WHERE ServerId = " + item.ServerId);
+            db.DropTable<ElectorateTable>();
+            db.CreateTable<ElectorateTable>();
 
-                if (dbelectorates.Count == 1)
-                {
-                    ElectorateTable single = new ElectorateTable();
-                    single = dbelectorates[0];
-
-                    bool updateRecord = false;
-
-                    if (item.Name != single.Name)
-                    {
-                        updateRecord = true;
-                    }
-
-                    if (item.Detail != single.Detail)
-                    {
-                        updateRecord = true;
-                    }
-
-                    if (item.Image != single.Image)
-                    {
-                        updateRecord = true;
-                    }
-
-                    if (updateRecord)
-                    {
-                        single = new ElectorateTable()
-                        {
-                            Id = dbelectorates[0].Id,
-                            ServerId = item.ServerId,
-                            Name = item.Name,
-                            Detail = item.Detail,
-                            Image = item.Image
-                        };
-
-                        db.Update(single);
-                    }
-                }
-                else if (dbelectorates.Count == 0)
-                {
-                    db.Insert(item);
-                }
-            }
+            db.InsertAll(electorates);
 
             return Task.FromResult(-1);
         }

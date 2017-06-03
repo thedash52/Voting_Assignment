@@ -42,7 +42,7 @@ namespace votingFrontend.ViewModels
 
         private ResourceLoader resource;
 
-        private DateTime openDateTime = DateTime.Parse("1 June 2017 3:49PM");
+        private DateTime openDateTime = DateTime.Parse("3 June 2017 3:49PM");
         private DispatcherTimer countdown;
 
         private RestService restAPI = new RestService();
@@ -469,7 +469,7 @@ namespace votingFrontend.ViewModels
                 {
                     this.navigation.Navigate(typeof(ElectorateView));
                 }
-                else if (user.CandidateId == default(int))
+                else if (user.CandidateIds == null)
                 {
                     this.navigation.Navigate(typeof(CandidateView));
                 }
@@ -523,7 +523,7 @@ namespace votingFrontend.ViewModels
             List<ElectorateTable> electorates = new List<ElectorateTable>();
             List<CandidateTable> candidates = new List<CandidateTable>();
             List<PartyTable> parties = new List<PartyTable>();
-            List<ReferendumTable> referendum = new List<ReferendumTable>();
+            ReferendumTable referendum = new ReferendumTable();
 
             electorates = await restAPI.GetElectorates();
             candidates = await restAPI.GetCandidates();

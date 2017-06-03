@@ -79,7 +79,7 @@
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding Title}" FontSize="65" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontSize="65" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
 
         <ListView x:Name="listView" ItemTemplate="{StaticResource Normal}" ItemsSource="{Binding Electorates}" SelectionChanged="ListView_SelectionChanged" Grid.Column="0" Grid.Row="1"/>
 
