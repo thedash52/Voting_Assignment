@@ -159,6 +159,12 @@
   <data name="LoginTitle" xml:space="preserve">
     <value>Vote 2017</value>
   </data>
+  <data name="PartySelect" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="PartyTitle" xml:space="preserve">
+    <value>Choose Your Party</value>
+  </data>
   <data name="TimeTillOpen" xml:space="preserve">
     <value>Voting Opens in:</value>
   </data>

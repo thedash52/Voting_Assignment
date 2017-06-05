@@ -31,8 +31,6 @@ namespace votingFrontend.Views
 
             this.InitializeComponent();
             this.DataContext = candidateVM;
-
-            
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -73,6 +73,14 @@ namespace votingFrontend.Services
             return candidates;
         }
 
+        internal List<PartyTable> GetParties()
+        {
+            List<PartyTable> parties = new List<PartyTable>();
+            parties = db.Query<PartyTable>("SELECT * FROM PartyTable");
+
+            return parties;
+        }
+
         internal List<ElectorateTable> GetElectorates()
         {
             List<ElectorateTable> electorates = new List<ElectorateTable>();
@@ -173,6 +181,25 @@ namespace votingFrontend.Services
             db.InsertAll(electorates);
 
             return Task.FromResult(-1);
+        }
+
+        internal int AddPartyVote(PartyTable sender)
+        {
+            List<UserVoteTable> users = new List<UserVoteTable>();
+            users = db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
+
+            if (users.Count != 1)
+            {
+                return -1;
+            }
+
+            UserVoteTable user = new UserVoteTable();
+            user = users[0];
+            user.PartyId = sender.Id;
+
+            db.Update(user);
+
+            return 1;
         }
     }
 }

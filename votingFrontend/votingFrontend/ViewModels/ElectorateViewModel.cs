@@ -42,6 +42,7 @@ namespace votingFrontend.ViewModels
 
             ConnectionText = resource.GetString("ConnectionText");
 
+            Electorates = new List<ElectorateTable>();
             Electorates = db.GetElectorates();
         }
 

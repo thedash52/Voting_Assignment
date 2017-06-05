@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using votingFrontend.Services;
 using votingFrontend.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -23,12 +24,29 @@ namespace votingFrontend.Views
     /// </summary>
     public sealed partial class PartyView : Page
     {
-        private PartyViewModel partyVM = new PartyViewModel();
+        private PartyViewModel partyVM;
 
         public PartyView()
         {
             this.InitializeComponent();
+
+            this.partyVM = new PartyViewModel(new NavigationService());
             this.DataContext = partyVM;
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (var item in e.AddedItems)
+            {
+                ListViewItem lvi = (sender as ListView).ContainerFromItem(item) as ListViewItem;
+                lvi.ContentTemplate = (DataTemplate)this.Resources["Detailed"];
+            }
+
+            foreach (var item in e.RemovedItems)
+            {
+                ListViewItem lvi = (sender as ListView).ContainerFromItem(item) as ListViewItem;
+                lvi.ContentTemplate = (DataTemplate)this.Resources["Normal"];
+            }
         }
     }
 }
