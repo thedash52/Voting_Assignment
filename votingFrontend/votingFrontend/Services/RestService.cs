@@ -57,6 +57,11 @@ namespace votingFrontend.Services
             return items;
         }
 
+        internal bool SendVote()
+        {
+            throw new NotImplementedException();
+        }
+
         internal async Task<List<PartyTable>> GetParties()
         {
             List<PartyTable> items = new List<PartyTable>()
@@ -78,13 +83,23 @@ namespace votingFrontend.Services
                 "/Assets/placeholder120x120.png"
             };
 
+            List<string> details = new List<string>()
+            {
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at libero interdum, porttitor augue in, blandit nisl. Mauris ultricies mattis quam, vel porttitor orci sodales sed. Integer eleifend diam sagittis, tincidunt mauris et, luctus dolor. Praesent fringilla convallis efficitur. Nam at augue nisi. Sed odio lectus, vehicula at euismod et, aliquam vel nibh. Aliquam tristique magna massa, a auctor massa viverra quis. Morbi in lacus quis nisl auctor mattis. Sed at ante ante.",
+                "Quisque fermentum tellus nec eros fermentum sagittis. Phasellus tempor magna dictum suscipit fringilla. Cras vitae elementum enim, in hendrerit felis. Sed congue elit eget erat pretium, ut pellentesque nisi molestie. In a finibus arcu. Ut mollis elit at odio dictum, id efficitur lorem luctus. Fusce luctus et tellus id feugiat. Proin velit risus, bibendum non lorem in, rutrum lobortis elit. Quisque mattis auctor nisl eu pellentesque. Proin commodo erat sit amet scelerisque viverra. Integer est tortor, dignissim nec diam eget, tristique dignissim orci. Donec auctor ante id leo commodo, non accumsan tortor gravida. Sed euismod ligula at orci consequat, vel aliquam justo interdum.",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut elementum purus, at aliquet dui. Aliquam vel neque lorem. Cras fermentum interdum condimentum. Duis venenatis, quam nec hendrerit dapibus, erat dui mollis tortor, sed condimentum enim justo nec odio. Maecenas venenatis nulla eu tortor pretium venenatis. Nunc porttitor molestie augue, vel mollis leo. Donec eleifend non tellus ut mattis. Nulla facilisi.",
+                "Nulla facilisi. Suspendisse quam ex, finibus tristique lorem sit amet, vestibulum tempor odio. Proin venenatis nisi ac sapien consequat sodales. Donec nec semper leo, sit amet rutrum mauris. Donec in iaculis risus. Sed eget interdum quam. In tincidunt arcu non purus efficitur, sit amet porta purus consectetur. Fusce pellentesque, dui nec pellentesque cursus, augue odio facilisis ligula, in mattis turpis nisl vel massa. Integer consectetur nisl id pharetra accumsan. Nunc non laoreet nunc. Praesent eu porttitor tortor. Curabitur bibendum pharetra vestibulum. Aliquam dolor urna, aliquam sed posuere eu, mattis in lectus. Pellentesque quis pellentesque leo.",
+                "In finibus eros urna, vitae cursus arcu ultricies imperdiet. Pellentesque accumsan viverra mattis. Phasellus lacus justo, ornare in neque id, accumsan venenatis tortor. Quisque dictum mauris in convallis finibus. Morbi luctus ipsum vitae ligula volutpat, sit amet placerat ex iaculis. Duis consectetur consequat sapien vitae tempor. Duis tincidunt magna et augue volutpat consequat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam purus nulla, sollicitudin a sapien in, elementum bibendum massa. Morbi laoreet cursus lorem ac tincidunt. Donec convallis malesuada nibh, quis blandit lectus sagittis id. Pellentesque volutpat libero nec tellus varius eleifend."
+            };
+
             string imageJson = JsonConvert.SerializeObject(images);
+            string detailJson = JsonConvert.SerializeObject(details);
 
             ReferendumTable items = new ReferendumTable()
             {
                 ServerId = 1,
                 Name = "Palmerston North",
-                Detail = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut a sollicitudin urna. Sed sollicitudin suscipit est, eget euismod tellus lobortis id. Sed maximus cursus pellentesque. Morbi quis dolor pretium, sodales orci quis, dignissim neque. Proin ante tellus, lobortis non dui auctor, tincidunt mollis enim. Donec eget congue nisi, a tincidunt felis. Mauris feugiat, orci in lacinia consequat, lorem dui cursus odio, iaculis rutrum velit nisl in nisl. Fusce aliquet lacus vitae turpis scelerisque, a fermentum ex luctus. Etiam eleifend dolor vel ex sodales imperdiet. Praesent non nunc in orci sollicitudin imperdiet.",
+                Detail = detailJson,
                 Images = imageJson 
             };
 

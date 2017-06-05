@@ -159,16 +159,25 @@
   <data name="LoginTitle" xml:space="preserve">
     <value>Vote 2017</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="PartySelect" xml:space="preserve">
     <value>Select</value>
   </data>
   <data name="PartyTitle" xml:space="preserve">
     <value>Choose Your Party</value>
   </data>
+  <data name="ReferendumTitle" xml:space="preserve">
+    <value>Answer the Referendum</value>
+  </data>
   <data name="TimeTillOpen" xml:space="preserve">
     <value>Voting Opens in:</value>
   </data>
   <data name="VotingFinished" xml:space="preserve">
     <value>Voting has Finished for 2017!</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

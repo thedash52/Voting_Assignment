@@ -48,6 +48,14 @@ namespace votingFrontend.Services
             return userDB[0];
         }
 
+        internal ReferendumTable GetReferendum()
+        {
+            ReferendumTable referendum = new ReferendumTable();
+            referendum = db.Query<ReferendumTable>("SELECT * FROM ReferendumTable")[0];
+
+            return referendum;
+        }
+
         internal ObservableCollection<CandidateSelection> GetCandidates()
         {
             List<CandidateTable> dbcandidates = new List<CandidateTable>();
@@ -94,6 +102,11 @@ namespace votingFrontend.Services
             db.Query<UserVoteTable>("UPDATE UserVoteTable SET Active = '" + !user.Active + "' WHERE Id = '" + user.Id + "'");
 
             return user;
+        }
+
+        internal int AddReferendumVote(bool v)
+        {
+            throw new NotImplementedException();
         }
 
         internal Task UpdateReferendum(ReferendumTable referendum)
