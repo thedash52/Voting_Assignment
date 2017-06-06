@@ -162,9 +162,9 @@ namespace votingFrontend.ViewModels
             }
             else
             {
-                bool voteSent = restAPI.SendVote();
+                UserVoteTable voteSent = restAPI.SendVote();
 
-                if (!voteSent)
+                if (voteSent == null)
                 {
                     ContentDialog connectionError = new ContentDialog()
                     {
@@ -176,7 +176,7 @@ namespace votingFrontend.ViewModels
                     await connectionError.ShowAsync();
                 }
 
-                this.navigation.Navigate(typeof(VoteSubmittedView));
+                this.navigation.Navigate(typeof(VoteSubmittedView), voteSent);
             }
         }
 

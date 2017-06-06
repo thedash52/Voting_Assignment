@@ -456,7 +456,7 @@ namespace votingFrontend.ViewModels
             {
                 if (user.VoteSaved)
                 {
-                    this.navigation.Navigate(typeof(VoteSubmittedView));
+                    this.navigation.Navigate(typeof(VoteSubmittedView), user);
                     return;
                 }
 
@@ -486,26 +486,44 @@ namespace votingFrontend.ViewModels
                 return;
             }
 
-            db.DeactivateUsers();
+            UserVoteTable loggedIn = await restAPI.Login(FirstName, LastName, DoB, ElectoralId);
 
-            bool loggedIn = await restAPI.Login(FirstName, LastName, DoB, ElectoralId);
-
-            if (loggedIn)
+            if (loggedIn != null)
             {
-                UserVoteTable newUser = new UserVoteTable()
-                {
-                    FirstName = FirstName,
-                    LastName = LastName,
-                    DoB = DoB.Date.ToString(),
-                    ElectoralId = ElectoralId,
-                    Active = true
-                };
+                loggedIn.Active = true;
 
-                db.VoterLoggedIn(newUser);
+                db.VoterLoggedIn(loggedIn);
 
                 LoggingIn = false;
 
-                this.navigation.Navigate(typeof(ElectorateView));
+                if (loggedIn.VoteSaved)
+                {
+                    this.navigation.Navigate(typeof(VoteSubmittedView), loggedIn);
+                    return;
+                }
+
+                if (!loggedIn.Active)
+                {
+                    db.DeactivateUsers();
+                    loggedIn = db.SwitchActive(loggedIn);
+                }
+
+                if (loggedIn.ElectorateId == default(int))
+                {
+                    this.navigation.Navigate(typeof(ElectorateView));
+                }
+                else if (loggedIn.CandidateIds == null)
+                {
+                    this.navigation.Navigate(typeof(CandidateView));
+                }
+                else if (loggedIn.PartyId == default(int))
+                {
+                    this.navigation.Navigate(typeof(PartyView));
+                }
+                else
+                {
+                    this.navigation.Navigate(typeof(ReferendumView));
+                }
             }
             else
             {

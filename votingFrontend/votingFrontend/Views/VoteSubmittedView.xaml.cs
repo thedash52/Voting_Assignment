@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using votingFrontend.DatabaseTables;
+using votingFrontend.Services;
 using votingFrontend.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -23,10 +25,13 @@ namespace votingFrontend.Views
     /// </summary>
     public sealed partial class VoteSubmittedView : Page
     {
-        private VoteSubmittedViewModel voteSubmittedVM = new VoteSubmittedViewModel();
-        public VoteSubmittedView()
+        private VoteSubmittedViewModel voteSubmittedVM;
+
+        public VoteSubmittedView(UserVoteTable user)
         {
             this.InitializeComponent();
+
+            this.voteSubmittedVM = new VoteSubmittedViewModel(new NavigationService(), user);
             this.DataContext = voteSubmittedVM;
         }
     }

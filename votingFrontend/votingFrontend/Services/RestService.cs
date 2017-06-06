@@ -17,7 +17,7 @@ namespace votingFrontend.Services
 
         }
 
-        internal async Task<bool> Login(string firstName, string lastName, DateTime dob, string electoralId)
+        internal async Task<UserVoteTable> Login(string firstName, string lastName, DateTime dob, string electoralId)
         {
             string first = "Bob";
             string last = "Smith";
@@ -26,11 +26,20 @@ namespace votingFrontend.Services
 
             if (first != firstName || last != lastName || birth.Date != dob.Date || id != electoralId)
             {
-                return false;
+                return null;
             }
             else
             {
-                return true;
+                UserVoteTable user = new UserVoteTable()
+                {
+                    ServerId = 1,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    DoB = dob.Date.ToString(),
+                    ElectoralId = electoralId
+                };
+
+                return user;
             }
         }
 
@@ -58,14 +67,14 @@ namespace votingFrontend.Services
             return items;
         }
 
-        internal bool SendVote()
+        internal UserVoteTable SendVote()
         {
             UserVoteTable voteToSend = new UserVoteTable();
             voteToSend = db.GetVoteToSend();
 
-            db.VoteSent(voteToSend);
+            voteToSend = db.VoteSent(voteToSend);
 
-            return true;
+            return voteToSend;
         }
 
         internal async Task<List<PartyTable>> GetParties()

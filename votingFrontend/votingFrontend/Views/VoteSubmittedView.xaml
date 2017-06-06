@@ -5,9 +5,78 @@
     xmlns:local="using:votingFrontend.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:votingFrontend.Converters"
+    xmlns:service="using:votingFrontend.Services"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <converters:CountdownConverter x:Key="CountdownConverter"/>
+        <converters:DateTimeConverter x:Key="DateTimeConverter"/>
+    </Page.Resources>
 
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="OfflineState">
+                    <VisualState.StateTriggers>
+                        <service:NetworkConnection RequiresInternet="False"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="connectionPanel.Visibility" Value="Visible"/>
+                        <Setter Target="connectionText.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="ConnectedState">
+                    <VisualState.StateTriggers>
+                        <service:NetworkConnection RequiresInternet="True"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="connectionPanel.Visibility" Value="Collapsed"/>
+                        <Setter Target="connectionText.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="0.75*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{Binding Title}" FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"/>
+
+        <TextBlock Text="{Binding VoteText}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"/>
+
+        <TextBlock Text="{Binding ElectorateText}" FontWeight="Bold" Grid.Column="0" Grid.Row="2"/>
+        <TextBlock Text="{Binding Electorate}" Grid.Column="1" Grid.Row="2"/>
+
+        <TextBlock Text="{Binding CandidateText}" FontWeight="Bold" Grid.Column="0" Grid.Row="3"/>
+        <TextBlock Text="{Binding Candidates}" Grid.Column="1" Grid.Row="3"/>
+
+        <TextBlock Text="{Binding PartyText}" FontWeight="Bold" Grid.Column="0" Grid.Row="4"/>
+        <TextBlock Text="{Binding Party}" Grid.Column="1" Grid.Row="4"/>
+
+        <TextBlock Text="{Binding ReferendumText}" FontWeight="Bold" Grid.Column="0" Grid.Row="5"/>
+        <TextBlock Text="{Binding Referendum}" Grid.Column="1" Grid.Row="5"/>
+
+        <TextBlock Text="{Binding SubmittedText}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6"/>
+        <Button Content="{Binding LoginButton}" Command="{Binding LoginCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7"/>
+
+        <StackPanel x:Name="connectionPanel" Background="Black" Opacity="0.6" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="8"/>
+        <TextBlock x:Name="connectionText" Text="{Binding ConnectionText}" FontSize="50" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Foreground="White" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="8"/>
     </Grid>
 </Page>

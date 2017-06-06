@@ -200,12 +200,14 @@ namespace votingFrontend.Services
             return Task.FromResult(-1);
         }
 
-        internal void VoteSent(UserVoteTable voteToSend)
+        internal UserVoteTable VoteSent(UserVoteTable voteToSend)
         {
             voteToSend.VoteSaved = true;
             voteToSend.Active = false;
 
             db.Update(voteToSend);
+
+            return voteToSend;
         }
 
         internal UserVoteTable GetVoteToSend()

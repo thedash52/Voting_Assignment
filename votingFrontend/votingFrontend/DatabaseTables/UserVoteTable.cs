@@ -31,8 +31,8 @@ namespace votingFrontend.DatabaseTables
 
         public bool Referendum { get; set; }
 
-        public bool Active { get; set; }
+        public bool Active { get; set; } = false;
 
-        public bool VoteSaved { get; set; }
+        public bool VoteSaved { get; set; } = false;
     }
 }
