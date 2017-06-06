@@ -11,6 +11,7 @@ namespace votingFrontend.Services
 {
     internal class RestService
     {
+        private DatabaseService db = new DatabaseService();
         public RestService()
         {
 
@@ -59,7 +60,12 @@ namespace votingFrontend.Services
 
         internal bool SendVote()
         {
-            throw new NotImplementedException();
+            UserVoteTable voteToSend = new UserVoteTable();
+            voteToSend = db.GetVoteToSend();
+
+            db.VoteSent(voteToSend);
+
+            return true;
         }
 
         internal async Task<List<PartyTable>> GetParties()

@@ -106,7 +106,21 @@ namespace votingFrontend.Services
 
         internal int AddReferendumVote(bool v)
         {
-            throw new NotImplementedException();
+            List<UserVoteTable> users = new List<UserVoteTable>();
+            users = db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
+
+            if (users.Count != 1)
+            {
+                return -1;
+            }
+
+            UserVoteTable user = new UserVoteTable();
+            user = users[0];
+            user.Referendum = v;
+
+            db.Update(user);
+
+            return 1;
         }
 
         internal Task UpdateReferendum(ReferendumTable referendum)
@@ -186,6 +200,27 @@ namespace votingFrontend.Services
             return Task.FromResult(-1);
         }
 
+        internal void VoteSent(UserVoteTable voteToSend)
+        {
+            voteToSend.VoteSaved = true;
+            voteToSend.Active = false;
+
+            db.Update(voteToSend);
+        }
+
+        internal UserVoteTable GetVoteToSend()
+        {
+            List<UserVoteTable> users = new List<UserVoteTable>();
+            users = db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
+
+            if (users.Count != 1)
+            {
+                return null;
+            }
+
+            return users[0];
+        }
+
         internal Task UpdateElectorates(List<ElectorateTable> electorates)
         {
             db.DropTable<ElectorateTable>();
@@ -213,6 +248,11 @@ namespace votingFrontend.Services
             db.Update(user);
 
             return 1;
+        }
+
+        internal void DeactivateUsers()
+        {
+            db.Query<UserVoteTable>("UPDATE UserVoteTable SET Active = false");
         }
     }
 }

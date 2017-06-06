@@ -42,7 +42,7 @@ namespace votingFrontend.ViewModels
 
         private ResourceLoader resource;
 
-        private DateTime openDateTime = DateTime.Parse("5 June 2017 3:49PM");
+        private DateTime openDateTime = DateTime.Parse("6 June 2017 3:49PM");
         private DispatcherTimer countdown;
 
         private RestService restAPI = new RestService();
@@ -462,6 +462,7 @@ namespace votingFrontend.ViewModels
 
                 if (!user.Active)
                 {
+                    db.DeactivateUsers();
                     user = db.SwitchActive(user);
                 }
 
@@ -484,6 +485,8 @@ namespace votingFrontend.ViewModels
 
                 return;
             }
+
+            db.DeactivateUsers();
 
             bool loggedIn = await restAPI.Login(FirstName, LastName, DoB, ElectoralId);
 
