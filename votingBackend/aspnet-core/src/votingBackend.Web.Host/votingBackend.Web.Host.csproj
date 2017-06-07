@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
@@ -11,6 +11,9 @@
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <DefineConstants>FEATURE_SIGNALR</DefineConstants>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Properties\PublishProfiles\VotingBackendAPI - Web Deploy.pubxml" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Update="log4net.config">
@@ -47,5 +50,8 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 </Project>

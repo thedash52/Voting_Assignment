@@ -49,13 +49,13 @@ namespace votingFrontend.ViewModels
 
             this.resource = new ResourceLoader();
             Title = resource.GetString("SubmittedTitle");
-            VoteText = resource.GetString("");
-            ElectorateText = resource.GetString("");
-            CandidateText = resource.GetString("");
-            PartyText = resource.GetString("");
-            ReferendumText = resource.GetString("");
-            SubmittedText = resource.GetString("");
-            LoginButton = resource.GetString("");
+            VoteText = resource.GetString("VoteText");
+            ElectorateText = resource.GetString("ElectorateText");
+            CandidateText = resource.GetString("CandidateText");
+            PartyText = resource.GetString("PartyText");
+            ReferendumText = resource.GetString("ReferendumText");
+            SubmittedText = resource.GetString("SubmittedText");
+            LoginButton = resource.GetString("VoteButton");
             ConnectionText = resource.GetString("ConnectionText");
 
             LoginCommand = new CommandService(Login);
@@ -68,7 +68,7 @@ namespace votingFrontend.ViewModels
 
             electorateData = db.GetElectorateFromId(this.user.ElectorateId);
 
-            foreach(string item in candidateList)
+            foreach (string item in candidateList)
             {
                 int id = int.Parse(item);
 
@@ -82,15 +82,23 @@ namespace votingFrontend.ViewModels
 
             Electorate = electorateData.Name;
 
-            string candidateNames = "";
+            string candidateNames = String.Empty;
 
-            foreach(CandidateTable item in candidateData)
+            foreach (CandidateTable item in candidateData)
             {
-                candidateNames = String.Join(Environment.NewLine, candidateNames, item.Name);
+                if (candidateNames == String.Empty)
+                {
+                    candidateNames = item.Name;
+                }
+                else
+                {
+                    candidateNames = String.Join(Environment.NewLine, candidateNames, item.Name);
+                }
             }
 
             Candidates = candidateNames;
             Party = partyData.Name;
+            Referendum = this.user.Referendum.ToString();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -293,8 +301,6 @@ namespace votingFrontend.ViewModels
 
         internal void Login(object obj)
         {
-            db.SwitchActive();
-
             this.navigation.Navigate(typeof(LoginView));
         }
 

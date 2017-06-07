@@ -53,30 +53,30 @@
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.75*"/>
             <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding Title}" FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"/>
+        <TextBlock Text="{Binding Title}" FontSize="60" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"/>
 
-        <TextBlock Text="{Binding VoteText}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <TextBlock Text="{Binding VoteText}" FontSize="24" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"/>
 
-        <TextBlock Text="{Binding ElectorateText}" FontWeight="Bold" Grid.Column="0" Grid.Row="2"/>
+        <TextBlock Text="{Binding ElectorateText}" HorizontalAlignment="Right" Margin="0,0,20,0" FontWeight="Bold" Grid.Column="0" Grid.Row="2"/>
         <TextBlock Text="{Binding Electorate}" Grid.Column="1" Grid.Row="2"/>
 
-        <TextBlock Text="{Binding CandidateText}" FontWeight="Bold" Grid.Column="0" Grid.Row="3"/>
+        <TextBlock Text="{Binding CandidateText}" HorizontalAlignment="Right" Margin="0,0,20,0" FontWeight="Bold" Grid.Column="0" Grid.Row="3"/>
         <TextBlock Text="{Binding Candidates}" Grid.Column="1" Grid.Row="3"/>
 
-        <TextBlock Text="{Binding PartyText}" FontWeight="Bold" Grid.Column="0" Grid.Row="4"/>
+        <TextBlock Text="{Binding PartyText}" HorizontalAlignment="Right" Margin="0,0,20,0" FontWeight="Bold" Grid.Column="0" Grid.Row="4"/>
         <TextBlock Text="{Binding Party}" Grid.Column="1" Grid.Row="4"/>
 
-        <TextBlock Text="{Binding ReferendumText}" FontWeight="Bold" Grid.Column="0" Grid.Row="5"/>
+        <TextBlock Text="{Binding ReferendumText}" HorizontalAlignment="Right" Margin="0,0,20,0" FontWeight="Bold" Grid.Column="0" Grid.Row="5"/>
         <TextBlock Text="{Binding Referendum}" Grid.Column="1" Grid.Row="5"/>
 
-        <TextBlock Text="{Binding SubmittedText}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6"/>
+        <TextBlock Text="{Binding SubmittedText}" FontSize="24" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6"/>
         <Button Content="{Binding LoginButton}" Command="{Binding LoginCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7"/>
 
         <StackPanel x:Name="connectionPanel" Background="Black" Opacity="0.6" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="8"/>
-        <TextBlock x:Name="connectionText" Text="{Binding ConnectionText}" FontSize="50" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Foreground="White" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="8"/>
+        <TextBlock x:Name="connectionText" Text="{Binding ConnectionText}" FontSize="50" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Foreground="White" Grid.Column="1" Grid.Row="3" Grid.RowSpan="2" Margin="0,2,180,19"/>
     </Grid>
 </Page>

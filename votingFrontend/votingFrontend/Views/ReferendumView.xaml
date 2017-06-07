@@ -63,7 +63,7 @@
         <Button Content="{Binding YesButton}" Command="{Binding AnswerCommand}" CommandParameter="yes" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" Grid.Column="0" Grid.Row="3"/>
         <Button Content="{Binding NoButton}" Command="{Binding AnswerCommand}" CommandParameter="no" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" Grid.Column="1" Grid.Row="3"/>
 
-        <StackPanel x:Name="connectionPanel" Background="Black" Opacity="0.6" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
-        <TextBlock x:Name="connectionText" Text="{Binding ConnectionText}" FontSize="50" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Foreground="White" Grid.Column="0"  Grid.Row="0" Grid.RowSpan="2"/>
+        <StackPanel x:Name="connectionPanel" Background="Black" Opacity="0.6" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="4"/>
+        <TextBlock x:Name="connectionText" Text="{Binding ConnectionText}" FontSize="50" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Foreground="White" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="4"/>
     </Grid>
 </Page>

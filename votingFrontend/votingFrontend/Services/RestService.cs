@@ -6,19 +6,74 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using votingFrontend.DatabaseTables;
 using Newtonsoft.Json;
+using Windows.ApplicationModel.Resources;
+using votingFrontend.Models;
+using Windows.UI.Xaml.Controls;
 
 namespace votingFrontend.Services
 {
     internal class RestService
     {
         private DatabaseService db = new DatabaseService();
+        private ResourceLoader resource;
+
         public RestService()
         {
-
+            this.resource = new ResourceLoader();
         }
 
         internal async Task<UserVoteTable> Login(string firstName, string lastName, DateTime dob, string electoralId)
         {
+            string url = resource.GetString("BaseUrl") + "Login";
+            string contentType = resource.GetString("ContentType");
+
+            LoginRequestModel loginModel = new LoginRequestModel()
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Dob = dob.Date.ToString(),
+                ElectoralId = electoralId
+            };
+
+            string json = JsonConvert.SerializeObject(loginModel);
+            HttpContent content = new StringContent(json, Encoding.UTF8, contentType);
+            HttpResponseMessage response;
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    response = await client.PostAsync(url, content);
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            if (response.IsSuccessStatusCode)
+            {
+                LoginUserResponse result = JsonConvert.DeserializeObject<LoginUserResponse>(response.Content.ReadAsStringAsync().Result);
+
+                if (result.Success)
+                {
+                    UserVoteTable user = new UserVoteTable()
+                    {
+
+                    };
+
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            //else
+            //{
+            //    return null;
+            //}
+
             string first = "Bob";
             string last = "Smith";
             DateTime birth = DateTime.Parse("1993-08-10");
@@ -93,9 +148,9 @@ namespace votingFrontend.Services
         {
             List<string> images = new List<string>()
             {
-                "/Assets/placeholder120x120.png",
-                "/Assets/placeholder120x120.png",
-                "/Assets/placeholder120x120.png"
+                "/Assets/placeholder250x250.png",
+                "/Assets/placeholder250x250.png",
+                "/Assets/placeholder250x250.png"
             };
 
             List<string> details = new List<string>()
@@ -113,7 +168,7 @@ namespace votingFrontend.Services
             ReferendumTable items = new ReferendumTable()
             {
                 ServerId = 1,
-                Name = "Palmerston North",
+                Name = "Flag Referendum",
                 Detail = detailJson,
                 Images = imageJson 
             };

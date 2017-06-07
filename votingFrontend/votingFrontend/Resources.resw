@@ -117,14 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BaseURL" xml:space="preserve">
+    <value />
+  </data>
   <data name="CandidateSelect" xml:space="preserve">
     <value>Next</value>
+  </data>
+  <data name="CandidateText" xml:space="preserve">
+    <value>Candidates:</value>
   </data>
   <data name="CandidateTitle" xml:space="preserve">
     <value>Choose Up to 3 Candidates</value>
   </data>
   <data name="ConnectionText" xml:space="preserve">
     <value>Device is Currently Offline, Please Connect to the Internet</value>
+  </data>
+  <data name="ContentType" xml:space="preserve">
+    <value>application/json</value>
   </data>
   <data name="DateOfBirth" xml:space="preserve">
     <value>Date of Birth:</value>
@@ -137,6 +146,9 @@
   </data>
   <data name="ElectorateSelect" xml:space="preserve">
     <value>Select</value>
+  </data>
+  <data name="ElectorateText" xml:space="preserve">
+    <value>Electorate:</value>
   </data>
   <data name="ElectorateTitle" xml:space="preserve">
     <value>Choose Your Electorate</value>
@@ -165,14 +177,32 @@
   <data name="PartySelect" xml:space="preserve">
     <value>Select</value>
   </data>
+  <data name="PartyText" xml:space="preserve">
+    <value>Party:</value>
+  </data>
   <data name="PartyTitle" xml:space="preserve">
     <value>Choose Your Party</value>
+  </data>
+  <data name="ReferendumText" xml:space="preserve">
+    <value>Referendum:</value>
   </data>
   <data name="ReferendumTitle" xml:space="preserve">
     <value>Answer the Referendum</value>
   </data>
+  <data name="SubmittedText" xml:space="preserve">
+    <value>Your vote has been recorded and sent to ElectionsNZ</value>
+  </data>
+  <data name="SubmittedTitle" xml:space="preserve">
+    <value>Thank You For Voting</value>
+  </data>
   <data name="TimeTillOpen" xml:space="preserve">
     <value>Voting Opens in:</value>
+  </data>
+  <data name="VoteButton" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="VoteText" xml:space="preserve">
+    <value>Here is what you voted for:</value>
   </data>
   <data name="VotingFinished" xml:space="preserve">
     <value>Voting has Finished for 2017!</value>

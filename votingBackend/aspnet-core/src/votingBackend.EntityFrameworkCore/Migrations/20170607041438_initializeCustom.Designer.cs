@@ -11,9 +11,10 @@ using Abp.Notifications;
 namespace votingBackend.Migrations
 {
     [DbContext(typeof(votingBackendDbContext))]
-    partial class votingBackendDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170607041438_initializeCustom")]
+    partial class initializeCustom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")

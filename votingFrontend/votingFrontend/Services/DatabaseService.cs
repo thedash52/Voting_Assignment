@@ -81,6 +81,45 @@ namespace votingFrontend.Services
             return candidates;
         }
 
+        internal PartyTable GetPartyFromId(int partyId)
+        {
+            List<PartyTable> parties = new List<PartyTable>();
+            parties = db.Query<PartyTable>("SELECT * FROM PartyTable WHERE Id = " + partyId);
+
+            if (parties.Count != 1)
+            {
+                return null;
+            }
+
+            return parties[0];
+        }
+
+        internal CandidateTable GetCandidateFromId(int id)
+        {
+            List<CandidateTable> candidates = new List<CandidateTable>();
+            candidates = db.Query<CandidateTable>("SELECT * FROM CandidateTable WHERE Id = " + id);
+
+            if (candidates.Count != 1)
+            {
+                return null;
+            }
+
+            return candidates[0];
+        }
+
+        internal ElectorateTable GetElectorateFromId(int electorateId)
+        {
+            List<ElectorateTable> electorates = new List<ElectorateTable>();
+            electorates = db.Query<ElectorateTable>("SELECT * FROM ElectorateTable WHERE Id = " + electorateId);
+
+            if (electorates.Count != 1)
+            {
+                return null;
+            }
+
+            return electorates[0];
+        }
+
         internal List<PartyTable> GetParties()
         {
             List<PartyTable> parties = new List<PartyTable>();

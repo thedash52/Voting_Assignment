@@ -26,13 +26,20 @@ namespace votingFrontend.Views
     public sealed partial class VoteSubmittedView : Page
     {
         private VoteSubmittedViewModel voteSubmittedVM;
+        private UserVoteTable user;
 
-        public VoteSubmittedView(UserVoteTable user)
+        public VoteSubmittedView()
         {
             this.InitializeComponent();
+        }
 
-            this.voteSubmittedVM = new VoteSubmittedViewModel(new NavigationService(), user);
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            //user = e.Parameter as UserVoteTable;
+            this.voteSubmittedVM = new VoteSubmittedViewModel(new NavigationService(), e.Parameter as UserVoteTable);
             this.DataContext = voteSubmittedVM;
+
+            base.OnNavigatedTo(e);
         }
     }
 }
