@@ -11,9 +11,10 @@ using Abp.Notifications;
 namespace votingBackend.Migrations
 {
     [DbContext(typeof(votingBackendDbContext))]
-    partial class votingBackendDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170608035120_updateUserVote")]
+    partial class updateUserVote
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -996,15 +997,15 @@ namespace votingBackend.Migrations
 
                     b.Property<string>("ElectoralId");
 
-                    b.Property<int?>("ElectorateId");
+                    b.Property<int>("ElectorateId");
 
                     b.Property<string>("FirstName");
 
                     b.Property<string>("LastName");
 
-                    b.Property<int?>("PartyId");
+                    b.Property<int>("PartyId");
 
-                    b.Property<bool?>("Referendum");
+                    b.Property<bool>("Referendum");
 
                     b.Property<bool>("VoteSaved");
 

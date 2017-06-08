@@ -14,13 +14,14 @@ namespace votingBackend
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public DateTime DoB { get; set; }
         public string ElectoralId { get; set; }
-        public int ElectorateId { get; set; }
+        public int? ElectorateId { get; set; }
         public string CandidateIds { get; set; }
-        public int PartyId { get; set; }
-        public bool Referendum { get; set; }
+        public int? PartyId { get; set; }
+        public bool? Referendum { get; set; }
         public bool VoteSaved { get; set; }
     }
 }

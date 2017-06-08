@@ -42,7 +42,7 @@ namespace votingFrontend.ViewModels
 
         private ResourceLoader resource;
 
-        private DateTime openDateTime = DateTime.Parse("7 June 2017 9:45AM");
+        private DateTime openDateTime = DateTime.Parse("8 June 2017 9:45AM");
         private DispatcherTimer countdown;
 
         private RestService restAPI = new RestService();

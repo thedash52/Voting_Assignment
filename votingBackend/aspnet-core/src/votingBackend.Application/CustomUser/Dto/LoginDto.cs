@@ -1,24 +1,21 @@
-﻿using Newtonsoft.Json;
+﻿using Abp.AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using votingBackend.EntityFrameworkCore.Models;
 
-namespace votingFrontend.Models
+namespace votingBackend.CustomUser.Dto
 {
-    public class LoginRequestModel
+    [AutoMap(typeof(AuthenticationModel))]
+    public class LoginDto
     {
-        [JsonProperty(PropertyName = "firstName")]
+        public int Id { get; set; }
         public string FirstName { get; set; }
-
-        [JsonProperty(PropertyName = "lastName")]
         public string LastName { get; set; }
-
-        [JsonProperty(PropertyName = "dob")]
         public string Dob { get; set; }
-
-        [JsonProperty(PropertyName = "electoralId")]
         public string ElectoralId { get; set; }
+        public bool VoteSaved { get; set; }
     }
 }

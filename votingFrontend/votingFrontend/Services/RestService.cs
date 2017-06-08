@@ -24,7 +24,7 @@ namespace votingFrontend.Services
 
         internal async Task<UserVoteTable> Login(string firstName, string lastName, DateTime dob, string electoralId)
         {
-            string url = resource.GetString("BaseUrl") + "Login";
+            string url = resource.GetString("BaseUrl") + "/api/UserContoller/LoginAsync";
             string contentType = resource.GetString("ContentType");
 
             LoginRequestModel loginModel = new LoginRequestModel()
@@ -45,7 +45,7 @@ namespace votingFrontend.Services
                 {
                     response = await client.PostAsync(url, content);
                 }
-                catch
+                catch (Exception ex)
                 {
                     return null;
                 }
@@ -59,7 +59,12 @@ namespace votingFrontend.Services
                 {
                     UserVoteTable user = new UserVoteTable()
                     {
-
+                        ServerId = result.Result.Id,
+                        FirstName = result.Result.FirstName,
+                        LastName = result.Result.LastName,
+                        DoB = result.Result.Dob,
+                        ElectoralId = result.Result.ElectoralId,
+                        VoteSaved = result.Result.VoteSaved
                     };
 
                     return user;
@@ -69,33 +74,33 @@ namespace votingFrontend.Services
                     return null;
                 }
             }
-            //else
-            //{
-            //    return null;
-            //}
-
-            string first = "Bob";
-            string last = "Smith";
-            DateTime birth = DateTime.Parse("1993-08-10");
-            string id = "ABC123456";
-
-            if (first != firstName || last != lastName || birth.Date != dob.Date || id != electoralId)
+            else
             {
                 return null;
             }
-            else
-            {
-                UserVoteTable user = new UserVoteTable()
-                {
-                    ServerId = 1,
-                    FirstName = firstName,
-                    LastName = lastName,
-                    DoB = dob.Date.ToString(),
-                    ElectoralId = electoralId
-                };
 
-                return user;
-            }
+            //string first = "Bob";
+            //string last = "Smith";
+            //DateTime birth = DateTime.Parse("1993-08-10");
+            //string id = "ABC123456";
+
+            //if (first != firstName || last != lastName || birth.Date != dob.Date || id != electoralId)
+            //{
+            //    return null;
+            //}
+            //else
+            //{
+            //    UserVoteTable user = new UserVoteTable()
+            //    {
+            //        ServerId = 1,
+            //        FirstName = firstName,
+            //        LastName = lastName,
+            //        DoB = dob.Date.ToString(),
+            //        ElectoralId = electoralId
+            //    };
+
+            //    return user;
+            //}
         }
 
         internal async Task<List<ElectorateTable>> GetElectorates()
