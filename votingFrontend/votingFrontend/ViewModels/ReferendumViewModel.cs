@@ -138,7 +138,7 @@ namespace votingFrontend.ViewModels
         {
             int result = -1;
 
-            switch (obj)
+            switch ((string)obj)
             {
                 case "yes":
                     result = db.AddReferendumVote(true);

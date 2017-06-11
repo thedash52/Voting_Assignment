@@ -42,7 +42,7 @@ namespace votingFrontend.ViewModels
 
         private ResourceLoader resource;
 
-        private DateTime openDateTime = DateTime.Parse("8 June 2017 9:45AM");
+        private DateTime openDateTime = DateTime.Parse("12 June 2017 9:45AM");
         private DispatcherTimer countdown;
 
         private RestService restAPI = new RestService();
@@ -371,7 +371,7 @@ namespace votingFrontend.ViewModels
         {
             LoggingIn = true;
 
-            if (FirstName == null || LastName == null || ElectoralId == null)
+            if (String.IsNullOrEmpty(FirstName) || String.IsNullOrEmpty(LastName) || String.IsNullOrEmpty(ElectoralId))
             {
                 ContentDialog emptyEntry = new ContentDialog()
                 {
@@ -506,23 +506,6 @@ namespace votingFrontend.ViewModels
                 {
                     db.DeactivateUsers();
                     loggedIn = db.SwitchActive(loggedIn);
-                }
-
-                if (loggedIn.ElectorateId == default(int))
-                {
-                    this.navigation.Navigate(typeof(ElectorateView));
-                }
-                else if (loggedIn.CandidateIds == null)
-                {
-                    this.navigation.Navigate(typeof(CandidateView));
-                }
-                else if (loggedIn.PartyId == default(int))
-                {
-                    this.navigation.Navigate(typeof(PartyView));
-                }
-                else
-                {
-                    this.navigation.Navigate(typeof(ReferendumView));
                 }
             }
             else

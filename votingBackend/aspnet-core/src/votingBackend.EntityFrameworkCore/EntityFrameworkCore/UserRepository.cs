@@ -99,5 +99,36 @@ namespace votingBackend.EntityFrameworkCore
                 }
             }
         }
+
+        public Tuple<string, bool> SaveVote(int id, int electorateId, string candidateIds, int partyId, bool referendum)
+        {
+            using(var ctx = _dbContext.Create(new DbContextFactoryOptions()))
+            {
+                try
+                {
+                    UserVote user = ctx.UserVoteSet.Single<UserVote>(s => s.Id == id);
+
+                    if (user.VoteSaved)
+                    {
+                        Tuple.Create("Vote Already Saved", false);
+                    }
+
+                    user.ElectorateId = electorateId;
+                    user.CandidateIds = candidateIds;
+                    user.PartyId = partyId;
+                    user.Referendum = referendum;
+                    user.VoteSaved = true;
+
+                    ctx.Entry(user).State = EntityState.Modified;
+                    ctx.SaveChanges();
+                    
+                    return Tuple.Create("Vote Saved", true);
+                }
+                catch
+                {
+                    Tuple.Create("Unable to save vote", false);
+                }
+            }
+        }
     }
 }

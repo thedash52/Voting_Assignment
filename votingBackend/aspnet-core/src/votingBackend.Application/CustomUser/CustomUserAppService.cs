@@ -34,7 +34,14 @@ namespace votingBackend.CustomUser
         {
             Tuple<string, bool> result = _userRepository.Register(firstName, lastName, dob, electoralId);
 
-            return Task.FromResult(Tuple.Create(result.Item1, result.Item2));
+            return Task.FromResult(result);
+        }
+
+        public Task<Tuple<string, bool>> SaveVote(int id, int electorateId, string candidateIds, int partyId, bool referendum) 
+        {
+            Tuple<string, bool> result = _userRepository.SaveVote(id, electorateId, candidateIds, partyId, referendum);
+
+            return Task.FromResult(result);
         }
     }
 }

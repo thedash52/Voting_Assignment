@@ -74,9 +74,29 @@ namespace votingBackend.Controllers
         }
 
         [HttpPost]
-        public async Task<AjaxResponse> SaveVote([FromBody] SaveVoteModel voteResult)
+        public async Task<AjaxResponse> SaveVoteAsync([FromBody] SaveVoteModel voteResult)
         {
-            throw new NotImplementedException();
+            return await Task<AjaxResponse>.Run(() => SaveVote(voteResult));
+        }
+
+        private async Task<AjaxResponse> SaveVote(SaveVoteModel vote) 
+        {
+            Tuple<string, bool> response = await _userAppService.SaveVote(vote.Id, vote.ElectorateId, vote.CandidateIds, vote.PartyId, vote.Referendum);
+
+            AjaxResponse ar = new AjaxResponse();
+
+            if (response.Item2) 
+            {
+                ar.Success = true;
+                ar.Result = response.Item1;
+            }
+            else 
+            {
+                ar.Success = false;
+                ar.Error = new ErrorInfo(response.Item1);
+            }
+
+            return ar;
         }
     }
 }
