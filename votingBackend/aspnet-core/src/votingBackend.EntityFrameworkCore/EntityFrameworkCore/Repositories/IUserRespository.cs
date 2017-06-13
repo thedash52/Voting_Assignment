@@ -14,5 +14,7 @@ namespace votingBackend.EntityFrameworkCore.Repositories
         Tuple<AuthenticationModel, string, bool> Authenticate(string first, string last, string dob, string electoral);
 
         Tuple<string, bool> Register(string first, string last, string dob, string electoralId);
+
+        Tuple<string, bool> SaveVote(int id, int electorateId, string candidateIds, int partyId, bool referendum);
     }
 }

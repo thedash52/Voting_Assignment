@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 using votingBackend.CustomUser;
 using votingBackend.CustomUser.Dto;
 using votingBackend.Models;
+using Abp.UI;
+using Abp.MultiTenancy;
 
 namespace votingBackend.Controllers
 {
     [Route("api/[controller]/[action]")]
     public class UserContoller : votingBackendControllerBase
     {
-        private CustomUserAppService _userAppService;
+        private readonly ICustomUserAppService _userAppService;
 
         public UserContoller()
         {

@@ -13,7 +13,7 @@ namespace votingBackend.CustomUser
 {
     public class CustomUserAppService : votingBackendAppServiceBase, ICustomUserAppService
     {
-        private UserRepository _userRepository;
+        private IUserRespository _userRepository;
 
         public CustomUserAppService()
         {

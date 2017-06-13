@@ -16,5 +16,6 @@ namespace votingBackend
         public string Name { get; set; }
         public string Detail { get; set; }
         public string Images { get; set; }
+        public bool Active { get; set; }
     }
 }

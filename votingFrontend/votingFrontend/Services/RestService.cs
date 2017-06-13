@@ -74,33 +74,33 @@ namespace votingFrontend.Services
                     return null;
                 }
             }
-            else
-            {
-                return null;
-            }
-
-            //string first = "Bob";
-            //string last = "Smith";
-            //DateTime birth = DateTime.Parse("1993-08-10");
-            //string id = "ABC123456";
-
-            //if (first != firstName || last != lastName || birth.Date != dob.Date || id != electoralId)
+            //else
             //{
             //    return null;
             //}
-            //else
-            //{
-            //    UserVoteTable user = new UserVoteTable()
-            //    {
-            //        ServerId = 1,
-            //        FirstName = firstName,
-            //        LastName = lastName,
-            //        DoB = dob.Date.ToString(),
-            //        ElectoralId = electoralId
-            //    };
 
-            //    return user;
-            //}
+            string first = "Bob";
+            string last = "Smith";
+            DateTime birth = DateTime.Parse("1993-08-10");
+            string id = "ABC123456";
+
+            if (first != firstName || last != lastName || birth.Date != dob.Date || id != electoralId)
+            {
+                return null;
+            }
+            else
+            {
+                UserVoteTable user = new UserVoteTable()
+                {
+                    ServerId = 1,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    DoB = dob.Date.ToString(),
+                    ElectoralId = electoralId
+                };
+
+                return user;
+            }
         }
 
         internal async Task<List<ElectorateTable>> GetElectorates()

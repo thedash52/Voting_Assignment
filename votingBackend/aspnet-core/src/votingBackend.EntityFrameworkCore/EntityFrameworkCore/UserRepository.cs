@@ -126,7 +126,7 @@ namespace votingBackend.EntityFrameworkCore
                 }
                 catch
                 {
-                    Tuple.Create("Unable to save vote", false);
+                    return Tuple.Create("Unable to save vote", false);
                 }
             }
         }
