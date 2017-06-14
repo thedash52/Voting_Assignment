@@ -22,10 +22,10 @@ namespace votingBackend.CustomUser
 
         public Task<Tuple<LoginDto, string, bool>> Login(string first, string last, string dob, string electoral)
         {
-            Tuple<AuthenticationModel, string, bool> result = _userRepository.Authenticate(first, last, dob, electoral);
+            Tuple<UserVote, string, bool> result = _userRepository.Authenticate(first, last, dob, electoral);
 
             LoginDto loginDto = new LoginDto();
-            loginDto = Mapper.Map<AuthenticationModel, LoginDto>(result.Item1);
+            loginDto = Mapper.Map<UserVote, LoginDto>(result.Item1);
 
             return Task.FromResult(Tuple.Create(loginDto, result.Item2, result.Item3));
         }

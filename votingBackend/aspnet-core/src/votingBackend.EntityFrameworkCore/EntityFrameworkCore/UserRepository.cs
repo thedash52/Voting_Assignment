@@ -14,32 +14,26 @@ namespace votingBackend.EntityFrameworkCore
 {
     public class UserRepository : IUserRespository
     {
-        private votingBackendDbContextFactory _dbContext;
+        private votingBackendDbContext _dbContext;
+        private DbContextOptionsBuilder<votingBackendDbContext> builder;
 
         public UserRepository()
         {
-            _dbContext = new votingBackendDbContextFactory();
+            builder = new DbContextOptionsBuilder<votingBackendDbContext>();
+            builder.UseSqlServer("Data Source=tcp:developmentdaniel.database.windows.net,1433;Initial Catalog=votingBackend_db;User Id=danieln@developmentdaniel;Password=tHedAshc379sq;");
         }
 
-        public Tuple<AuthenticationModel, string, bool> Authenticate(string first, string last, string dob, string electoral)
+        public Tuple<UserVote, string, bool> Authenticate(string first, string last, string dob, string electoral)
         {
-            AuthenticationModel user = new AuthenticationModel();
+            UserVote user = new UserVote();
 
-            using (var ctx = _dbContext.Create(new DbContextFactoryOptions()))
+            using (var ctx = _dbContext = new votingBackendDbContext(builder.Options))
             {
                 try
                 {
                     var result = (from u in ctx.UserVoteSet
                                  where u.FirstName == first && u.LastName == last && u.DoB == DateTime.Parse(dob) && u.ElectoralId == electoral
-                                 select new AuthenticationModel
-                                 {
-                                     Id = u.Id,
-                                     FirstName = u.FirstName,
-                                     LastName = u.LastName,
-                                     Dob = u.DoB.ToShortDateString(),
-                                     ElectoralId = u.ElectoralId,
-                                     VoteSaved = u.VoteSaved
-                                 }).ToList();
+                                 select u).ToList();
 
                     if (result.Count == 1)
                     {
@@ -78,7 +72,7 @@ namespace votingBackend.EntityFrameworkCore
                 VoteSaved = false
             };
 
-            using (var ctx = _dbContext.Create(new DbContextFactoryOptions()))
+            using (var ctx = _dbContext = new votingBackendDbContext(builder.Options))
             {
                 try
                 {
@@ -102,7 +96,7 @@ namespace votingBackend.EntityFrameworkCore
 
         public Tuple<string, bool> SaveVote(int id, int electorateId, string candidateIds, int partyId, bool referendum)
         {
-            using(var ctx = _dbContext.Create(new DbContextFactoryOptions()))
+            using(var ctx = _dbContext = new votingBackendDbContext(builder.Options))
             {
                 try
                 {

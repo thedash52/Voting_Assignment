@@ -8,13 +8,13 @@ using votingFrontend.DatabaseTables;
 
 namespace votingFrontend.Models
 {
-    public class LoginUserResponse
+    public class VoteSentResponseModel
     {
         [JsonProperty(PropertyName = "success")]
         public bool Success { get; set; }
 
         [JsonProperty(PropertyName = "result")]
-        public UserVoteTable Result { get; set; }
+        public string Result { get; set; }
 
         [JsonProperty(PropertyName = "error")]
         public Error Error { get; set; }

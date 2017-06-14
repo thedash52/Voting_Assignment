@@ -11,7 +11,7 @@ namespace votingBackend.EntityFrameworkCore.Repositories
 {
     public interface IUserRespository : IRepository
     {
-        Tuple<AuthenticationModel, string, bool> Authenticate(string first, string last, string dob, string electoral);
+        Tuple<UserVote, string, bool> Authenticate(string first, string last, string dob, string electoral);
 
         Tuple<string, bool> Register(string first, string last, string dob, string electoralId);
 

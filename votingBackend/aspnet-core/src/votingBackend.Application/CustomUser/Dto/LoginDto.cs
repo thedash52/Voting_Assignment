@@ -8,7 +8,7 @@ using votingBackend.EntityFrameworkCore.Models;
 
 namespace votingBackend.CustomUser.Dto
 {
-    [AutoMap(typeof(AuthenticationModel))]
+    [AutoMap(typeof(UserVote))]
     public class LoginDto
     {
         public int Id { get; set; }
@@ -16,6 +16,10 @@ namespace votingBackend.CustomUser.Dto
         public string LastName { get; set; }
         public string Dob { get; set; }
         public string ElectoralId { get; set; }
+        public int ElectorateId { get; set; }
+        public string CandidateIds { get; set; }
+        public int PartyId { get; set; }
+        public bool Referendum { get; set; }
         public bool VoteSaved { get; set; }
     }
 }

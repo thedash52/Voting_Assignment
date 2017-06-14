@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using votingBackend.CustomUser;
 using votingBackend.VoteData;
+using votingBackend.EntityFrameworkCore;
 
 #if FEATURE_SIGNALR
 using Owin;

@@ -12,11 +12,13 @@ namespace votingBackend.EntityFrameworkCore
 {
     public class VoteDataRepository : IVoteDataRepository
     {
-        private votingBackendDbContextFactory _dbContext;
+        private votingBackendDbContext _dbContext;
+        private DbContextOptionsBuilder<votingBackendDbContext> builder;
 
         public VoteDataRepository()
         {
-            _dbContext = new votingBackendDbContextFactory();
+            builder = new DbContextOptionsBuilder<votingBackendDbContext>();
+            builder.UseSqlServer("Data Source=tcp:developmentdaniel.database.windows.net,1433;Initial Catalog=votingBackend_db;User Id=danieln@developmentdaniel;Password=tHedAshc379sq;");
         }
 
         public Tuple<string, bool> AddElectorate(string name, string detail, string image)
@@ -28,7 +30,7 @@ namespace votingBackend.EntityFrameworkCore
                 Image = image
             };
 
-            using (var ctx = _dbContext.Create(new DbContextFactoryOptions()))
+            using (var ctx = _dbContext = new votingBackendDbContext(builder.Options))
             {
                 try
                 {
@@ -60,7 +62,7 @@ namespace votingBackend.EntityFrameworkCore
                 Image = image
             };
 
-            using (var ctx = _dbContext.Create(new DbContextFactoryOptions()))
+            using (var ctx = _dbContext = new votingBackendDbContext(builder.Options))
             {
                 try
                 {
@@ -93,7 +95,7 @@ namespace votingBackend.EntityFrameworkCore
                 Active = true
             };
 
-            using (var ctx = _dbContext.Create(new DbContextFactoryOptions()))
+            using (var ctx = _dbContext = new votingBackendDbContext(builder.Options))
             {
                 try
                 {
@@ -143,7 +145,7 @@ namespace votingBackend.EntityFrameworkCore
                 Image = image
             };
 
-            using (var ctx = _dbContext.Create(new DbContextFactoryOptions()))
+            using (var ctx = _dbContext = new votingBackendDbContext(builder.Options))
             {
                 try
                 {
@@ -170,7 +172,7 @@ namespace votingBackend.EntityFrameworkCore
         {
             List<Electorate> listItems = new List<Electorate>();
 
-            using (var ctx = _dbContext.Create(new DbContextFactoryOptions()))
+            using (var ctx = _dbContext = new votingBackendDbContext(builder.Options))
             {
                 try
                 {
@@ -205,7 +207,7 @@ namespace votingBackend.EntityFrameworkCore
         {
             List<Candidate> listItems = new List<Candidate>();
 
-            using (var ctx = _dbContext.Create(new DbContextFactoryOptions()))
+            using (var ctx = _dbContext = new votingBackendDbContext(builder.Options))
             {
                 try
                 {
@@ -240,7 +242,7 @@ namespace votingBackend.EntityFrameworkCore
         {
             List<Party> listItems = new List<Party>();
 
-            using (var ctx = _dbContext.Create(new DbContextFactoryOptions()))
+            using (var ctx = _dbContext = new votingBackendDbContext(builder.Options))
             {
                 try
                 {
@@ -275,7 +277,7 @@ namespace votingBackend.EntityFrameworkCore
         {
             Referendum listItems = new Referendum();
 
-            using (var ctx = _dbContext.Create(new DbContextFactoryOptions()))
+            using (var ctx = _dbContext = new votingBackendDbContext(builder.Options))
             {
                 try
                 {

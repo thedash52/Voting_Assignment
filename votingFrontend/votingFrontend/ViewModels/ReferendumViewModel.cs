@@ -162,7 +162,7 @@ namespace votingFrontend.ViewModels
             }
             else
             {
-                UserVoteTable voteSent = restAPI.SendVote();
+                UserVoteTable voteSent = await restAPI.SendVote();
 
                 if (voteSent == null)
                 {

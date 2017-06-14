@@ -42,7 +42,7 @@ namespace votingFrontend.ViewModels
 
         private ResourceLoader resource;
 
-        private DateTime openDateTime = DateTime.Parse("13 June 2017 9:45AM");
+        private DateTime openDateTime = DateTime.Parse("14 June 2017 9:45AM");
         private DispatcherTimer countdown;
 
         private RestService restAPI = new RestService();
@@ -448,7 +448,19 @@ namespace votingFrontend.ViewModels
                 return;
             }
 
-            await UpdateVoteData();
+            if (!(await UpdateVoteData()))
+            {
+                ContentDialog noData = new ContentDialog()
+                {
+                    Title = "No Data",
+                    Content = "Unable to get Voting Data, Please Try Again Later",
+                    PrimaryButtonText = "OK"
+                };
+
+                await noData.ShowAsync();
+                LoggingIn = false;
+                return;
+            }
 
             UserVoteTable user = db.CheckVoter(FirstName, LastName, DoB, ElectoralId);
 
@@ -522,7 +534,7 @@ namespace votingFrontend.ViewModels
             }
         }
 
-        private async Task UpdateVoteData()
+        private async Task<bool> UpdateVoteData()
         {
             List<ElectorateTable> electorates = new List<ElectorateTable>();
             List<CandidateTable> candidates = new List<CandidateTable>();
@@ -534,10 +546,26 @@ namespace votingFrontend.ViewModels
             parties = await restAPI.GetParties();
             referendum = await restAPI.GetReferendum();
 
-            await db.UpdateElectorates(electorates);
-            await db.UpdateCandidates(candidates);
-            await db.UpdateParties(parties);
-            await db.UpdateReferendum(referendum);
+            if (electorates != null || candidates != null || parties != null || referendum != null)
+            {
+                await db.UpdateElectorates(electorates);
+                await db.UpdateCandidates(candidates);
+                await db.UpdateParties(parties);
+                await db.UpdateReferendum(referendum);
+
+                return true;
+            }
+            else
+            {
+                if (db.CheckData())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         private void Countdown_Tick(object sender, object e)

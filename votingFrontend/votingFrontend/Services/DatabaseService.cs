@@ -295,5 +295,27 @@ namespace votingFrontend.Services
         {
             db.Query<UserVoteTable>("UPDATE UserVoteTable SET Active = false");
         }
+
+        internal bool CheckData()
+        {
+            List<ElectorateTable> electorates = new List<ElectorateTable>();
+            List<CandidateTable> candidates = new List<CandidateTable>();
+            List<PartyTable> parties = new List<PartyTable>();
+            List<ReferendumTable> referendum = new List<ReferendumTable>();
+
+            electorates = db.Query<ElectorateTable>("SELECT * FROM ElectorateTable");
+            candidates = db.Query<CandidateTable>("SELECT * FROM CandidateTable");
+            parties = db.Query<PartyTable>("SELECT * FROM PartyTable");
+            referendum = db.Query<ReferendumTable>("SELECT * FROM ReferendumTable");
+
+            if (electorates.Count == 0 || candidates.Count == 0 || parties.Count == 0 || referendum.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }

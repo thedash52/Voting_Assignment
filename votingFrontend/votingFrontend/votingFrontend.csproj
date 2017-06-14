@@ -105,11 +105,17 @@
     <Compile Include="DatabaseTables\ReferendumTable.cs" />
     <Compile Include="DatabaseTables\UserVoteTable.cs" />
     <Compile Include="Interfaces\INavigationService.cs" />
+    <Compile Include="Models\CandidateResponseModel.cs" />
     <Compile Include="Models\CandidateSelection.cs" />
+    <Compile Include="Models\ElectorateResponseModel.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\LoginRequestModel.cs" />
     <Compile Include="Models\LoginResponseModel.cs" />
     <Compile Include="Models\LoginUserResponse.cs" />
+    <Compile Include="Models\PartyResponseModel.cs" />
+    <Compile Include="Models\ReferendumResponseModel.cs" />
+    <Compile Include="Models\VoteSendRequestModel.cs" />
+    <Compile Include="Models\VoteSentResponseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CommandService.cs" />
     <Compile Include="Services\DatabaseService.cs" />

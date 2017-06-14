@@ -14,7 +14,7 @@ namespace votingBackend.EntityFrameworkCore
         public virtual DbSet<Candidate> CandidateSet { get; set; }
         public virtual DbSet<Party> PartySet { get; set; }
         public virtual DbSet<Referendum> ReferendumSet { get; set; }
-        
+
         public votingBackendDbContext(DbContextOptions<votingBackendDbContext> options)
             : base(options)
         {
