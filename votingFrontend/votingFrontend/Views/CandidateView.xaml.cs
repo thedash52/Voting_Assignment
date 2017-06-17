@@ -15,16 +15,19 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace votingFrontend.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Displays Candidates for the user to choose from
     /// </summary>
     public sealed partial class CandidateView : Page
     {
+        //ViewModel Object for the related ViewModel
         private CandidateViewModel candidateVM;
+
+        /// <summary>
+        /// Default Contructor of the CandidateView
+        /// </summary>
         public CandidateView()
         {
             candidateVM = new CandidateViewModel(new NavigationService());
@@ -33,6 +36,11 @@ namespace votingFrontend.Views
             this.DataContext = candidateVM;
         }
 
+        /// <summary>
+        /// When an item is selected the DataTemplate for the selected item is changed to a more detailed view and any other items DataTemplate is changed to the detault view
+        /// </summary>
+        /// <param name="sender">The Object that called this method</param>
+        /// <param name="e">Event arguments for the object that called this method</param>
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             foreach (var item in e.AddedItems)
@@ -48,11 +56,19 @@ namespace votingFrontend.Views
             }
         }
 
+        /// <summary>
+        /// Links the checkboxes to the related method in the view model
+        /// </summary>
+        /// <param name="sender">Contains the selected item of the list</param>
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             candidateVM.SelectedCandidateChecked(sender);
         }
 
+        /// <summary>
+        /// Links the checkboxes to the related method in the view model
+        /// </summary>
+        /// <param name="sender">Contains the selected item of the list</param>
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             candidateVM.SelectedCandidateUnChecked(sender);

@@ -15,17 +15,19 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace votingFrontend.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Displays a Login page for the user to enter their details and login
     /// </summary>
     public sealed partial class LoginView : Page
     {
+        //ViewModel Object for the related ViewModel
         private LoginViewModel loginVM;
 
+        /// <summary>
+        /// Default Contructor of the LoginView
+        /// </summary>
         public LoginView()
         {
             loginVM = new LoginViewModel(new NavigationService());

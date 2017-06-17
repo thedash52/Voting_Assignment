@@ -15,8 +15,12 @@ using Windows.ApplicationModel.Resources;
 
 namespace votingFrontend.ViewModels
 {
+    /// <summary>
+    /// The ViewModel of the VoteSubmittedView which contains all the logic for the view
+    /// </summary>
     public class VoteSubmittedViewModel : INotifyPropertyChanged
     {
+        //Private variables for the properties to store information
         private string title;
         private string voteText;
         private string electorateText;
@@ -42,6 +46,10 @@ namespace votingFrontend.ViewModels
         private RestService restAPI = new RestService();
         private DatabaseService db = new DatabaseService();
 
+        /// <summary>
+        /// Default Contructor for LoginViewModel
+        /// </summary>
+        /// <param name="navigationService">Passes the Navigation Property from the View to the ViewModel</param>
         public VoteSubmittedViewModel(INavigationService navigationService, UserVoteTable user)
         {
             this.navigation = navigationService;
@@ -101,8 +109,14 @@ namespace votingFrontend.ViewModels
             Referendum = this.user.Referendum.ToString();
         }
 
+        /// <summary>
+        /// Event relating to and controlling property changes
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Gets and Sets the String property Title
+        /// </summary>
         public string Title
         {
             get
@@ -117,6 +131,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property VoteText
+        /// </summary>
         public string VoteText
         {
             get
@@ -131,6 +148,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property ElectorateText
+        /// </summary>
         public string ElectorateText
         {
             get
@@ -145,6 +165,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property Electorate
+        /// </summary>
         public string Electorate
         {
             get
@@ -159,6 +182,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property CandidateText
+        /// </summary>
         public string CandidateText
         {
             get
@@ -173,6 +199,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property Candidates
+        /// </summary>
         public string Candidates
         {
             get
@@ -187,6 +216,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property PartyText
+        /// </summary>
         public string PartyText
         {
             get
@@ -201,6 +233,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property Party
+        /// </summary>
         public string Party
         {
             get
@@ -215,6 +250,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property ReferendumText
+        /// </summary>
         public string ReferendumText
         {
             get
@@ -229,6 +267,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property Referendum
+        /// </summary>
         public string Referendum
         {
             get
@@ -243,6 +284,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property SubmittedText
+        /// </summary>
         public string SubmittedText
         {
             get
@@ -257,6 +301,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property LoginButton
+        /// </summary>
         public string LoginButton
         {
             get
@@ -271,6 +318,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property ConnectionText
+        /// </summary>
         public string ConnectionText
         {
             get
@@ -285,6 +335,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the ICommand property LoginCommand
+        /// </summary>
         public ICommand LoginCommand
         {
             get
@@ -299,11 +352,18 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Navigates the user back to the LoginView
+        /// </summary>
         internal void Login(object obj)
         {
             this.navigation.Navigate(typeof(LoginView));
         }
 
+        /// <summary>
+        /// Handles what happens whenever the property data changes
+        /// </summary>
+        /// <param name="propertyName">The name of the property that has changed</param>
         private void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
             if (this.PropertyChanged != null)

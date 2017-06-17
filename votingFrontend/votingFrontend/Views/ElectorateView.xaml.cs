@@ -15,17 +15,19 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace votingFrontend.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Displays Electorates for the user to choose from
     /// </summary>
     public sealed partial class ElectorateView : Page
     {
+        //ViewModel Object for the related ViewModel
         private ElectorateViewModel electorateVM;
 
+        /// <summary>
+        /// Default Contructor of the ElectorateView
+        /// </summary>
         public ElectorateView()
         {
             this.InitializeComponent();
@@ -34,6 +36,11 @@ namespace votingFrontend.Views
             this.DataContext = electorateVM;
         }
 
+        /// <summary>
+        /// When an item is selected the DataTemplate for the selected item is changed to a more detailed view and any other items DataTemplate is changed to the detault view
+        /// </summary>
+        /// <param name="sender">The Object that called this method</param>
+        /// <param name="e">Event arguments for the object that called this method</param>
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             foreach (var item in e.AddedItems)

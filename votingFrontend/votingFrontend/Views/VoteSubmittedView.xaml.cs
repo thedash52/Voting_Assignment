@@ -16,23 +16,28 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace votingFrontend.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Displays Vote Data the user selected
     /// </summary>
     public sealed partial class VoteSubmittedView : Page
     {
+        //ViewModel Object for the related ViewModel
         private VoteSubmittedViewModel voteSubmittedVM;
-        private UserVoteTable user;
 
+        /// <summary>
+        /// Default Contructor of the VoteSubmittedView
+        /// </summary>
         public VoteSubmittedView()
         {
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Overrides the OnNavigatedaTo method to set the DataContext for the view
+        /// </summary>
+        /// <param name="e">Contains the user data passed from the previous view</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //user = e.Parameter as UserVoteTable;

@@ -18,17 +18,19 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace votingFrontend.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Displays the Referendum for the user to choose from
     /// </summary>
     public sealed partial class ReferendumView : Page
     {
+        //ViewModel Object for the related ViewModel
         private ReferendumViewModel referendumVM;
 
+        /// <summary>
+        /// Default Contructor of the ReferendumView
+        /// </summary>
         public ReferendumView()
         {
             this.InitializeComponent();

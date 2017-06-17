@@ -15,8 +15,12 @@ using Windows.UI.Xaml.Controls;
 
 namespace votingFrontend.ViewModels
 {
+    /// <summary>
+    /// The ViewModel of the ReferendumView which contains all the logic for the view
+    /// </summary>
     public class ReferendumViewModel : INotifyPropertyChanged
     {
+        //Private variables for the properties to store information
         private string title;
         private ReferendumTable referendum;
         private string yesButton;
@@ -31,6 +35,10 @@ namespace votingFrontend.ViewModels
         private RestService restAPI = new RestService();
         private DatabaseService db = new DatabaseService();
 
+        /// <summary>
+        /// Default Contructor for ReferendumViewModel
+        /// </summary>
+        /// <param name="navigationService">Passes the Navigation Property from the View to the ViewModel</param>
         public ReferendumViewModel(INavigationService navigationService)
         {
             this.navigation = navigationService;
@@ -48,8 +56,14 @@ namespace votingFrontend.ViewModels
             Referendum = db.GetReferendum();
         }
 
+        /// <summary>
+        /// Event relating to and controlling property changes
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Gets and Sets the String property Title
+        /// </summary>
         public string Title
         {
             get
@@ -64,6 +78,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the ReferendumTable property Referendum
+        /// </summary>
         public ReferendumTable Referendum
         {
             get
@@ -78,6 +95,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property YesButton
+        /// </summary>
         public string YesButton
         {
             get
@@ -92,6 +112,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property NoButton
+        /// </summary>
         public string NoButton
         {
             get
@@ -106,6 +129,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the ICommand property AnswerCommand
+        /// </summary>
         public ICommand AnswerCommand
         {
             get
@@ -120,6 +146,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property ConnectionText
+        /// </summary>
         public string ConnectionText
         {
             get
@@ -134,6 +163,10 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Takes the result passed from the button and saves it to the user, then navigates to the next view
+        /// </summary>
+        /// <param name="obj">Contains a Yes or No value depending on what button was pressed</param>
         internal async void Next(object obj)
         {
             int result = -1;
@@ -180,6 +213,10 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Handles what happens whenever the property data changes
+        /// </summary>
+        /// <param name="propertyName">The name of the property that has changed</param>
         private void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
             if (this.PropertyChanged != null)

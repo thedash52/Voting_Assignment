@@ -16,7 +16,7 @@ namespace votingFrontend.Converters
                 DateTime date = (DateTime)value;
                 return new DateTimeOffset(date);
             }
-            catch (Exception ex)
+            catch
             {
                 return DateTimeOffset.MinValue;
             }
@@ -29,7 +29,7 @@ namespace votingFrontend.Converters
                 DateTimeOffset dto = (DateTimeOffset)value;
                 return dto.DateTime;
             }
-            catch (Exception ex)
+            catch
             {
                 return DateTime.MinValue;
             }

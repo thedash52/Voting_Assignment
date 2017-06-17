@@ -16,8 +16,12 @@ using Windows.UI.Xaml.Controls;
 
 namespace votingFrontend.ViewModels
 {
+    /// <summary>
+    /// The ViewModel of the ElectorateView which contains all the logic for the view
+    /// </summary>
     public class ElectorateViewModel : INotifyPropertyChanged
     {
+        //Private variables for the properties to store information
         private string title;
         private List<ElectorateTable> electorates;
         private string selectButton;
@@ -31,6 +35,10 @@ namespace votingFrontend.ViewModels
         private RestService restAPI = new RestService();
         private DatabaseService db = new DatabaseService();
 
+        /// <summary>
+        /// Default Contructor for ElectorateViewModel
+        /// </summary>
+        /// <param name="navigationService">Passes the Navigation Property from the View to the ViewModel</param>
         public ElectorateViewModel(INavigationService navigationService)
         {
             this.navigation = navigationService;
@@ -46,8 +54,14 @@ namespace votingFrontend.ViewModels
             Electorates = db.GetElectorates();
         }
 
+        /// <summary>
+        /// Event relating to and controlling property changes
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Gets and Sets the String property Title
+        /// </summary>
         public string Title
         {
             get
@@ -62,6 +76,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the List<ElectorateTable> property Electorates
+        /// </summary>
         public List<ElectorateTable> Electorates
         {
             get
@@ -76,6 +93,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property SelectButton
+        /// </summary>
         public string SelectButton
         {
             get
@@ -90,6 +110,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the ICommand property SelectCommand
+        /// </summary>
         public ICommand SelectCommand
         {
             get
@@ -104,6 +127,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property ConnectionText
+        /// </summary>
         public string ConnectionText
         {
             get
@@ -118,6 +144,10 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Saves the selected electorate to the user and navigates to the next view
+        /// </summary>
+        /// <param name="sender">Sender Contains the selected item from the list</param>
         internal async void Next(object sender)
         {
             int result = db.AddElectorateVote((ElectorateTable)sender);
@@ -140,6 +170,10 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Handles what happens whenever the property data changes
+        /// </summary>
+        /// <param name="propertyName">The name of the property that has changed</param>
         private void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
             if (this.PropertyChanged != null)

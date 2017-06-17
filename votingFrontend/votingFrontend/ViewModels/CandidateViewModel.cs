@@ -17,8 +17,12 @@ using Windows.UI.Xaml.Controls;
 
 namespace votingFrontend.ViewModels
 {
+    /// <summary>
+    /// The ViewModel of the CandidateView which contains all the logic for the view
+    /// </summary>
     public class CandidateViewModel : INotifyPropertyChanged
     {
+        //Private variables for the properties to store information
         private string title;
         private ObservableCollection<CandidateSelection> candidates;
         private List<CandidateTable> selectedCandidates;
@@ -36,6 +40,10 @@ namespace votingFrontend.ViewModels
         private RestService resAPI = new RestService();
         private DatabaseService db = new DatabaseService();
 
+        /// <summary>
+        /// Default Contructor for CandidateViewModel
+        /// </summary>
+        /// <param name="navigationService">Passes the Navigation Property from the View to the ViewModel</param>
         public CandidateViewModel(INavigationService navigationService)
         {
             this.navigation = navigationService;
@@ -56,8 +64,14 @@ namespace votingFrontend.ViewModels
             Candidates = db.GetCandidates();
         }
 
+        /// <summary>
+        /// Event relating to and controlling property changes
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Gets and Sets the String property Title
+        /// </summary>
         public string Title
         {
             get
@@ -72,6 +86,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the ObservableCollection<CandidateSelection> property Canidates
+        /// </summary>
         public ObservableCollection<CandidateSelection> Candidates
         {
             get
@@ -86,6 +103,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property SelectButton
+        /// </summary>
         public string SelectButton
         {
             get
@@ -100,6 +120,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the ICommand property SelectCommand
+        /// </summary>
         public ICommand SelectCommand
         {
             get
@@ -114,6 +137,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property ConnectionText
+        /// </summary>
         public string ConnectionText
         {
             get
@@ -128,6 +154,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the List<CandidateTable> property SelectCandidates
+        /// </summary>
         public List<CandidateTable> SelectedCandidates
         {
             get
@@ -143,6 +172,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the CandidateSelection property SelectCandidate
+        /// </summary>
         public CandidateSelection SelectedCandidate
         {
             get
@@ -157,6 +189,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property 
+        /// </summary>
         public bool CanExecute
         {
             get
@@ -171,6 +206,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// When an item is selected checks how many have been selected and if to many tells the user otherwise adds the selected item to a selected item list
+        /// </summary>
         internal async void SelectedCandidateChecked(object sender)
         {
             if (SelectedCandidates.Count > 3)
@@ -211,6 +249,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// When an item is unselected removes the selected item from the selected item list
+        /// </summary>
         internal void SelectedCandidateUnChecked(object sender)
         {
             CandidateTable candidate = new CandidateTable()
@@ -247,6 +288,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Takes the selected item list and saves it to the user, then navigates to the next view
+        /// </summary>
         internal async void Next(object sender)
         {
             int result = db.AddCandidateVote(SelectedCandidates);
@@ -269,6 +313,10 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Handles what happens whenever the property data changes
+        /// </summary>
+        /// <param name="propertyName">The name of the property that has changed</param>
         private void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
             if (this.PropertyChanged != null)

@@ -17,8 +17,12 @@ using Windows.UI.Xaml.Controls;
 
 namespace votingFrontend.ViewModels
 {
+    /// <summary>
+    /// The ViewModel of the PartyView which contains all the logic for the view
+    /// </summary>
     public class PartyViewModel : INotifyPropertyChanged
     {
+        //Private variables for the properties to store information
         private string title;
         private List<PartyTable> parties;
         private PartyTable selectedParty;
@@ -33,6 +37,10 @@ namespace votingFrontend.ViewModels
         private RestService restAPT = new RestService();
         private DatabaseService db = new DatabaseService();
 
+        /// <summary>
+        /// Default Contructor for PartyViewModel
+        /// </summary>
+        /// <param name="navigationService">Passes the Navigation Property from the View to the ViewModel</param>
         public PartyViewModel(INavigationService navigationService)
         {
             this.navigation = navigationService;
@@ -49,8 +57,14 @@ namespace votingFrontend.ViewModels
             Parties = db.GetParties();
         }
 
+        /// <summary>
+        /// Event relating to and controlling property changes
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Gets and Sets the String property Title
+        /// </summary>
         public string Title
         {
             get
@@ -65,6 +79,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the List<PartyTable> property Parties
+        /// </summary>
         public List<PartyTable> Parties
         {
             get
@@ -79,6 +96,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property SelectButton
+        /// </summary>
         public string SelectButton
         {
             get
@@ -93,6 +113,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the ICommand property SelectCommand
+        /// </summary>
         public ICommand SelectCommand
         {
             get
@@ -107,6 +130,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property ConnectionText
+        /// </summary>
         public string ConnectionText
         {
             get
@@ -121,6 +147,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the PartyTable property SelectParty
+        /// </summary>
         public PartyTable SelectedParty
         {
             get
@@ -135,6 +164,10 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Takes the selected item and saves it to the user, then navigates to the next view
+        /// </summary>
+        /// <param name="sender">Contains the selected item from the list</param>
         internal async void Next(object sender)
         {
             int result = db.AddPartyVote((PartyTable)sender);
@@ -157,6 +190,10 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Handles what happens whenever the property data changes
+        /// </summary>
+        /// <param name="propertyName">The name of the property that has changed</param>
         private void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
             if (this.PropertyChanged != null)

@@ -24057,14 +24057,14 @@
     "UAP,Version=v10.0": []
   },
   "packageFolders": {
-    "C:\\Users\\danieln\\.nuget\\packages\\": {}
+    "C:\\Users\\thedash52\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "C:\\Dev\\VotingAssignment\\votingFrontend\\votingFrontend\\votingFrontend.csproj",
+      "projectUniqueName": "C:\\Dev\\votingAssignment\\votingFrontend\\votingFrontend\\votingFrontend.csproj",
       "projectName": "votingFrontend",
-      "projectPath": "C:\\Dev\\VotingAssignment\\votingFrontend\\votingFrontend\\votingFrontend.csproj",
-      "projectJsonPath": "C:\\Dev\\VotingAssignment\\votingFrontend\\votingFrontend\\project.json",
+      "projectPath": "C:\\Dev\\votingAssignment\\votingFrontend\\votingFrontend\\votingFrontend.csproj",
+      "projectJsonPath": "C:\\Dev\\votingAssignment\\votingFrontend\\votingFrontend\\project.json",
       "projectStyle": "ProjectJson"
     },
     "dependencies": {

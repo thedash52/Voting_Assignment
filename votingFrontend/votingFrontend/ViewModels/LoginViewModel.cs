@@ -15,8 +15,12 @@ using Windows.UI.Xaml.Controls;
 
 namespace votingFrontend.ViewModels
 {
+    /// <summary>
+    /// The ViewModel of the LoginView which contains all the logic for the view
+    /// </summary>
     public class LoginViewModel : INotifyPropertyChanged
     {
+        //Private variables for the properties to store information
         private string titleText;
         private string firstNameText;
         private string firstName;
@@ -42,13 +46,17 @@ namespace votingFrontend.ViewModels
 
         private ResourceLoader resource;
 
-        private DateTime openDateTime = DateTime.Parse("14 June 2017 9:45AM");
+        private DateTime openDateTime = DateTime.Parse("17 June 2017 9:45AM");
         private DispatcherTimer countdown;
 
         private RestService restAPI = new RestService();
         private DatabaseService db = new DatabaseService();
         private INavigationService navigation;
 
+        /// <summary>
+        /// Default Contructor for LoginViewModel
+        /// </summary>
+        /// <param name="navigationService">Passes the Navigation Property from the View to the ViewModel</param>
         public LoginViewModel(INavigationService navigationService)
         {
             this.navigation = navigationService;
@@ -99,8 +107,14 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Event relating to and controlling property changes
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
+        /// <summary>
+        /// Gets and Sets the ICommand property LoginCommand
+        /// </summary>
         public ICommand LoginCommand
         {
             get
@@ -115,6 +129,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property TitleText
+        /// </summary>
         public string TitleText
         {
             get
@@ -129,6 +146,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property FirstNameText
+        /// </summary>
         public string FirstNameText
         {
             get
@@ -143,6 +163,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property FirstName
+        /// </summary>
         public string FirstName
         {
             get
@@ -157,6 +180,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property LastNameText
+        /// </summary>
         public string LastNameText
         {
             get
@@ -171,6 +197,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property LastName
+        /// </summary>
         public string LastName
         {
             get
@@ -185,6 +214,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property DoBText
+        /// </summary>
         public string DoBText
         {
             get
@@ -199,6 +231,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the DateTime property DoB
+        /// </summary>
         public DateTime DoB
         {
             get
@@ -213,6 +248,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property ElectoralIdText
+        /// </summary>
         public string ElectoralIdText
         {
             get
@@ -227,6 +265,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property ElectoralId
+        /// </summary>
         public string ElectoralId
         {
             get
@@ -241,6 +282,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property LoginText
+        /// </summary>
         public string LoginText
         {
             get
@@ -255,6 +299,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the Visibility property VotingClosed
+        /// </summary>
         public Visibility VotingClosed
         {
             get
@@ -269,6 +316,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property TimeTillOpenText
+        /// </summary>
         public string TimeTillOpenText
         {
             get
@@ -283,6 +333,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property TimeTillOpen
+        /// </summary>
         public double TimeTillOpen
         {
             get
@@ -297,6 +350,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property FistNamePlaceHolder
+        /// </summary>
         public string FirstNamePlaceHolder
         {
             get
@@ -311,6 +367,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property LastNamePlaceHolder
+        /// </summary>
         public string LastNamePlaceHolder
         {
             get
@@ -325,6 +384,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property ElectoralIdPlaceHolder
+        /// </summary>
         public string ElectoralIdPlaceHolder
         {
             get
@@ -339,6 +401,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the Boolean property LoggingIn
+        /// </summary>
         public bool LoggingIn
         {
             get
@@ -353,6 +418,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets and Sets the String property Connection Text
+        /// </summary>
         public string ConnectionText
         {
             get
@@ -367,6 +435,10 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Validates the user entry and if the entry is valid sends the data to the Rest Service to check if user details are correct and logs in the user.
+        /// When the user has been logged in and has received the user details navigates user to appropriate view 
+        /// </summary>
         internal async void Login(object sender)
         {
             LoggingIn = true;
@@ -534,6 +606,10 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Updates the Voting Data in the local database from the server database
+        /// </summary>
+        /// <returns>A bool weather the local database was updated</returns>
         private async Task<bool> UpdateVoteData()
         {
             List<ElectorateTable> electorates = new List<ElectorateTable>();
@@ -568,6 +644,9 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Logic behind each tick of the countdown timer
+        /// </summary>
         private void Countdown_Tick(object sender, object e)
         {
             TimeTillOpen--;
@@ -580,6 +659,10 @@ namespace votingFrontend.ViewModels
             }
         }
 
+        /// <summary>
+        /// Handles what happens whenever the property data changes
+        /// </summary>
+        /// <param name="propertyName">The name of the property that has changed</param>
         private void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
             if (this.PropertyChanged != null)

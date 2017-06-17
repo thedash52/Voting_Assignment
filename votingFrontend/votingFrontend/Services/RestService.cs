@@ -31,7 +31,7 @@ namespace votingFrontend.Services
             {
                 FirstName = firstName,
                 LastName = lastName,
-                Dob = dob.Date.ToString(),
+                Dob = dob.Date.ToString("D"),
                 ElectoralId = electoralId
             };
 
