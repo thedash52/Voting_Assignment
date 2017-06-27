@@ -1,13 +1,16 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using votingFrontend.DatabaseTables;
+﻿// <copyright file="ElectorateResponseModel.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
-namespace votingFrontend.Models
+namespace VotingFrontend.Models
 {
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+    using VotingFrontend.DatabaseTables;
+
+    /// <summary>
+    /// Response Model for Getting the Electorates
+    /// </summary>
     public class ElectorateResponseModel
     {
         [JsonProperty(PropertyName = "success")]

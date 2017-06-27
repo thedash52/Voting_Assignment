@@ -2,18 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using votingFrontend.DatabaseTables;
-using votingFrontend.Interfaces;
-using votingFrontend.Services;
-using votingFrontend.Views;
+using VotingFrontend.DatabaseTables;
+using VotingFrontend.Interfaces;
+using VotingFrontend.Services;
+using VotingFrontend.Views;
 using Windows.ApplicationModel.Resources;
 
-namespace votingFrontend.ViewModels
+namespace VotingFrontend.ViewModels
 {
     /// <summary>
     /// The ViewModel of the VoteSubmittedView which contains all the logic for the view

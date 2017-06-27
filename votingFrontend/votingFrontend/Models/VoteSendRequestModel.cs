@@ -1,12 +1,14 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="VoteSendRequestModel.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
-namespace votingFrontend.Models
+namespace VotingFrontend.Models
 {
+    using Newtonsoft.Json;
+
+    /// <summary>
+    /// Request Model for sending vote results to the server
+    /// </summary>
     public class VoteSendRequestModel
     {
         [JsonProperty(PropertyName = "id")]

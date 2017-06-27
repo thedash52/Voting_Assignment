@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="CandidateSelection.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
-namespace votingFrontend.Models
+namespace VotingFrontend.Models
 {
+    /// <summary>
+    /// Model for the acordian list on the select candidate view
+    /// </summary>
     public class CandidateSelection
     {
         public int Id { get; set; }

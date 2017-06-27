@@ -499,6 +499,9 @@
           "lib/portable-win8+net45+wp8+wpa81+MonoAndroid1+MonoTouch1/SQLite.Net.dll": {}
         }
       },
+      "StyleCop.Analyzers/1.0.2": {
+        "type": "package"
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -3150,6 +3153,9 @@
           "lib/portable-win8+net45+wp8+wpa81+MonoAndroid1+MonoTouch1/SQLite.Net.dll": {}
         }
       },
+      "StyleCop.Analyzers/1.0.2": {
+        "type": "package"
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -5656,6 +5662,9 @@
           "lib/portable-win8+net45+wp8+wpa81+MonoAndroid1+MonoTouch1/SQLite.Net.dll": {}
         }
       },
+      "StyleCop.Analyzers/1.0.2": {
+        "type": "package"
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -8131,6 +8140,9 @@
         "runtime": {
           "lib/portable-win8+net45+wp8+wpa81+MonoAndroid1+MonoTouch1/SQLite.Net.dll": {}
         }
+      },
+      "StyleCop.Analyzers/1.0.2": {
+        "type": "package"
       },
       "System.AppContext/4.3.0": {
         "type": "package",
@@ -10647,6 +10659,9 @@
           "lib/portable-win8+net45+wp8+wpa81+MonoAndroid1+MonoTouch1/SQLite.Net.dll": {}
         }
       },
+      "StyleCop.Analyzers/1.0.2": {
+        "type": "package"
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -13122,6 +13137,9 @@
         "runtime": {
           "lib/portable-win8+net45+wp8+wpa81+MonoAndroid1+MonoTouch1/SQLite.Net.dll": {}
         }
+      },
+      "StyleCop.Analyzers/1.0.2": {
+        "type": "package"
       },
       "System.AppContext/4.3.0": {
         "type": "package",
@@ -15637,6 +15655,9 @@
         "runtime": {
           "lib/portable-win8+net45+wp8+wpa81+MonoAndroid1+MonoTouch1/SQLite.Net.dll": {}
         }
+      },
+      "StyleCop.Analyzers/1.0.2": {
+        "type": "package"
       },
       "System.AppContext/4.3.0": {
         "type": "package",
@@ -18860,6 +18881,19 @@
         "lib/portable-win8+net45+wp8+wpa81+MonoAndroid1+MonoTouch1/SQLite.Net.dll",
         "sqlite.net.core-pcl.3.1.1.nupkg.sha512",
         "sqlite.net.core-pcl.nuspec"
+      ]
+    },
+    "StyleCop.Analyzers/1.0.2": {
+      "sha512": "3xD87lafnVhsSEtJKk50G7FGutvaXkFz4XrrLrxnk/DhZU42dnCGWUsvKuBv4mTS0XdIgTY88tLhxW/8Vi3Pow==",
+      "type": "package",
+      "path": "stylecop.analyzers/1.0.2",
+      "files": [
+        "analyzers/dotnet/cs/StyleCop.Analyzers.CodeFixes.dll",
+        "analyzers/dotnet/cs/StyleCop.Analyzers.dll",
+        "stylecop.analyzers.1.0.2.nupkg.sha512",
+        "stylecop.analyzers.nuspec",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
       ]
     },
     "System.AppContext/4.3.0": {
@@ -24052,25 +24086,27 @@
     "": [
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.2.3",
       "Newtonsoft.Json >= 10.0.2",
-      "SQLite.Net-PCL >= 3.1.1"
+      "SQLite.Net-PCL >= 3.1.1",
+      "StyleCop.Analyzers >= 1.0.2"
     ],
     "UAP,Version=v10.0": []
   },
   "packageFolders": {
-    "C:\\Users\\thedash52\\.nuget\\packages\\": {}
+    "C:\\Users\\danieln\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "C:\\Dev\\votingAssignment\\votingFrontend\\votingFrontend\\votingFrontend.csproj",
+      "projectUniqueName": "C:\\Dev\\VotingAssignment\\votingFrontend\\votingFrontend\\votingFrontend.csproj",
       "projectName": "votingFrontend",
-      "projectPath": "C:\\Dev\\votingAssignment\\votingFrontend\\votingFrontend\\votingFrontend.csproj",
-      "projectJsonPath": "C:\\Dev\\votingAssignment\\votingFrontend\\votingFrontend\\project.json",
+      "projectPath": "C:\\Dev\\VotingAssignment\\votingFrontend\\votingFrontend\\votingFrontend.csproj",
+      "projectJsonPath": "C:\\Dev\\VotingAssignment\\votingFrontend\\votingFrontend\\project.json",
       "projectStyle": "ProjectJson"
     },
     "dependencies": {
       "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.3",
       "Newtonsoft.Json": "10.0.2",
-      "SQLite.Net-PCL": "3.1.1"
+      "SQLite.Net-PCL": "3.1.1",
+      "StyleCop.Analyzers": "1.0.2"
     },
     "frameworks": {
       "uap10.0": {}

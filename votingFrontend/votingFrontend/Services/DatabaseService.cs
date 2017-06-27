@@ -1,44 +1,65 @@
-﻿using Newtonsoft.Json;
-using SQLite.Net;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using votingFrontend.DatabaseTables;
-using votingFrontend.Models;
+﻿// <copyright file="DatabaseService.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
-namespace votingFrontend.Services
+namespace VotingFrontend.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.IO;
+    using System.Threading.Tasks;
+    using Newtonsoft.Json;
+    using SQLite.Net;
+    using VotingFrontend.DatabaseTables;
+    using VotingFrontend.Models;
+
+    /// <summary>
+    /// Service that handles all data manipulation
+    /// </summary>
     public class DatabaseService
     {
+        // private database object
         private SQLiteConnection db;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DatabaseService"/> class.
+        /// </summary>
         public DatabaseService()
         {
-            var path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "db.sqlite");
-            db = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
+            var path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "this.db.sqlite");
+            this.db = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
 
-            db.CreateTable<UserVoteTable>();
-            db.CreateTable<ElectorateTable>();
-            db.CreateTable<CandidateTable>();
-            db.CreateTable<PartyTable>();
-            db.CreateTable<ReferendumTable>();
+            this.db.CreateTable<UserVoteTable>();
+            this.db.CreateTable<ElectorateTable>();
+            this.db.CreateTable<CandidateTable>();
+            this.db.CreateTable<PartyTable>();
+            this.db.CreateTable<ReferendumTable>();
         }
 
+        /// <summary>
+        /// Sets login status of user to active
+        /// </summary>
+        /// <param name="user">Model containing current user data</param>
         internal void VoterLoggedIn(UserVoteTable user)
         {
-            db.Query<UserVoteTable>("UPDATE UserVoteTable SET Active = 0");
+            this.db.Query<UserVoteTable>("UPDATE UserVoteTable SET Active = 0");
 
-            db.Insert(user);
+            this.db.Insert(user);
         }
 
+        /// <summary>
+        /// Checks if the login details match current records
+        /// </summary>
+        /// <param name="firstName">string containing first name</param>
+        /// <param name="lastName">string containing last name</param>
+        /// <param name="doB">DateTime object containing date of birth</param>
+        /// <param name="electoralId">String containing electoral id</param>
+        /// <returns>Returns the user details if found, if not returns null</returns>
         internal UserVoteTable CheckVoter(string firstName, string lastName, DateTime doB, string electoralId)
         {
             List<UserVoteTable> userDB = new List<UserVoteTable>();
-            userDB = db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE FirstName = '" + firstName + "' AND LastName = '" + lastName + "' AND DoB LIKE '" + doB.Date.ToString("d") + "%' AND ElectoralId = '" + electoralId + "'");
+            userDB = this.db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE FirstName = '" + firstName + "' AND LastName = '" + lastName + "' AND DoB LIKE '" + doB.Date.ToString("d") + "%' AND ElectoralId = '" + electoralId + "'");
 
             if (userDB.Count != 1)
             {
@@ -48,18 +69,26 @@ namespace votingFrontend.Services
             return userDB[0];
         }
 
+        /// <summary>
+        /// Get the referendum from the database
+        /// </summary>
+        /// <returns>Returns the referendum data</returns>
         internal ReferendumTable GetReferendum()
         {
             ReferendumTable referendum = new ReferendumTable();
-            referendum = db.Query<ReferendumTable>("SELECT * FROM ReferendumTable")[0];
+            referendum = this.db.Query<ReferendumTable>("SELECT * FROM ReferendumTable")[0];
 
             return referendum;
         }
 
+        /// <summary>
+        /// Gets all the candidates from the database
+        /// </summary>
+        /// <returns>Returns the candidate data</returns>
         internal ObservableCollection<CandidateSelection> GetCandidates()
         {
             List<CandidateTable> dbcandidates = new List<CandidateTable>();
-            dbcandidates = db.Query<CandidateTable>("SELECT * FROM CandidateTable");
+            dbcandidates = this.db.Query<CandidateTable>("SELECT * FROM CandidateTable");
 
             ObservableCollection<CandidateSelection> candidates = new ObservableCollection<CandidateSelection>();
 
@@ -81,10 +110,15 @@ namespace votingFrontend.Services
             return candidates;
         }
 
+        /// <summary>
+        /// Gets the party from the database using the party id
+        /// </summary>
+        /// <param name="partyId">Int containing the party id</param>
+        /// <returns>Returns the party data relating to the id if found, otherwise returns null</returns>
         internal PartyTable GetPartyFromId(int partyId)
         {
             List<PartyTable> parties = new List<PartyTable>();
-            parties = db.Query<PartyTable>("SELECT * FROM PartyTable WHERE Id = " + partyId);
+            parties = this.db.Query<PartyTable>("SELECT * FROM PartyTable WHERE Id = " + partyId);
 
             if (parties.Count != 1)
             {
@@ -94,10 +128,15 @@ namespace votingFrontend.Services
             return parties[0];
         }
 
+        /// <summary>
+        /// Gets the candidate from the database using the canididate id
+        /// </summary>
+        /// <param name="id">Int containing the candidate id</param>
+        /// <returns>Returns the candidate data relating to the id if found, otherwise returns null</returns>
         internal CandidateTable GetCandidateFromId(int id)
         {
             List<CandidateTable> candidates = new List<CandidateTable>();
-            candidates = db.Query<CandidateTable>("SELECT * FROM CandidateTable WHERE Id = " + id);
+            candidates = this.db.Query<CandidateTable>("SELECT * FROM CandidateTable WHERE Id = " + id);
 
             if (candidates.Count != 1)
             {
@@ -107,10 +146,15 @@ namespace votingFrontend.Services
             return candidates[0];
         }
 
+        /// <summary>
+        /// Gets the electorate from the database using the electorate id
+        /// </summary>
+        /// <param name="electorateId">Int containing the electorate id</param>
+        /// <returns>Returns the electorate data relating to the id if found, otherwise returns null</returns>
         internal ElectorateTable GetElectorateFromId(int electorateId)
         {
             List<ElectorateTable> electorates = new List<ElectorateTable>();
-            electorates = db.Query<ElectorateTable>("SELECT * FROM ElectorateTable WHERE Id = " + electorateId);
+            electorates = this.db.Query<ElectorateTable>("SELECT * FROM ElectorateTable WHERE Id = " + electorateId);
 
             if (electorates.Count != 1)
             {
@@ -120,33 +164,51 @@ namespace votingFrontend.Services
             return electorates[0];
         }
 
+        /// <summary>
+        /// Gets all the parties from the database
+        /// </summary>
+        /// <returns>Returns the party data</returns>
         internal List<PartyTable> GetParties()
         {
             List<PartyTable> parties = new List<PartyTable>();
-            parties = db.Query<PartyTable>("SELECT * FROM PartyTable");
+            parties = this.db.Query<PartyTable>("SELECT * FROM PartyTable");
 
             return parties;
         }
 
+        /// <summary>
+        /// Gets all the electorates from the database
+        /// </summary>
+        /// <returns>Returns the electorate data</returns>
         internal List<ElectorateTable> GetElectorates()
         {
             List<ElectorateTable> electorates = new List<ElectorateTable>();
-            electorates = db.Query<ElectorateTable>("SELECT * FROM ElectorateTable");
+            electorates = this.db.Query<ElectorateTable>("SELECT * FROM ElectorateTable");
 
             return electorates;
         }
 
+        /// <summary>
+        /// Changes the active state of the user
+        /// </summary>
+        /// <param name="user">Model containing the users data</param>
+        /// <returns>Returns the updated user data</returns>
         internal UserVoteTable SwitchActive(UserVoteTable user)
         {
-            db.Query<UserVoteTable>("UPDATE UserVoteTable SET Active = '" + !user.Active + "' WHERE Id = '" + user.Id + "'");
+            this.db.Query<UserVoteTable>("UPDATE UserVoteTable SET Active = '" + !user.Active + "' WHERE Id = '" + user.Id + "'");
 
             return user;
         }
 
-        internal int AddReferendumVote(bool v)
+        /// <summary>
+        /// Saves the referendum result to the user
+        /// </summary>
+        /// <param name="result">Bool containing the referendum result</param>
+        /// <returns>Returns an int that is either -1 for a fail and a 1 for a success</returns>
+        internal int AddReferendumVote(bool result)
         {
             List<UserVoteTable> users = new List<UserVoteTable>();
-            users = db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
+            users = this.db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
 
             if (users.Count != 1)
             {
@@ -155,27 +217,37 @@ namespace votingFrontend.Services
 
             UserVoteTable user = new UserVoteTable();
             user = users[0];
-            user.Referendum = v;
+            user.Referendum = result;
 
-            db.Update(user);
+            this.db.Update(user);
 
             return 1;
         }
 
+        /// <summary>
+        /// Updates the referendum in the database
+        /// </summary>
+        /// <param name="referendum">Model containing the referendum data to be updated</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         internal Task UpdateReferendum(ReferendumTable referendum)
         {
-            db.DropTable<ReferendumTable>();
-            db.CreateTable<ReferendumTable>();
+            this.db.DropTable<ReferendumTable>();
+            this.db.CreateTable<ReferendumTable>();
 
-            db.Insert(referendum);
+            this.db.Insert(referendum);
 
             return Task.FromResult(-1);
         }
 
+        /// <summary>
+        /// Saves the candidates chosen to the user
+        /// </summary>
+        /// <param name="sender">Model list containing the list of candidate vote result</param>
+        /// <returns>Returns a -1 for a fail result and a 1 for a success result</returns>
         internal int AddCandidateVote(List<CandidateTable> sender)
         {
             List<UserVoteTable> users = new List<UserVoteTable>();
-            users = db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
+            users = this.db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
 
             if (users.Count != 1)
             {
@@ -195,15 +267,20 @@ namespace votingFrontend.Services
             user = users[0];
             user.CandidateIds = json;
 
-            db.Update(user);
+            this.db.Update(user);
 
             return 1;
         }
 
+        /// <summary>
+        /// Saves the electorate chosen to the user
+        /// </summary>
+        /// <param name="sender">Model containing the electorate vote result</param>
+        /// <returns>Returns a -1 for a fail result and a 1 for a success result</returns>
         internal int AddElectorateVote(ElectorateTable sender)
         {
             List<UserVoteTable> users = new List<UserVoteTable>();
-            users = db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
+            users = this.db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
 
             if (users.Count != 1)
             {
@@ -214,45 +291,64 @@ namespace votingFrontend.Services
             user = users[0];
             user.ElectorateId = sender.Id;
 
-            db.Update(user);
+            this.db.Update(user);
 
             return 1;
         }
 
+        /// <summary>
+        /// Updates the parties in the database
+        /// </summary>
+        /// <param name="parties">Model list containing a list of the party data to be updated</param>
+        /// /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         internal Task UpdateParties(List<PartyTable> parties)
         {
-            db.DropTable<PartyTable>();
-            db.CreateTable<PartyTable>();
+            this.db.DropTable<PartyTable>();
+            this.db.CreateTable<PartyTable>();
 
-            db.InsertAll(parties);
+            this.db.InsertAll(parties);
 
             return Task.FromResult(-1);
         }
 
+        /// <summary>
+        /// Updates the candidates in the database
+        /// </summary>
+        /// <param name="candidates">Model list containing a list of the candidate data to be updated</param>
+        /// /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         internal Task UpdateCandidates(List<CandidateTable> candidates)
         {
-            db.DropTable<CandidateTable>();
-            db.CreateTable<CandidateTable>();
+            this.db.DropTable<CandidateTable>();
+            this.db.CreateTable<CandidateTable>();
 
-            db.InsertAll(candidates);
+            this.db.InsertAll(candidates);
 
             return Task.FromResult(-1);
         }
 
+        /// <summary>
+        /// Updates the user to having the vote being sent to the server and to deactive
+        /// </summary>
+        /// <param name="voteToSend">Model containing the user details for status update</param>
+        /// <returns>Returns the updated user details</returns>
         internal UserVoteTable VoteSent(UserVoteTable voteToSend)
         {
             voteToSend.VoteSaved = true;
             voteToSend.Active = false;
 
-            db.Update(voteToSend);
+            this.db.Update(voteToSend);
 
             return voteToSend;
         }
 
+        /// <summary>
+        /// Gets the current user details that contain the vote results
+        /// </summary>
+        /// <returns>Returns the user details if found otherwise returns null</returns>
         internal UserVoteTable GetVoteToSend()
         {
             List<UserVoteTable> users = new List<UserVoteTable>();
-            users = db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
+            users = this.db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
 
             if (users.Count != 1)
             {
@@ -262,20 +358,30 @@ namespace votingFrontend.Services
             return users[0];
         }
 
+        /// <summary>
+        /// Updates the electorates in the database
+        /// </summary>
+        /// <param name="electorates">Model list containing a list of the electorate data to be updated</param>
+        /// /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         internal Task UpdateElectorates(List<ElectorateTable> electorates)
         {
-            db.DropTable<ElectorateTable>();
-            db.CreateTable<ElectorateTable>();
+            this.db.DropTable<ElectorateTable>();
+            this.db.CreateTable<ElectorateTable>();
 
-            db.InsertAll(electorates);
+            this.db.InsertAll(electorates);
 
             return Task.FromResult(-1);
         }
 
+        /// <summary>
+        /// Saves the party chosen to the user
+        /// </summary>
+        /// <param name="sender">Model containing the party vote result</param>
+        /// <returns>Returns a -1 for a fail result and a 1 for a success result</returns>
         internal int AddPartyVote(PartyTable sender)
         {
             List<UserVoteTable> users = new List<UserVoteTable>();
-            users = db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
+            users = this.db.Query<UserVoteTable>("SELECT * FROM UserVoteTable WHERE Active = 1");
 
             if (users.Count != 1)
             {
@@ -286,16 +392,23 @@ namespace votingFrontend.Services
             user = users[0];
             user.PartyId = sender.Id;
 
-            db.Update(user);
+            this.db.Update(user);
 
             return 1;
         }
 
+        /// <summary>
+        /// Sets active status of all users to inactive
+        /// </summary>
         internal void DeactivateUsers()
         {
-            db.Query<UserVoteTable>("UPDATE UserVoteTable SET Active = false");
+            this.db.Query<UserVoteTable>("UPDATE UserVoteTable SET Active = false");
         }
 
+        /// <summary>
+        /// Checks the database to see if it has data in the Electorate, Candidate, Party, and Referendum tables
+        /// </summary>
+        /// <returns>Returns true if all the tables contain data otherwise returns false</returns>
         internal bool CheckData()
         {
             List<ElectorateTable> electorates = new List<ElectorateTable>();
@@ -303,10 +416,10 @@ namespace votingFrontend.Services
             List<PartyTable> parties = new List<PartyTable>();
             List<ReferendumTable> referendum = new List<ReferendumTable>();
 
-            electorates = db.Query<ElectorateTable>("SELECT * FROM ElectorateTable");
-            candidates = db.Query<CandidateTable>("SELECT * FROM CandidateTable");
-            parties = db.Query<PartyTable>("SELECT * FROM PartyTable");
-            referendum = db.Query<ReferendumTable>("SELECT * FROM ReferendumTable");
+            electorates = this.db.Query<ElectorateTable>("SELECT * FROM ElectorateTable");
+            candidates = this.db.Query<CandidateTable>("SELECT * FROM CandidateTable");
+            parties = this.db.Query<PartyTable>("SELECT * FROM PartyTable");
+            referendum = this.db.Query<ReferendumTable>("SELECT * FROM ReferendumTable");
 
             if (electorates.Count == 0 || candidates.Count == 0 || parties.Count == 0 || referendum.Count == 0)
             {

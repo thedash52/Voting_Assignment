@@ -1,7 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿// <copyright file="Error.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
-namespace votingFrontend.Models
+namespace VotingFrontend.Models
 {
+    using Newtonsoft.Json;
+
+    /// <summary>
+    /// Response Model for errors
+    /// </summary>
     public class Error
     {
         [JsonProperty(PropertyName = "code")]

@@ -75,6 +75,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <DocumentationFile>bin\x64\Debug\votingFrontend.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -104,13 +105,13 @@
     <Compile Include="DatabaseTables\PartyTable.cs" />
     <Compile Include="DatabaseTables\ReferendumTable.cs" />
     <Compile Include="DatabaseTables\UserVoteTable.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Interfaces\INavigationService.cs" />
     <Compile Include="Models\CandidateResponseModel.cs" />
     <Compile Include="Models\CandidateSelection.cs" />
     <Compile Include="Models\ElectorateResponseModel.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\LoginRequestModel.cs" />
-    <Compile Include="Models\LoginResponseModel.cs" />
     <Compile Include="Models\LoginUserResponse.cs" />
     <Compile Include="Models\PartyResponseModel.cs" />
     <Compile Include="Models\ReferendumResponseModel.cs" />
@@ -152,6 +153,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <PRIResource Include="Resources.resw" />
+    <AdditionalFiles Include="stylecop.json" />
     <None Include="votingFrontend_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

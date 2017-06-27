@@ -1,12 +1,14 @@
-﻿using SQLite.Net.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="ReferendumTable.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
-namespace votingFrontend.DatabaseTables
+namespace VotingFrontend.DatabaseTables
 {
+    using SQLite.Net.Attributes;
+
+    /// <summary>
+    /// Database Table Model for the Referendums
+    /// </summary>
     public class ReferendumTable
     {
         [AutoIncrement]
@@ -16,7 +18,7 @@ namespace votingFrontend.DatabaseTables
         public int ServerId { get; set; }
 
         public string Name { get; set; }
-        
+
         public string Detail { get; set; }
 
         public string Images { get; set; }

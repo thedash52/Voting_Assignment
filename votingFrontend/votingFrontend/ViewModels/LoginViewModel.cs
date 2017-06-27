@@ -5,15 +5,15 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using votingFrontend.DatabaseTables;
-using votingFrontend.Interfaces;
-using votingFrontend.Services;
-using votingFrontend.Views;
+using VotingFrontend.DatabaseTables;
+using VotingFrontend.Interfaces;
+using VotingFrontend.Services;
+using VotingFrontend.Views;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace votingFrontend.ViewModels
+namespace VotingFrontend.ViewModels
 {
     /// <summary>
     /// The ViewModel of the LoginView which contains all the logic for the view

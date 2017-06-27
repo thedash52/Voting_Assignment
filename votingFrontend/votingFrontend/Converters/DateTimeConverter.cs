@@ -1,14 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Data;
+﻿// <copyright file="DateTimeConverter.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
-namespace votingFrontend.Converters
+namespace VotingFrontend.Converters
 {
-    public class DateTimeConverter: IValueConverter
+    using System;
+    using Windows.UI.Xaml.Data;
+
+    /// <summary>
+    /// Converts a dateTime object into a dateTimeOffset object and back
+    /// </summary>
+    public class DateTimeConverter : IValueConverter
     {
+        /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             try
@@ -22,6 +26,7 @@ namespace votingFrontend.Converters
             }
         }
 
+        /// <inheritdoc/>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             try
