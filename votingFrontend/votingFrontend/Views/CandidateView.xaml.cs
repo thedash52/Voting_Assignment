@@ -1,27 +1,31 @@
-﻿using VotingFrontend.Services;
-using VotingFrontend.ViewModels;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+﻿// <copyright file="CandidateView.xaml.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
 namespace VotingFrontend.Views
 {
+    using VotingFrontend.Services;
+    using VotingFrontend.ViewModels;
+    using Windows.UI.Xaml;
+    using Windows.UI.Xaml.Controls;
+
     /// <summary>
     /// Displays Candidates for the user to choose from
     /// </summary>
     public sealed partial class CandidateView : Page
     {
-        //ViewModel Object for the related ViewModel
+        // ViewModel Object for the related ViewModel
         private CandidateViewModel candidateVM;
 
         /// <summary>
-        /// Default Contructor of the CandidateView
+        /// Initializes a new instance of the <see cref="CandidateView"/> class.
         /// </summary>
         public CandidateView()
         {
-            candidateVM = new CandidateViewModel(new NavigationService());
+            this.candidateVM = new CandidateViewModel(new NavigationService());
 
             this.InitializeComponent();
-            this.DataContext = candidateVM;
+            this.DataContext = this.candidateVM;
         }
 
         /// <summary>
@@ -48,18 +52,20 @@ namespace VotingFrontend.Views
         /// Links the checkboxes to the related method in the view model
         /// </summary>
         /// <param name="sender">Contains the selected item of the list</param>
+        /// <param name="e">Parameter not used</param>
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            candidateVM.SelectedCandidateChecked(sender);
+            this.candidateVM.SelectedCandidateChecked(sender);
         }
 
         /// <summary>
         /// Links the checkboxes to the related method in the view model
         /// </summary>
         /// <param name="sender">Contains the selected item of the list</param>
+        /// <param name="e">Parameter not used</param>
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            candidateVM.SelectedCandidateUnChecked(sender);
+            this.candidateVM.SelectedCandidateUnChecked(sender);
         }
     }
 }

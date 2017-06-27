@@ -105,7 +105,6 @@
     <Compile Include="DatabaseTables\PartyTable.cs" />
     <Compile Include="DatabaseTables\ReferendumTable.cs" />
     <Compile Include="DatabaseTables\UserVoteTable.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Interfaces\INavigationService.cs" />
     <Compile Include="Models\CandidateResponseModel.cs" />
     <Compile Include="Models\CandidateSelection.cs" />

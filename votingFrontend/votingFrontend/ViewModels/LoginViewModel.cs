@@ -1,26 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using VotingFrontend.DatabaseTables;
-using VotingFrontend.Interfaces;
-using VotingFrontend.Services;
-using VotingFrontend.Views;
-using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+﻿// <copyright file="LoginViewModel.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
 namespace VotingFrontend.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+    using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
+    using System.Windows.Input;
+    using VotingFrontend.DatabaseTables;
+    using VotingFrontend.Interfaces;
+    using VotingFrontend.Services;
+    using VotingFrontend.Views;
+    using Windows.ApplicationModel.Resources;
+    using Windows.UI.Xaml;
+    using Windows.UI.Xaml.Controls;
+
     /// <summary>
     /// The ViewModel of the LoginView which contains all the logic for the view
     /// </summary>
     public class LoginViewModel : INotifyPropertyChanged
     {
-        //Private variables for the properties to store information
+        // Private variables for the properties to store information
         private string titleText;
         private string firstNameText;
         private string firstName;
@@ -46,7 +50,7 @@ namespace VotingFrontend.ViewModels
 
         private ResourceLoader resource;
 
-        private DateTime openDateTime = DateTime.Parse("17 June 2017 9:45AM");
+        private DateTime openDateTime = DateTime.Parse("28 June 2017 1:00PM");
         private DispatcherTimer countdown;
 
         private RestService restAPI = new RestService();
@@ -54,66 +58,66 @@ namespace VotingFrontend.ViewModels
         private INavigationService navigation;
 
         /// <summary>
-        /// Default Contructor for LoginViewModel
+        /// Initializes a new instance of the <see cref="LoginViewModel"/> class.
         /// </summary>
         /// <param name="navigationService">Passes the Navigation Property from the View to the ViewModel</param>
         public LoginViewModel(INavigationService navigationService)
         {
             this.navigation = navigationService;
 
-            resource = new ResourceLoader();
-            TitleText = resource.GetString("LoginTitle");
-            FirstNameText = resource.GetString("FirstName");
-            LastNameText = resource.GetString("LastName");
-            DoBText = resource.GetString("DateOfBirth");
-            ElectoralIdText = resource.GetString("ElectoralID");
-            LoginText = resource.GetString("LoginButton");
-            LoginCommand = new CommandService(Login);
+            this.resource = new ResourceLoader();
+            this.TitleText = this.resource.GetString("LoginTitle");
+            this.FirstNameText = this.resource.GetString("FirstName");
+            this.LastNameText = this.resource.GetString("LastName");
+            this.DoBText = this.resource.GetString("DateOfBirth");
+            this.ElectoralIdText = this.resource.GetString("ElectoralID");
+            this.LoginText = this.resource.GetString("LoginButton");
+            this.LoginCommand = new CommandService(this.Login);
 
-            FirstNamePlaceHolder = resource.GetString("FirstNamePlaceHolder");
-            LastNamePlaceHolder = resource.GetString("LastNamePlaceHolder");
-            ElectoralIdPlaceHolder = resource.GetString("ElectoralIdPlaceHolder");
-            ConnectionText = resource.GetString("ConnectionText");
+            this.FirstNamePlaceHolder = this.resource.GetString("FirstNamePlaceHolder");
+            this.LastNamePlaceHolder = this.resource.GetString("LastNamePlaceHolder");
+            this.ElectoralIdPlaceHolder = this.resource.GetString("ElectoralIdPlaceHolder");
+            this.ConnectionText = this.resource.GetString("ConnectionText");
 
-            LoggingIn = false;
+            this.LoggingIn = false;
 
-            DoB = DateTime.Now;
-            DoB = DoB.AddYears(-18);
+            this.DoB = DateTime.Now;
+            this.DoB = this.DoB.AddYears(-18);
 
-            if (DateTime.Now <= openDateTime)
+            if (DateTime.Now <= this.openDateTime)
             {
-                VotingClosed = Visibility.Visible;
+                this.VotingClosed = Visibility.Visible;
 
-                countdown = new DispatcherTimer()
+                this.countdown = new DispatcherTimer()
                 {
                     Interval = new TimeSpan(0, 0, 1)
                 };
-                countdown.Tick += Countdown_Tick;
+                this.countdown.Tick += this.Countdown_Tick;
 
-                TimeTillOpenText = resource.GetString("TimeTillOpen");
-                TimeTillOpen = (openDateTime - DateTime.Now).TotalSeconds;
+                this.TimeTillOpenText = this.resource.GetString("TimeTillOpen");
+                this.TimeTillOpen = (this.openDateTime - DateTime.Now).TotalSeconds;
 
-                countdown.Start();
+                this.countdown.Start();
             }
-            else if (DateTime.Now >= (openDateTime.AddHours(9).AddMinutes(50)))
+            else if (DateTime.Now >= this.openDateTime.AddHours(9).AddMinutes(50))
             {
-                VotingClosed = Visibility.Visible;
+                this.VotingClosed = Visibility.Visible;
 
-                TimeTillOpenText = resource.GetString("VotingFinished");
+                this.TimeTillOpenText = this.resource.GetString("VotingFinished");
             }
             else
             {
-                VotingClosed = Visibility.Collapsed;
+                this.VotingClosed = Visibility.Collapsed;
             }
         }
 
         /// <summary>
         /// Event relating to and controlling property changes
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Gets and Sets the ICommand property LoginCommand
+        /// Gets or sets the ICommand property LoginCommand
         /// </summary>
         public ICommand LoginCommand
         {
@@ -125,12 +129,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.loginCommand = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property TitleText
+        /// Gets or sets the String property TitleText
         /// </summary>
         public string TitleText
         {
@@ -142,12 +146,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.titleText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property FirstNameText
+        /// Gets or sets the String property FirstNameText
         /// </summary>
         public string FirstNameText
         {
@@ -159,12 +163,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.firstNameText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property FirstName
+        /// Gets or sets the String property FirstName
         /// </summary>
         public string FirstName
         {
@@ -176,12 +180,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.firstName = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property LastNameText
+        /// Gets or sets the String property LastNameText
         /// </summary>
         public string LastNameText
         {
@@ -193,12 +197,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.lastNameText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property LastName
+        /// Gets or sets the String property LastName
         /// </summary>
         public string LastName
         {
@@ -210,12 +214,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.lastName = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property DoBText
+        /// Gets or sets the String property DoBText
         /// </summary>
         public string DoBText
         {
@@ -227,12 +231,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.dobText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the DateTime property DoB
+        /// Gets or sets the DateTime property DoB
         /// </summary>
         public DateTime DoB
         {
@@ -244,12 +248,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.dob = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property ElectoralIdText
+        /// Gets or sets the String property ElectoralIdText
         /// </summary>
         public string ElectoralIdText
         {
@@ -261,12 +265,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.electoralIdText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property ElectoralId
+        /// Gets or sets the String property ElectoralId
         /// </summary>
         public string ElectoralId
         {
@@ -278,12 +282,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.electoralId = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property LoginText
+        /// Gets or sets the String property LoginText
         /// </summary>
         public string LoginText
         {
@@ -295,12 +299,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.loginText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the Visibility property VotingClosed
+        /// Gets or sets the Visibility property VotingClosed
         /// </summary>
         public Visibility VotingClosed
         {
@@ -312,12 +316,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.votingClosed = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property TimeTillOpenText
+        /// Gets or sets the String property TimeTillOpenText
         /// </summary>
         public string TimeTillOpenText
         {
@@ -329,12 +333,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.timeTillOpenText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property TimeTillOpen
+        /// Gets or sets the String property TimeTillOpen
         /// </summary>
         public double TimeTillOpen
         {
@@ -346,12 +350,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.timeTillOpen = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property FistNamePlaceHolder
+        /// Gets or sets the String property FistNamePlaceHolder
         /// </summary>
         public string FirstNamePlaceHolder
         {
@@ -363,12 +367,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.firstNamePlaceholder = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property LastNamePlaceHolder
+        /// Gets or sets the String property LastNamePlaceHolder
         /// </summary>
         public string LastNamePlaceHolder
         {
@@ -380,12 +384,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.lastNamePlaceholder = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property ElectoralIdPlaceHolder
+        /// Gets or sets the String property ElectoralIdPlaceHolder
         /// </summary>
         public string ElectoralIdPlaceHolder
         {
@@ -397,12 +401,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.electoralIdPlaceholder = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the Boolean property LoggingIn
+        /// Gets or sets a value indicating whether the Boolean property LoggingIn
         /// </summary>
         public bool LoggingIn
         {
@@ -414,12 +418,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.loggingIn = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property Connection Text
+        /// Gets or sets the String property Connection Text
         /// </summary>
         public string ConnectionText
         {
@@ -431,19 +435,20 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.connectionText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
         /// Validates the user entry and if the entry is valid sends the data to the Rest Service to check if user details are correct and logs in the user.
-        /// When the user has been logged in and has received the user details navigates user to appropriate view 
+        /// When the user has been logged in and has received the user details navigates user to appropriate view
         /// </summary>
+        /// <param name="sender">Empty Object</param>
         internal async void Login(object sender)
         {
-            LoggingIn = true;
+            this.LoggingIn = true;
 
-            if (String.IsNullOrEmpty(FirstName) || String.IsNullOrEmpty(LastName) || String.IsNullOrEmpty(ElectoralId))
+            if (string.IsNullOrEmpty(this.FirstName) || string.IsNullOrEmpty(this.LastName) || string.IsNullOrEmpty(this.ElectoralId))
             {
                 ContentDialog emptyEntry = new ContentDialog()
                 {
@@ -453,25 +458,25 @@ namespace VotingFrontend.ViewModels
                 };
 
                 await emptyEntry.ShowAsync();
-                LoggingIn = false;
+                this.LoggingIn = false;
                 return;
             }
 
-            MatchCollection firstNameResult = Regex.Matches(FirstName, @"^[a-zA-Z]+$");
-            MatchCollection lastNameResult = Regex.Matches(LastName, @"^[a-zA-Z]+$");
-            MatchCollection electoralIdResult = Regex.Matches(ElectoralId, @"^[A-Z]{3}[0-9]{6}$");
+            MatchCollection firstNameResult = Regex.Matches(this.FirstName, @"^[a-zA-Z]+$");
+            MatchCollection lastNameResult = Regex.Matches(this.LastName, @"^[a-zA-Z]+$");
+            MatchCollection electoralIdResult = Regex.Matches(this.ElectoralId, @"^[A-Z]{3}[0-9]{6}$");
 
             if (firstNameResult.Count == 0)
             {
                 ContentDialog invalidEntry = new ContentDialog()
                 {
                     Title = "Invalid Entry",
-                    Content = FirstName + " is not a valid name, Please enter your correct first name",
+                    Content = this.FirstName + " is not a valid name, Please enter your correct first name",
                     PrimaryButtonText = "OK"
                 };
 
                 await invalidEntry.ShowAsync();
-                LoggingIn = false;
+                this.LoggingIn = false;
                 return;
             }
 
@@ -480,19 +485,19 @@ namespace VotingFrontend.ViewModels
                 ContentDialog invalidEntry = new ContentDialog()
                 {
                     Title = "Invalid Entry",
-                    Content = LastName + " is not a valid name, Please enter your correct last name",
+                    Content = this.LastName + " is not a valid name, Please enter your correct last name",
                     PrimaryButtonText = "OK"
                 };
 
                 await invalidEntry.ShowAsync();
-                LoggingIn = false;
+                this.LoggingIn = false;
                 return;
             }
 
             DateTime validationDate = DateTime.Now;
             validationDate = validationDate.AddYears(-18);
 
-            if (DoB.Date > validationDate.Date)
+            if (this.DoB.Date > validationDate.Date)
             {
                 ContentDialog invalidEntry = new ContentDialog()
                 {
@@ -502,7 +507,7 @@ namespace VotingFrontend.ViewModels
                 };
 
                 await invalidEntry.ShowAsync();
-                LoggingIn = false;
+                this.LoggingIn = false;
                 return;
             }
 
@@ -516,11 +521,11 @@ namespace VotingFrontend.ViewModels
                 };
 
                 await invalidEntry.ShowAsync();
-                LoggingIn = false;
+                this.LoggingIn = false;
                 return;
             }
 
-            if (!(await UpdateVoteData()))
+            if (!(await this.UpdateVoteData()))
             {
                 ContentDialog noData = new ContentDialog()
                 {
@@ -530,11 +535,11 @@ namespace VotingFrontend.ViewModels
                 };
 
                 await noData.ShowAsync();
-                LoggingIn = false;
+                this.LoggingIn = false;
                 return;
             }
 
-            UserVoteTable user = db.CheckVoter(FirstName, LastName, DoB, ElectoralId);
+            UserVoteTable user = this.db.CheckVoter(this.FirstName, this.LastName, this.DoB, this.ElectoralId);
 
             if (user != null)
             {
@@ -546,8 +551,8 @@ namespace VotingFrontend.ViewModels
 
                 if (!user.Active)
                 {
-                    db.DeactivateUsers();
-                    user = db.SwitchActive(user);
+                    this.db.DeactivateUsers();
+                    user = this.db.SwitchActive(user);
                 }
 
                 if (user.ElectorateId == default(int))
@@ -570,15 +575,15 @@ namespace VotingFrontend.ViewModels
                 return;
             }
 
-            UserVoteTable loggedIn = await restAPI.Login(FirstName, LastName, DoB, ElectoralId);
+            UserVoteTable loggedIn = await this.restAPI.Login(this.FirstName, this.LastName, this.DoB, this.ElectoralId);
 
             if (loggedIn != null)
             {
                 loggedIn.Active = true;
 
-                db.VoterLoggedIn(loggedIn);
+                this.db.VoterLoggedIn(loggedIn);
 
-                LoggingIn = false;
+                this.LoggingIn = false;
 
                 if (loggedIn.VoteSaved)
                 {
@@ -588,8 +593,8 @@ namespace VotingFrontend.ViewModels
 
                 if (!loggedIn.Active)
                 {
-                    db.DeactivateUsers();
-                    loggedIn = db.SwitchActive(loggedIn);
+                    this.db.DeactivateUsers();
+                    loggedIn = this.db.SwitchActive(loggedIn);
                 }
             }
             else
@@ -602,7 +607,7 @@ namespace VotingFrontend.ViewModels
                 };
 
                 await invalidLogin.ShowAsync();
-                LoggingIn = false;
+                this.LoggingIn = false;
             }
         }
 
@@ -617,23 +622,23 @@ namespace VotingFrontend.ViewModels
             List<PartyTable> parties = new List<PartyTable>();
             ReferendumTable referendum = new ReferendumTable();
 
-            electorates = await restAPI.GetElectorates();
-            candidates = await restAPI.GetCandidates();
-            parties = await restAPI.GetParties();
-            referendum = await restAPI.GetReferendum();
+            electorates = await this.restAPI.GetElectorates();
+            candidates = await this.restAPI.GetCandidates();
+            parties = await this.restAPI.GetParties();
+            referendum = await this.restAPI.GetReferendum();
 
             if (electorates != null || candidates != null || parties != null || referendum != null)
             {
-                await db.UpdateElectorates(electorates);
-                await db.UpdateCandidates(candidates);
-                await db.UpdateParties(parties);
-                await db.UpdateReferendum(referendum);
+                await this.db.UpdateElectorates(electorates);
+                await this.db.UpdateCandidates(candidates);
+                await this.db.UpdateParties(parties);
+                await this.db.UpdateReferendum(referendum);
 
                 return true;
             }
             else
             {
-                if (db.CheckData())
+                if (this.db.CheckData())
                 {
                     return true;
                 }
@@ -647,15 +652,17 @@ namespace VotingFrontend.ViewModels
         /// <summary>
         /// Logic behind each tick of the countdown timer
         /// </summary>
+        /// <param name="sender">Empty Object</param>
+        /// <param name="e">Object is not used</param>
         private void Countdown_Tick(object sender, object e)
         {
-            TimeTillOpen--;
+            this.TimeTillOpen--;
 
-            if (TimeTillOpen < 0)
+            if (this.TimeTillOpen < 0)
             {
-                VotingClosed = Visibility.Collapsed;
-                TimeTillOpen = 0;
-                countdown.Stop();
+                this.VotingClosed = Visibility.Collapsed;
+                this.TimeTillOpen = 0;
+                this.countdown.Stop();
             }
         }
 
@@ -665,10 +672,7 @@ namespace VotingFrontend.ViewModels
         /// <param name="propertyName">The name of the property that has changed</param>
         private void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
-            if (this.PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -1,23 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using VotingFrontend.DatabaseTables;
-using VotingFrontend.Interfaces;
-using VotingFrontend.Services;
-using VotingFrontend.Views;
-using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml.Controls;
+﻿// <copyright file="ElectorateViewModel.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
 namespace VotingFrontend.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+    using System.Windows.Input;
+    using VotingFrontend.DatabaseTables;
+    using VotingFrontend.Interfaces;
+    using VotingFrontend.Services;
+    using VotingFrontend.Views;
+    using Windows.ApplicationModel.Resources;
+    using Windows.UI.Xaml.Controls;
+
     /// <summary>
     /// The ViewModel of the ElectorateView which contains all the logic for the view
     /// </summary>
     public class ElectorateViewModel : INotifyPropertyChanged
     {
-        //Private variables for the properties to store information
+        // Private variables for the properties to store information
         private string title;
         private List<ElectorateTable> electorates;
         private string selectButton;
@@ -32,7 +36,7 @@ namespace VotingFrontend.ViewModels
         private DatabaseService db = new DatabaseService();
 
         /// <summary>
-        /// Default Contructor for ElectorateViewModel
+        /// Initializes a new instance of the <see cref="ElectorateViewModel"/> class.
         /// </summary>
         /// <param name="navigationService">Passes the Navigation Property from the View to the ViewModel</param>
         public ElectorateViewModel(INavigationService navigationService)
@@ -40,14 +44,14 @@ namespace VotingFrontend.ViewModels
             this.navigation = navigationService;
 
             this.resource = new ResourceLoader();
-            Title = resource.GetString("ElectorateTitle");
-            SelectButton = resource.GetString("ElectorateSelect");
-            SelectCommand = new CommandService(Next);
+            this.Title = this.resource.GetString("ElectorateTitle");
+            this.SelectButton = this.resource.GetString("ElectorateSelect");
+            this.SelectCommand = new CommandService(this.Next);
 
-            ConnectionText = resource.GetString("ConnectionText");
+            this.ConnectionText = this.resource.GetString("ConnectionText");
 
-            Electorates = new List<ElectorateTable>();
-            Electorates = db.GetElectorates();
+            this.Electorates = new List<ElectorateTable>();
+            this.Electorates = this.db.GetElectorates();
         }
 
         /// <summary>
@@ -56,7 +60,7 @@ namespace VotingFrontend.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Gets and Sets the String property Title
+        /// Gets or sets the String property Title
         /// </summary>
         public string Title
         {
@@ -68,12 +72,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.title = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the List<ElectorateTable> property Electorates
+        /// Gets or sets the <list type="ElectorateTable"/> property Electorates
         /// </summary>
         public List<ElectorateTable> Electorates
         {
@@ -85,12 +89,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.electorates = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property SelectButton
+        /// Gets or sets the String property SelectButton
         /// </summary>
         public string SelectButton
         {
@@ -102,12 +106,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.selectButton = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the ICommand property SelectCommand
+        /// Gets or sets the ICommand property SelectCommand
         /// </summary>
         public ICommand SelectCommand
         {
@@ -119,12 +123,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.selectCommand = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property ConnectionText
+        /// Gets or sets the String property ConnectionText
         /// </summary>
         public string ConnectionText
         {
@@ -136,7 +140,7 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.connectionText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
@@ -146,7 +150,7 @@ namespace VotingFrontend.ViewModels
         /// <param name="sender">Sender Contains the selected item from the list</param>
         internal async void Next(object sender)
         {
-            int result = db.AddElectorateVote((ElectorateTable)sender);
+            int result = this.db.AddElectorateVote((ElectorateTable)sender);
 
             if (result == -1)
             {
@@ -172,10 +176,7 @@ namespace VotingFrontend.ViewModels
         /// <param name="propertyName">The name of the property that has changed</param>
         private void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
-            if (this.PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

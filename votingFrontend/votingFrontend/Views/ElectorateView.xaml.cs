@@ -1,27 +1,31 @@
-﻿using VotingFrontend.Services;
-using VotingFrontend.ViewModels;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+﻿// <copyright file="ElectorateView.xaml.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
 namespace VotingFrontend.Views
 {
+    using VotingFrontend.Services;
+    using VotingFrontend.ViewModels;
+    using Windows.UI.Xaml;
+    using Windows.UI.Xaml.Controls;
+
     /// <summary>
     /// Displays Electorates for the user to choose from
     /// </summary>
     public sealed partial class ElectorateView : Page
     {
-        //ViewModel Object for the related ViewModel
+        // ViewModel Object for the related ViewModel
         private ElectorateViewModel electorateVM;
 
         /// <summary>
-        /// Default Contructor of the ElectorateView
+        /// Initializes a new instance of the <see cref="ElectorateView"/> class.
         /// </summary>
         public ElectorateView()
         {
             this.InitializeComponent();
 
             this.electorateVM = new ElectorateViewModel(new NavigationService());
-            this.DataContext = electorateVM;
+            this.DataContext = this.electorateVM;
         }
 
         /// <summary>

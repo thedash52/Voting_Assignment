@@ -1,32 +1,36 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using VotingFrontend.DatabaseTables;
-using VotingFrontend.Services;
-using VotingFrontend.ViewModels;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Imaging;
+﻿// <copyright file="ReferendumView.xaml.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
 namespace VotingFrontend.Views
 {
+    using System;
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+    using VotingFrontend.DatabaseTables;
+    using VotingFrontend.Services;
+    using VotingFrontend.ViewModels;
+    using Windows.UI.Xaml;
+    using Windows.UI.Xaml.Controls;
+    using Windows.UI.Xaml.Media.Imaging;
+
     /// <summary>
     /// Displays the Referendum for the user to choose from
     /// </summary>
     public sealed partial class ReferendumView : Page
     {
-        //ViewModel Object for the related ViewModel
+        // ViewModel Object for the related ViewModel
         private ReferendumViewModel referendumVM;
 
         /// <summary>
-        /// Default Contructor of the ReferendumView
+        /// Initializes a new instance of the <see cref="ReferendumView"/> class.
         /// </summary>
         public ReferendumView()
         {
             this.InitializeComponent();
 
             this.referendumVM = new ReferendumViewModel(new NavigationService());
-            this.DataContext = referendumVM;
+            this.DataContext = this.referendumVM;
 
             ReferendumTable referendum = this.referendumVM.Referendum;
 
@@ -113,7 +117,7 @@ namespace VotingFrontend.Views
                 }
             }
 
-            scrollView.Content = grid;
+            this.scrollView.Content = grid;
         }
     }
 }

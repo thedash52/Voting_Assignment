@@ -1,22 +1,26 @@
-﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using VotingFrontend.DatabaseTables;
-using VotingFrontend.Interfaces;
-using VotingFrontend.Services;
-using VotingFrontend.Views;
-using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml.Controls;
+﻿// <copyright file="ReferendumViewModel.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
 namespace VotingFrontend.ViewModels
 {
+    using System;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+    using System.Windows.Input;
+    using VotingFrontend.DatabaseTables;
+    using VotingFrontend.Interfaces;
+    using VotingFrontend.Services;
+    using VotingFrontend.Views;
+    using Windows.ApplicationModel.Resources;
+    using Windows.UI.Xaml.Controls;
+
     /// <summary>
     /// The ViewModel of the ReferendumView which contains all the logic for the view
     /// </summary>
     public class ReferendumViewModel : INotifyPropertyChanged
     {
-        //Private variables for the properties to store information
+        // Private variables for the properties to store information
         private string title;
         private ReferendumTable referendum;
         private string yesButton;
@@ -32,7 +36,7 @@ namespace VotingFrontend.ViewModels
         private DatabaseService db = new DatabaseService();
 
         /// <summary>
-        /// Default Contructor for ReferendumViewModel
+        /// Initializes a new instance of the <see cref="ReferendumViewModel"/> class.
         /// </summary>
         /// <param name="navigationService">Passes the Navigation Property from the View to the ViewModel</param>
         public ReferendumViewModel(INavigationService navigationService)
@@ -40,16 +44,16 @@ namespace VotingFrontend.ViewModels
             this.navigation = navigationService;
 
             this.resource = new ResourceLoader();
-            Title = resource.GetString("ReferendumTitle");
-            YesButton = resource.GetString("Yes");
-            NoButton = resource.GetString("No");
+            this.Title = this.resource.GetString("ReferendumTitle");
+            this.YesButton = this.resource.GetString("Yes");
+            this.NoButton = this.resource.GetString("No");
 
-            AnswerCommand = new CommandService(Next);
+            this.AnswerCommand = new CommandService(this.Next);
 
-            ConnectionText = resource.GetString("ConnectionText");
+            this.ConnectionText = this.resource.GetString("ConnectionText");
 
-            Referendum = new ReferendumTable();
-            Referendum = db.GetReferendum();
+            this.Referendum = new ReferendumTable();
+            this.Referendum = this.db.GetReferendum();
         }
 
         /// <summary>
@@ -58,7 +62,7 @@ namespace VotingFrontend.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Gets and Sets the String property Title
+        /// Gets or sets the String property Title
         /// </summary>
         public string Title
         {
@@ -70,12 +74,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.title = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the ReferendumTable property Referendum
+        /// Gets or sets the ReferendumTable property Referendum
         /// </summary>
         public ReferendumTable Referendum
         {
@@ -87,12 +91,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.referendum = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property YesButton
+        /// Gets or sets the String property YesButton
         /// </summary>
         public string YesButton
         {
@@ -104,12 +108,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.yesButton = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property NoButton
+        /// Gets or sets the String property NoButton
         /// </summary>
         public string NoButton
         {
@@ -121,12 +125,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.noButton = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the ICommand property AnswerCommand
+        /// Gets or sets the ICommand property AnswerCommand
         /// </summary>
         public ICommand AnswerCommand
         {
@@ -138,12 +142,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.answerCommand = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property ConnectionText
+        /// Gets or sets the String property ConnectionText
         /// </summary>
         public string ConnectionText
         {
@@ -155,7 +159,7 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.connectionText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
@@ -170,10 +174,10 @@ namespace VotingFrontend.ViewModels
             switch ((string)obj)
             {
                 case "yes":
-                    result = db.AddReferendumVote(true);
+                    result = this.db.AddReferendumVote(true);
                     break;
                 case "no":
-                    result = db.AddReferendumVote(false);
+                    result = this.db.AddReferendumVote(false);
                     break;
             }
 
@@ -191,7 +195,7 @@ namespace VotingFrontend.ViewModels
             }
             else
             {
-                UserVoteTable voteSent = await restAPI.SendVote();
+                UserVoteTable voteSent = await this.restAPI.SendVote();
 
                 if (voteSent == null)
                 {
@@ -215,10 +219,7 @@ namespace VotingFrontend.ViewModels
         /// <param name="propertyName">The name of the property that has changed</param>
         private void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
-            if (this.PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

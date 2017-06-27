@@ -1,23 +1,27 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using VotingFrontend.DatabaseTables;
-using VotingFrontend.Interfaces;
-using VotingFrontend.Services;
-using VotingFrontend.Views;
-using Windows.ApplicationModel.Resources;
+﻿// <copyright file="VoteSubmittedViewModel.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
 namespace VotingFrontend.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+    using System.Windows.Input;
+    using Newtonsoft.Json;
+    using VotingFrontend.DatabaseTables;
+    using VotingFrontend.Interfaces;
+    using VotingFrontend.Services;
+    using VotingFrontend.Views;
+    using Windows.ApplicationModel.Resources;
+
     /// <summary>
     /// The ViewModel of the VoteSubmittedView which contains all the logic for the view
     /// </summary>
     public class VoteSubmittedViewModel : INotifyPropertyChanged
     {
-        //Private variables for the properties to store information
+        // Private variables for the properties to store information
         private string title;
         private string voteText;
         private string electorateText;
@@ -44,26 +48,27 @@ namespace VotingFrontend.ViewModels
         private DatabaseService db = new DatabaseService();
 
         /// <summary>
-        /// Default Contructor for LoginViewModel
+        /// Initializes a new instance of the <see cref="VoteSubmittedViewModel"/> class.
         /// </summary>
         /// <param name="navigationService">Passes the Navigation Property from the View to the ViewModel</param>
+        /// <param name="user">Receives the user data from the view</param>
         public VoteSubmittedViewModel(INavigationService navigationService, UserVoteTable user)
         {
             this.navigation = navigationService;
             this.user = user;
 
             this.resource = new ResourceLoader();
-            Title = resource.GetString("SubmittedTitle");
-            VoteText = resource.GetString("VoteText");
-            ElectorateText = resource.GetString("ElectorateText");
-            CandidateText = resource.GetString("CandidateText");
-            PartyText = resource.GetString("PartyText");
-            ReferendumText = resource.GetString("ReferendumText");
-            SubmittedText = resource.GetString("SubmittedText");
-            LoginButton = resource.GetString("VoteButton");
-            ConnectionText = resource.GetString("ConnectionText");
+            this.Title = this.resource.GetString("SubmittedTitle");
+            this.VoteText = this.resource.GetString("VoteText");
+            this.ElectorateText = this.resource.GetString("ElectorateText");
+            this.CandidateText = this.resource.GetString("CandidateText");
+            this.PartyText = this.resource.GetString("PartyText");
+            this.ReferendumText = this.resource.GetString("ReferendumText");
+            this.SubmittedText = this.resource.GetString("SubmittedText");
+            this.LoginButton = this.resource.GetString("VoteButton");
+            this.ConnectionText = this.resource.GetString("ConnectionText");
 
-            LoginCommand = new CommandService(Login);
+            this.LoginCommand = new CommandService(this.Login);
 
             ElectorateTable electorateData = new ElectorateTable();
             List<CandidateTable> candidateData = new List<CandidateTable>();
@@ -71,39 +76,39 @@ namespace VotingFrontend.ViewModels
 
             List<string> candidateList = JsonConvert.DeserializeObject<List<string>>(this.user.CandidateIds);
 
-            electorateData = db.GetElectorateFromId(this.user.ElectorateId);
+            electorateData = this.db.GetElectorateFromId(this.user.ElectorateId);
 
             foreach (string item in candidateList)
             {
                 int id = int.Parse(item);
 
                 CandidateTable candidate = new CandidateTable();
-                candidate = db.GetCandidateFromId(id);
+                candidate = this.db.GetCandidateFromId(id);
 
                 candidateData.Add(candidate);
             }
 
-            partyData = db.GetPartyFromId(this.user.PartyId);
+            partyData = this.db.GetPartyFromId(this.user.PartyId);
 
-            Electorate = electorateData.Name;
+            this.Electorate = electorateData.Name;
 
-            string candidateNames = String.Empty;
+            string candidateNames = string.Empty;
 
             foreach (CandidateTable item in candidateData)
             {
-                if (candidateNames == String.Empty)
+                if (candidateNames == string.Empty)
                 {
                     candidateNames = item.Name;
                 }
                 else
                 {
-                    candidateNames = String.Join(Environment.NewLine, candidateNames, item.Name);
+                    candidateNames = string.Join(Environment.NewLine, candidateNames, item.Name);
                 }
             }
 
-            Candidates = candidateNames;
-            Party = partyData.Name;
-            Referendum = this.user.Referendum.ToString();
+            this.Candidates = candidateNames;
+            this.Party = partyData.Name;
+            this.Referendum = this.user.Referendum.ToString();
         }
 
         /// <summary>
@@ -112,7 +117,7 @@ namespace VotingFrontend.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Gets and Sets the String property Title
+        /// Gets or sets the String property Title
         /// </summary>
         public string Title
         {
@@ -124,12 +129,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.title = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property VoteText
+        /// Gets or sets the String property VoteText
         /// </summary>
         public string VoteText
         {
@@ -141,12 +146,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.voteText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property ElectorateText
+        /// Gets or sets the String property ElectorateText
         /// </summary>
         public string ElectorateText
         {
@@ -158,12 +163,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.electorateText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property Electorate
+        /// Gets or sets the String property Electorate
         /// </summary>
         public string Electorate
         {
@@ -175,12 +180,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.electorate = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property CandidateText
+        /// Gets or sets the String property CandidateText
         /// </summary>
         public string CandidateText
         {
@@ -192,12 +197,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.candidateText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property Candidates
+        /// Gets or sets the String property Candidates
         /// </summary>
         public string Candidates
         {
@@ -209,12 +214,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.candidates = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property PartyText
+        /// Gets or sets the String property PartyText
         /// </summary>
         public string PartyText
         {
@@ -226,12 +231,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.partyText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property Party
+        /// Gets or sets the String property Party
         /// </summary>
         public string Party
         {
@@ -243,12 +248,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.party = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property ReferendumText
+        /// Gets or sets the String property ReferendumText
         /// </summary>
         public string ReferendumText
         {
@@ -260,12 +265,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.referendumText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property Referendum
+        /// Gets or sets the String property Referendum
         /// </summary>
         public string Referendum
         {
@@ -277,12 +282,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.referendum = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property SubmittedText
+        /// Gets or sets the String property SubmittedText
         /// </summary>
         public string SubmittedText
         {
@@ -294,12 +299,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.submittedText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property LoginButton
+        /// Gets or sets the String property LoginButton
         /// </summary>
         public string LoginButton
         {
@@ -311,12 +316,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.loginButton = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property ConnectionText
+        /// Gets or sets the String property ConnectionText
         /// </summary>
         public string ConnectionText
         {
@@ -328,12 +333,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.connectionText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the ICommand property LoginCommand
+        /// Gets or sets the ICommand property LoginCommand
         /// </summary>
         public ICommand LoginCommand
         {
@@ -345,13 +350,14 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.loginCommand = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
         /// Navigates the user back to the LoginView
         /// </summary>
+        /// <param name="obj">Object not used</param>
         internal void Login(object obj)
         {
             this.navigation.Navigate(typeof(LoginView));
@@ -363,10 +369,7 @@ namespace VotingFrontend.ViewModels
         /// <param name="propertyName">The name of the property that has changed</param>
         private void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
-            if (this.PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

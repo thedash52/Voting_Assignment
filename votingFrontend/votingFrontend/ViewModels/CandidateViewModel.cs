@@ -1,26 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using VotingFrontend.DatabaseTables;
-using VotingFrontend.Interfaces;
-using VotingFrontend.Models;
-using VotingFrontend.Services;
-using VotingFrontend.Views;
-using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml.Controls;
+﻿// <copyright file="CandidateViewModel.cs" company="UCOL 3rd Year Bachelor of Information and Communication Assignment">
+// Copyright (c) UCOL 3rd Year Bachelor of Information and Communication Assignment. All rights reserved.
+// </copyright>
 
 namespace VotingFrontend.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Windows.Input;
+    using VotingFrontend.DatabaseTables;
+    using VotingFrontend.Interfaces;
+    using VotingFrontend.Models;
+    using VotingFrontend.Services;
+    using VotingFrontend.Views;
+    using Windows.ApplicationModel.Resources;
+    using Windows.UI.Xaml.Controls;
+
     /// <summary>
     /// The ViewModel of the CandidateView which contains all the logic for the view
     /// </summary>
     public class CandidateViewModel : INotifyPropertyChanged
     {
-        //Private variables for the properties to store information
+        // Private variables for the properties to store information
         private string title;
         private ObservableCollection<CandidateSelection> candidates;
         private List<CandidateTable> selectedCandidates;
@@ -39,7 +43,7 @@ namespace VotingFrontend.ViewModels
         private DatabaseService db = new DatabaseService();
 
         /// <summary>
-        /// Default Contructor for CandidateViewModel
+        /// Initializes a new instance of the <see cref="CandidateViewModel"/> class.
         /// </summary>
         /// <param name="navigationService">Passes the Navigation Property from the View to the ViewModel</param>
         public CandidateViewModel(INavigationService navigationService)
@@ -47,19 +51,19 @@ namespace VotingFrontend.ViewModels
             this.navigation = navigationService;
 
             this.resource = new ResourceLoader();
-            Title = resource.GetString("CandidateTitle");
-            SelectButton = resource.GetString("CandidateSelect");
+            this.Title = this.resource.GetString("CandidateTitle");
+            this.SelectButton = this.resource.GetString("CandidateSelect");
 
-            SelectCommand = new CommandService(Next);
+            this.SelectCommand = new CommandService(this.Next);
 
-            ConnectionText = resource.GetString("ConnectionText");
+            this.ConnectionText = this.resource.GetString("ConnectionText");
 
-            CanExecute = false;
+            this.CanExecute = false;
 
-            SelectedCandidates = new List<CandidateTable>();
+            this.SelectedCandidates = new List<CandidateTable>();
 
-            Candidates = new ObservableCollection<CandidateSelection>();
-            Candidates = db.GetCandidates();
+            this.Candidates = new ObservableCollection<CandidateSelection>();
+            this.Candidates = this.db.GetCandidates();
         }
 
         /// <summary>
@@ -68,7 +72,7 @@ namespace VotingFrontend.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Gets and Sets the String property Title
+        /// Gets or sets the String property Title
         /// </summary>
         public string Title
         {
@@ -80,12 +84,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.title = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the ObservableCollection<CandidateSelection> property Canidates
+        /// Gets or sets the <list type="ObservableCollection-CandidateSelection"/> property Canidates
         /// </summary>
         public ObservableCollection<CandidateSelection> Candidates
         {
@@ -97,12 +101,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.candidates = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property SelectButton
+        /// Gets or sets the String property SelectButton
         /// </summary>
         public string SelectButton
         {
@@ -114,12 +118,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.selectButton = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the ICommand property SelectCommand
+        /// Gets or sets the ICommand property SelectCommand
         /// </summary>
         public ICommand SelectCommand
         {
@@ -131,12 +135,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.selectCommand = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property ConnectionText
+        /// Gets or sets the String property ConnectionText
         /// </summary>
         public string ConnectionText
         {
@@ -148,12 +152,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.connectionText = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the List<CandidateTable> property SelectCandidates
+        /// Gets or sets the <list type="CandidateTable"/> property SelectCandidates
         /// </summary>
         public List<CandidateTable> SelectedCandidates
         {
@@ -166,12 +170,12 @@ namespace VotingFrontend.ViewModels
             {
                 this.selectedCandidates = value;
 
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the CandidateSelection property SelectCandidate
+        /// Gets or sets the CandidateSelection property SelectCandidate
         /// </summary>
         public CandidateSelection SelectedCandidate
         {
@@ -183,12 +187,12 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.selectedCandidate = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets and Sets the String property 
+        /// Gets or sets a value indicating whether the command can execute
         /// </summary>
         public bool CanExecute
         {
@@ -200,16 +204,17 @@ namespace VotingFrontend.ViewModels
             set
             {
                 this.canExecute = value;
-                OnPropertyChanged();
+                this.OnPropertyChanged();
             }
         }
 
         /// <summary>
         /// When an item is selected checks how many have been selected and if to many tells the user otherwise adds the selected item to a selected item list
         /// </summary>
+        /// <param name="sender">Object containing checkbox</param>
         internal async void SelectedCandidateChecked(object sender)
         {
-            if (SelectedCandidates.Count > 3)
+            if (this.SelectedCandidates.Count > 3)
             {
                 ContentDialog error = new ContentDialog()
                 {
@@ -225,63 +230,64 @@ namespace VotingFrontend.ViewModels
             }
             else
             {
-                int idx = Candidates.IndexOf(SelectedCandidate);
+                int idx = this.Candidates.IndexOf(this.SelectedCandidate);
 
-                Candidates[idx].Selected = true;
+                this.Candidates[idx].Selected = true;
 
                 CandidateTable candidate = new CandidateTable()
                 {
-                    Id = SelectedCandidate.Id,
-                    ServerId = SelectedCandidate.ServerId,
-                    Name = SelectedCandidate.Name,
-                    Detail = SelectedCandidate.Detail,
-                    Image = SelectedCandidate.Image
+                    Id = this.SelectedCandidate.Id,
+                    ServerId = this.SelectedCandidate.ServerId,
+                    Name = this.SelectedCandidate.Name,
+                    Detail = this.SelectedCandidate.Detail,
+                    Image = this.SelectedCandidate.Image
                 };
 
-                if (!SelectedCandidates.Any(i => i.Id == candidate.Id && i.ServerId == candidate.ServerId))
+                if (!this.SelectedCandidates.Any(i => i.Id == candidate.Id && i.ServerId == candidate.ServerId))
                 {
-                    SelectedCandidates.Add(candidate);
+                    this.SelectedCandidates.Add(candidate);
                 }
 
-                CanExecute = true;
+                this.CanExecute = true;
             }
         }
 
         /// <summary>
         /// When an item is unselected removes the selected item from the selected item list
         /// </summary>
+        /// <param name="sender">Empty Object</param>
         internal void SelectedCandidateUnChecked(object sender)
         {
             CandidateTable candidate = new CandidateTable()
             {
-                Id = SelectedCandidate.Id,
-                ServerId = SelectedCandidate.ServerId,
-                Name = SelectedCandidate.Name,
-                Detail = SelectedCandidate.Detail,
-                Image = SelectedCandidate.Image
+                Id = this.SelectedCandidate.Id,
+                ServerId = this.SelectedCandidate.ServerId,
+                Name = this.SelectedCandidate.Name,
+                Detail = this.SelectedCandidate.Detail,
+                Image = this.SelectedCandidate.Image
             };
 
-            if (SelectedCandidates.Any(i => i.Id == candidate.Id && i.ServerId == candidate.ServerId))
+            if (this.SelectedCandidates.Any(i => i.Id == candidate.Id && i.ServerId == candidate.ServerId))
             {
-                int idx = Candidates.IndexOf(SelectedCandidate);
+                int idx = this.Candidates.IndexOf(this.SelectedCandidate);
 
-                Candidates[idx].Selected = false;
+                this.Candidates[idx].Selected = false;
 
                 int rmIdx = 0;
 
-                for (int i = 0; i < SelectedCandidates.Count; i++)
+                for (int i = 0; i < this.SelectedCandidates.Count; i++)
                 {
-                    if (SelectedCandidates[i].Id == candidate.Id && SelectedCandidates[i].ServerId == candidate.ServerId)
+                    if (this.SelectedCandidates[i].Id == candidate.Id && this.SelectedCandidates[i].ServerId == candidate.ServerId)
                     {
                         rmIdx = i;
                     }
                 }
 
-                SelectedCandidates.RemoveAt(rmIdx);
+                this.SelectedCandidates.RemoveAt(rmIdx);
 
-                if (SelectedCandidates.Count == 0)
+                if (this.SelectedCandidates.Count == 0)
                 {
-                    CanExecute = false;
+                    this.CanExecute = false;
                 }
             }
         }
@@ -289,9 +295,10 @@ namespace VotingFrontend.ViewModels
         /// <summary>
         /// Takes the selected item list and saves it to the user, then navigates to the next view
         /// </summary>
+        /// <param name="sender">Empty object for command</param>
         internal async void Next(object sender)
         {
-            int result = db.AddCandidateVote(SelectedCandidates);
+            int result = this.db.AddCandidateVote(this.SelectedCandidates);
 
             if (result == -1)
             {
@@ -317,10 +324,7 @@ namespace VotingFrontend.ViewModels
         /// <param name="propertyName">The name of the property that has changed</param>
         private void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
-            if (this.PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
