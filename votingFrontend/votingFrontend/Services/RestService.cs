@@ -74,7 +74,21 @@ namespace VotingFrontend.Services
 
                 if (result.Success)
                 {
-                    return result.Result;
+                    UserVoteTable newUser = new UserVoteTable()
+                    {
+                        ServerId = result.Result.Id,
+                        FirstName = result.Result.FirstName,
+                        LastName = result.Result.LastName,
+                        DoB = result.Result.DoB,
+                        ElectoralId = result.Result.ElectoralId,
+                        ElectorateId = result.Result.ElectorateId,
+                        CandidateIds = result.Result.CandidateIds,
+                        PartyId = result.Result.PartyId,
+                        Referendum = result.Result.Referendum,
+                        VoteSaved = result.Result.VoteSaved
+                    };
+
+                    return newUser;
                 }
                 else
                 {

@@ -197,7 +197,7 @@ namespace VotingFrontend.ViewModels
             {
                 UserVoteTable voteSent = await this.restAPI.SendVote();
 
-                if (voteSent == null)
+                if (!voteSent.VoteSaved)
                 {
                     ContentDialog connectionError = new ContentDialog()
                     {

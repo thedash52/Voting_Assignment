@@ -16,7 +16,7 @@ namespace VotingFrontend.Models
         public bool Success { get; set; }
 
         [JsonProperty(PropertyName = "result")]
-        public UserVoteTable Result { get; set; }
+        public UserVoteResponse Result { get; set; }
 
         [JsonProperty(PropertyName = "error")]
         public Error Error { get; set; }
