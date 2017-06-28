@@ -33,7 +33,19 @@ namespace votingBackend.EntityFrameworkCore
                 {
                     var result = (from u in ctx.UserVoteSet
                                  where u.FirstName == first && u.LastName == last && u.DoB == DateTime.Parse(dob) && u.ElectoralId == electoral
-                                 select u).ToList();
+                                  select new UserVote
+                                  {
+                                      Id = u.Id,
+                                      FirstName = u.FirstName,
+                                      LastName = u.LastName,
+                                      DoB = u.DoB,
+                                      ElectoralId = u.ElectoralId,
+                                      ElectorateId = u.ElectorateId,
+                                      CandidateIds = u.CandidateIds,
+                                      PartyId = u.PartyId,
+                                      Referendum = u.Referendum,
+                                      VoteSaved = u.VoteSaved
+                                  }).ToList();
 
                     if (result.Count == 1)
                     {
