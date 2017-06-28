@@ -27,7 +27,7 @@ namespace VotingFrontend.Services
         /// </summary>
         public DatabaseService()
         {
-            var path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "this.db.sqlite");
+            var path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "db.sqlite");
             this.db = new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
 
             this.db.CreateTable<UserVoteTable>();

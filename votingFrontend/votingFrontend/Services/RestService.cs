@@ -204,7 +204,7 @@ namespace VotingFrontend.Services
                 }
                 catch
                 {
-                    return null;
+                    return voteToSend;
                 }
             }
 
@@ -220,12 +220,12 @@ namespace VotingFrontend.Services
                 }
                 else
                 {
-                    return null;
+                    return voteToSend;
                 }
             }
             else
             {
-                return null;
+                return voteToSend;
             }
         }
 

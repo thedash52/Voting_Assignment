@@ -50,7 +50,7 @@ namespace VotingFrontend.ViewModels
 
         private ResourceLoader resource;
 
-        private DateTime openDateTime = DateTime.Parse("28 June 2017 1:00PM");
+        private DateTime openDateTime = DateTime.Parse("28 June 2017 1:45PM");
         private DispatcherTimer countdown;
 
         private RestService restAPI = new RestService();
@@ -596,6 +596,8 @@ namespace VotingFrontend.ViewModels
                     this.db.DeactivateUsers();
                     loggedIn = this.db.SwitchActive(loggedIn);
                 }
+
+                this.navigation.Navigate(typeof(ElectorateView));
             }
             else
             {
