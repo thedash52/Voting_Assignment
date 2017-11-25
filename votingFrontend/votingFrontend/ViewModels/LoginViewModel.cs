@@ -99,12 +99,12 @@ namespace VotingFrontend.ViewModels
 
                 this.countdown.Start();
             }
-            else if (DateTime.Now >= this.openDateTime.AddHours(9).AddMinutes(50))
-            {
-                this.VotingClosed = Visibility.Visible;
+            //else if (DateTime.Now >= this.openDateTime.AddHours(9).AddMinutes(50))
+            //{
+            //    this.VotingClosed = Visibility.Visible;
 
-                this.TimeTillOpenText = this.resource.GetString("VotingFinished");
-            }
+            //    this.TimeTillOpenText = this.resource.GetString("VotingFinished");
+            //}
             else
             {
                 this.VotingClosed = Visibility.Collapsed;
