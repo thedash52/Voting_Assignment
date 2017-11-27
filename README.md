@@ -16,4 +16,4 @@ Electoral ID: ABC123456
 
 At this point you are not able to see the whole application as register user is not currently a part of the application.  
 
-The backend can be accessed from [http://votingbackend.azurewebsites.net](votingbackend.azurewebsites.net). The code is in the backend folder.  
+The backend can be accessed from [votingbackend.azurewebsites.net](http://votingbackend.azurewebsites.net). The code is in the backend folder.  
